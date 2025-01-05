@@ -1,0 +1,525 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <title>Superadmin | Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content>
+
+    <link href="{% static 'assets/css/vendor.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet">
+
+</head>
+<body>
+
+<div id="app" class="app">
+
+    <div id="header" class="app-header">
+
+        <div class="mobile-toggler">
+            <button type="button" class="menu-toggler" data-toggle="sidebar-mobile">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
+
+        <div class="brand">
+            <div class="desktop-toggler">
+                <button type="button" class="menu-toggler" data-toggle="sidebar-minify">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+            <a href="{% url 'home_page' %}" class="brand-logo">
+                <img src="{{ site_settings.logo.url }}" class="invert-dark" alt height="40">
+            </a>
+        </div>
+
+
+        <div class="menu">
+            <form class="menu-search" name="header_search_form">
+                <div class="menu-search-icon"><i class="fa fa-search"></i></div>
+                <div class="menu-search-input">
+                    <input type="text" class="form-control" placeholder="Qidiruv...">
+                </div>
+            </form>
+            <div class="menu-item dropdown">
+                <a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
+                    <div class="menu-img online">
+                        {% if request.user.image %}
+                        <img src="{{ request.user.image.url }}" alt class="ms-100 mh-100 rounded-circle">
+                        {% endif %}
+                    </div>
+                    <div class="menu-text"><span>@{{ request.user.username }}</span>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end me-lg-3">
+                    <a class="dropdown-item d-flex align-items-center" href="/admin/user_app/user/">Profil <i
+                            class="fa fa-user-circle fa-fw ms-auto text-body text-opacity-50"></i></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item d-flex align-items-center" href="{% url 'logout_page' %}">Chiqish <i
+                            class="fa fa-toggle-off fa-fw ms-auto text-body text-opacity-50"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="sidebar" class="app-sidebar">
+
+        <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+
+            <div class="menu">
+                <div class="menu-header">Boshqaruv</div>
+                <div class="menu-item active">
+                    <a href="{% url 'home_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-laptop"></i></span>
+                        <span class="menu-text">Bosh sahifa</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="/admin/" target="_blank" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-qrcode"></i></span>
+                        <span class="menu-text">Qo'shimcha boshqaruv</span>
+                    </a>
+                </div>
+
+                <div class="menu-divider"></div>
+                <div class="menu-header">Buyurtmalar</div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_all_orders_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-chart-pie"></i></span>
+                        <span class="menu-text">Barchasi</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_1_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-chart-bar"></i></span>
+                        <span class="menu-text text-warning">Buyurtma berilganlar ({{ orders_1|length }})</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_2_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa-solid fa-check"></i></span>
+                        <span class="menu-text text-success">Yetkazib berilganlar({{ orders_2|length }})</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_3_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-question-circle"></i></span>
+                        <span class="menu-text text-danger">Bekor qilinganlar ({{ orders_3|length }})</span>
+                    </a>
+                </div>
+
+                <div class="p-3 px-4 mt-auto hide-on-minified">
+                    <a href="https://asliddinweb.uz" target="_blank"
+                       class="btn btn-secondary d-block w-100 fw-600 rounded-pill">
+                        <i class="fa fa-code-branch me-1 ms-n1 opacity-5"></i> Dasturchilar
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>
+
+    </div>
+
+    <div id="content" class="app-content">
+        <h1 class="page-header mb-3">
+            Salom! <small>{{ request.user.role }}!</small>
+        </h1>
+
+        <div class="row">
+
+            <div class="col-xl-6 mb-3">
+
+                <div class="card h-100 overflow-hidden">
+
+                    <div class="card-img-overlay d-block d-lg-none bg-blue rounded"></div>
+
+
+                    <div class="card-img-overlay d-none d-md-block bg-blue rounded mb-n1 mx-n1"
+                         style="background-image: url('{% static "assets/img/bg/wave-bg.png" %}'); background-position: right bottom; background-repeat: no-repeat; background-size: 100%;"></div>
+
+
+                    <div class="card-img-overlay d-none d-md-block bottom-0 top-auto">
+                        <div class="row">
+                            <div class="col-md-8 col-xl-6"></div>
+                            <div class="col-md-4 col-xl-6 mb-n2">
+                                <img src="{% static 'assets/img/page/dashboard.svg' %}" alt class="d-block ms-n3 mb-5"
+                                     style="max-height: 310px">
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card-body position-relative text-white text-opacity-70">
+
+                        <div class="row">
+
+                            <div class="col-md-8">
+
+                                <div class="d-flex">
+                                    <div class="me-auto">
+                                        <h5 class="text-white text-opacity-80 mb-3">Bugungi buyurtmalar soni</h5>
+                                        <h3 class="text-white mt-n1 mb-1">{{ today_orders|length }} ta</h3>
+
+                                    </div>
+                                </div>
+                                <hr class="bg-white bg-opacity-75 mt-3 mb-3">
+
+                                <div class="row">
+                                    <div class="col-6 col-lg-5">
+                                        <div class="mt-1">
+                                            <i class="fa fa-fw fa-retweet fs-28px text-black text-opacity-50"></i>
+
+                                        </div>
+                                        <div class="mt-1">
+                                            <div>Kutishdagilar</div>
+                                            <div class="fw-600 text-white">{{ today_orders_1|length }}ta</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-lg-5">
+                                        <div class="mt-1">
+                                            <i class="fa fa-fw fa-shopping-bag fs-28px text-black text-opacity-50"></i>
+                                        </div>
+                                        <div class="mt-1">
+                                            <div>Yetkazib berilganlar</div>
+                                            <div class="fw-600 text-white">{{ today_orders_2|length }}ta</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="bg-white bg-opacity-75 mt-3 mb-3">
+                                <div class="mt-3 mb-2">
+                                    <a href="{% url 'superadmin_all_orders_page' %}"
+                                       class="btn btn-yellow btn-rounded btn-sm ps-5 pe-5 pt-2 pb-2 fs-14px fw-600"><i
+                                            class="fa fa-wallet me-2 ms-n2"></i> Barcha buyurtmalarni ko'rish</a>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4 d-none d-md-block" style="min-height: 380px;"></div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="col-xl-6">
+
+                <div class="row">
+
+                    <div class="col-sm-6">
+
+                        <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-orange"
+                             style="min-height: 199px;">
+
+                            <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+                                <img src="{% static 'assets/img/icon/order.svg' %}" alt class="ms-auto d-block mb-n3"
+                                     style="max-height: 105px">
+                            </div>
+
+
+                            <div class="card-body position-relative">
+                                <h5 class="text-white text-opacity-80 mb-3 fs-16px">Kutishdagi buyurtmalar</h5>
+                                <h3 class="text-white mt-n1">{{ orders_1|length }} ta</h3>
+                                <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+                                    <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%"></div>
+                                </div>
+
+                                <div class="position-absolute bottom-0 pb-3">
+                                    <a href="{% url 'superadmin_orders_1_page' %}" class="btn btn-outline-light text-decoration-none">Ko'rish</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-teal"
+                             style="min-height: 199px;">
+
+                            <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+                                <img src="{% static 'assets/img/icon/visitor.svg' %}" alt class="ms-auto d-block mb-n3"
+                                     style="max-height: 105px">
+                            </div>
+
+
+                            <div class="card-body position-relative">
+                                <h5 class="text-white text-opacity-80 mb-3 fs-16px">Bajarilganlar</h5>
+                                <h3 class="text-white mt-n1">{{ orders_2|length }} ta</h3>
+                                <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+                                    <div class="progrss-bar progress-bar-striped bg-white" style="width: 50%"></div>
+                                </div>
+
+                                <div class="position-absolute bottom-0 pb-3">
+                                    <a href="{% url 'superadmin_orders_2_page' %}" class="btn btn-outline-light text-decoration-none">Ko'rish</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="col-sm-6">
+
+                        <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-pink"
+                             style="min-height: 199px;">
+
+                            <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+                                <img src="{% static 'assets/img/icon/email.svg' %}" alt class="ms-auto d-block mb-n3"
+                                     style="max-height: 105px">
+                            </div>
+
+
+                            <div class="card-body position-relative">
+                                <h5 class="text-white text-opacity-80 mb-3 fs-16px">Bekor qilinganlar</h5>
+                                <h3 class="text-white mt-n1">{{ orders_3|length }} ta</h3>
+                                <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+                                    <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%"></div>
+                                </div>
+
+                                <div class="position-absolute bottom-0 pb-3">
+                                    <a href="{% url 'superadmin_orders_3_page' %}" class="btn btn-outline-light text-decoration-none">Ko'rish</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="card mb-3 overflow-hidden fs-13px border-0 bg-gradient-custom-indigo"
+                             style="min-height: 199px;">
+
+                            <div class="card-img-overlay mb-n4 me-n4 d-flex" style="bottom: 0; top: auto;">
+                                <img src="{% static 'assets/img/icon/browser.svg' %}" alt class="ms-auto d-block mb-n3"
+                                     style="max-height: 105px">
+                            </div>
+
+
+                            <div class="card-body position-relative">
+                                <h5 class="text-white text-opacity-80 mb-3 fs-16px">Barcha buyurtmalar</h5>
+                                <h3 class="text-white mt-n1">{{ orders|length }} ta</h3>
+                                <div class="progress bg-black bg-opacity-50 mb-2" style="height: 6px">
+                                    <div class="progrss-bar progress-bar-striped bg-white" style="width: 80%"></div>
+                                </div>
+
+                                <div class="position-absolute bottom-0 pb-3">
+                                    <a href="{% url 'superadmin_all_orders_page' %}" class="btn btn-outline-light text-decoration-none">Ko'rish</a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">Oxirgi buyurtmalar:</h5>
+                                <div class="fs-13px">Buyurtmalarni tezkor boshqarish</div>
+                            </div>
+                            <a href="#" class="text-decoration-none btn btn-outline-theme">Barchasi</a>
+                        </div>
+
+                        <div class="table-responsive mb-n2">
+                            <table class="table table-borderless table-striped mb-0">
+                                <thead>
+                                <tr class="text-body">
+                                    <th class="ps-0">#ID</th>
+                                    <th>Maxsulotlar</th>
+                                    <th class="text-center">Xolati</th>
+                                    <th class="text-end pe-0">O'zgartirish</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in top_orders %}
+                                        <tr>
+                                            <td>{{ order.id }}</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="ms-3 flex-grow-1">
+                                                        <div class="fw-600 text-body">
+                                                            {% for m in order.maxsulotlar.all %}
+                                                                {{ m }},
+                                                            {% endfor %}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="text-center">
+                                                {% if order.status == '1' %}
+                                                    <span class="badge bg-warning text-teal-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                                                    d-inline-flex align-items-center">
+                                                        <i class="fa fa-circle text-warning fs-9px fa-fw me-5px"></i> Buyurtma berildi
+                                                    </span>
+                                                {% elif order.status == '2' %}
+                                                    <span class="badge bg-teal text-teal-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                                                    d-inline-flex align-items-center">
+                                                        <i class="fa fa-circle text-teal fs-9px fa-fw me-5px"></i> Yetkazib berildi
+                                                    </span>
+                                                {% elif order.status == '3' %}
+                                                    <span class="badge bg-danger text-danger-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                                                    d-inline-flex align-items-center">
+                                                        <i class="fa fa-circle text-danger fs-9px fa-fw me-5px"></i> Bekor qilindi
+                                                    </span>
+                                                {% endif %}
+                                            </td>
+                                            <td class="text-end">
+                                                <a href="{% url 'superadmin_edit_order_page' pk=order.id %}" class="btn btn-theme">
+                                                    <i class="fa-solid fa-pen-to-square fs-20px"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-xl-6 mb-3">
+
+                <div class="card h-100">
+
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="flex-grow-1">
+                                <h5 class="mb-1">Xodimlar ro'yhati:</h5>
+                                <div class="fs-13px">Tizimda mavjud xodimlar</div>
+                            </div>
+                            <a href="/admin/user_app/user/" class="text-decoration-none btn btn-outline-theme">Barchasi</a>
+                        </div>
+
+                        {% for user in users %}
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="d-flex align-items-center justify-content-center me-3 w-50px h-50px bg-white p-3px rounded">
+                                    {% if user.image %}
+                                        <img src="{{ user.image.url }}" alt="" class="ms-100 mh-100">
+                                    {% endif %}
+                                </div>
+                                <div class="flex-grow-1">
+                                    <div>
+                                        {% if user.is_superuser %}
+                                            <div class="text-primary fs-10px fw-600">SUPERUSER</div>
+                                        {% endif %}
+                                        <div class="text-body fw-600">{{ user.role }}</div>
+                                        <div class="fs-13px">@{{ user.username }}</div>
+                                    </div>
+                                </div>
+                                <div class="ps-3 text-center">
+                                    <div class="fs-13px">
+                                        <a href="/admin/user_app/user/" class="text-decoration-none btn btn-outline-theme" target="_blank">Ko'rish</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+
+
+    <div class="theme-panel">
+        <a href="javascript:;" data-click="theme-panel-expand" class="theme-collapse-btn"><i class="fa fa-cog"></i></a>
+        <div class="theme-panel-content">
+            <ul class="theme-list clearfix">
+                <li><a href="javascript:;" class="bg-red" data-theme="theme-red" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-pink" data-theme="theme-pink" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-orange" data-theme="theme-orange" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-yellow" data-theme="theme-yellow" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-lime" data-theme="theme-lime" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-green" data-theme="theme-green" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-teal" data-theme="theme-teal" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Teal"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-cyan" data-theme="theme-cyan" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Aqua"
+                       data-original-title title>&nbsp;</a></li>
+                <li class="active"><a href="javascript:;" class="bg-blue" data-theme data-click="theme-selector"
+                                      data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body"
+                                      data-bs-title="Default" data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-purple" data-theme="theme-purple" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-indigo" data-theme="theme-indigo" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-gray-600" data-theme="theme-gray-600" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Gray"
+                       data-original-title title>&nbsp;</a></li>
+            </ul>
+            <hr class="mb-0">
+            <div class="row mt-10px pt-3px">
+                <div class="col-9 control-label text-body-emphasis fw-bold">
+                    <div>Dark Mode <span class="badge bg-theme text-theme-color ms-1 position-relative py-4px px-6px"
+                                         style="top: -1px">NEW</span></div>
+                    <div class="lh-sm fs-13px fw-semibold">
+                        <small class="text-body-emphasis opacity-50">
+                            Adjust the appearance to reduce glare and give your eyes a break.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-3 d-flex">
+                    <div class="form-check form-switch ms-auto mb-0 mt-2px">
+                        <input type="checkbox" class="form-check-input" name="app-theme-dark-mode" id="appThemeDarkMode"
+                               value="1">
+                        <label class="form-check-label" for="appThemeDarkMode">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/vendor.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/app.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/plugins/apexcharts/dist/apexcharts.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/demo/dashboard.demo.js' %}" type="text/javascript"></script>
+
+</body>
+</html>

@@ -1,0 +1,458 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <title>Superadmin | Buyurtmalar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content>
+
+    <link href="{% static 'assets/css/vendor.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet">
+
+    <style>
+        /* General Table Styling */
+#myTable {
+    border-collapse: separate;
+    border-spacing: 0 15px;
+    width: 100%;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+#myTable th {
+    background-color:#007BFF;
+    color: #fff;
+    font-weight: bold;
+    text-align: left;
+    padding: 12px;
+    border-bottom: 2px solid #dee2e6;
+}
+
+#myTable td {
+    padding: 12px;
+    border-top: 1px solid #dee2e6;
+    vertical-align: middle;
+}
+
+#myTable tbody tr {
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+#myTable tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+/* Badge Styling */
+.badge {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+.badge.bg-warning {
+    color: #856404;
+    background-color: #fff3cd;
+}
+
+.badge.bg-teal {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.badge.bg-danger {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+/* Buttons */
+.btn-theme {
+    background-color: #6c757d;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-theme:hover {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+/* Pagination Styling */
+.pagination {
+    margin: 0;
+    padding: 0;
+}
+
+.pagination .page-item {
+    margin: 0 5px;
+}
+
+.pagination .page-link {
+    color: #007BFF;
+    border: 1px solid #dee2e6;
+    border-radius: 50%;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination .page-link:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.pagination .active .page-link {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    #myTable th, #myTable td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn-theme {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+
+    .badge {
+        font-size: 12px;
+    }
+}
+
+    </style>
+
+<!--    Dataset-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+</head>
+<body>
+
+<div id="app" class="app">
+
+    <div id="header" class="app-header">
+
+        <div class="mobile-toggler">
+            <button type="button" class="menu-toggler" data-toggle="sidebar-mobile">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
+
+        <div class="brand">
+            <div class="desktop-toggler">
+                <button type="button" class="menu-toggler" data-toggle="sidebar-minify">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+            <a href="{% url 'home_page' %}" class="brand-logo" style="padding: 0;">
+                <img src="{{ site_settings.logo.url }}" class="invert-dark" alt="Logo">
+            </a>
+        </div>
+
+
+        <div class="menu">
+            <form class="menu-search" name="header_search_form">
+{#                <div class="menu-search-icon"><i class="fa fa-search"></i></div>#}
+{#                <div class="menu-search-input">#}
+{#                    <input type="text" class="form-control" placeholder="Qidiruv...">#}
+{#                </div>#}
+            </form>
+            <div class="menu-item dropdown">
+                <a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
+                    <div class="menu-img online">
+                        {% if request.user.image %}
+                        <img src="{{ request.user.image.url }}" alt class="ms-100 mh-100 rounded-circle">
+                        {% endif %}
+                    </div>
+                    <div class="menu-text"><span>@{{ request.user.username }}</span>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end me-lg-3">
+                    <a class="dropdown-item d-flex align-items-center" href="/admin/user_app/user/">Profil <i
+                            class="fa fa-user-circle fa-fw ms-auto text-body text-opacity-50"></i></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item d-flex align-items-center" href="{% url 'logout_page' %}">Chiqish <i
+                            class="fa fa-toggle-off fa-fw ms-auto text-body text-opacity-50"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="sidebar" class="app-sidebar">
+
+        <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+
+            <div class="menu">
+                <div class="menu-header" >Boshqaruv</div>
+                <div class="menu-item active">
+                    <a href="{% url 'home_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-laptop"></i></span>
+                        <span class="menu-text" >Bosh sahifa</span>
+                    </a>
+                </div>
+
+                <div class="menu-divider"></div>
+                <div class="menu-header" >Buyurtmalar</div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_all_orders_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-chart-pie"></i></span>
+                        <span class="menu-text"><span >Barchasi</span></span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_1_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-chart-bar"></i></span>
+                        <span class="menu-text text-warning" >Buyurtma berilganlar ({{ orders_1 }})</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_2_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa-solid fa-check"></i></span>
+                        <span class="menu-text text-success" >Yetkazib berilganlar ({{ orders_2 }})</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_3_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-question-circle"></i></span>
+                        <span class="menu-text text-danger" >Bekor qilinganlar ({{ orders_3 }})</span>
+                    </a>
+                </div>
+
+                <div class="p-3 px-4 mt-auto hide-on-minified">
+                    <a href="https://asliddinweb.uz" target="_blank"
+                       class="btn btn-secondary d-block w-100 fw-600 rounded-pill">
+                        <i class="fa fa-code-branch me-1 ms-n1 opacity-5"></i> Dasturchilar
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>
+
+    </div>
+
+    <div id="content" class="app-content">
+        <h1 class="page-header mb-3">
+            Salom xush kelibsiz - <span style="color: #0a53be; font-size: 30px; font-weight: bold; text-transform: capitalize;font-family: 'Jost', sans-serif;">{{ request.user.username }}</span>
+        </h1>
+        <div class="row bg-white p-3">
+            <div class="col-12">
+                <div class="table-responsive mb-n2">
+
+
+                    <table id="myTable" class="display table table-borderless mb-0">
+                <thead>
+        <tr class="text-body">
+            <th >#ID</th>
+            <th>MAHSULOTLAR</th>
+            <th>VAQTI</th>
+            <th>BUYURTMACHI</th>
+            <th class="text-center">XOLATI</th>
+            <th class="text-end">O'ZGARTIRISH</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="ms-3 flex-grow-1">
+                            <div class="fw-600 text-body">
+                                {% for m in order.maxsulotlar.all %}
+                                    {{ m }},
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    {% if order.status == '2' %}
+                        {{ order.updated_at }}
+                    {% else %}
+                        {{ order.created_at }}
+                    {% endif %}
+                </td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="ms-3 flex-grow-1">
+                            <div class="fw-600 text-success">
+                                {{ order.foydalanuvchi.role }}
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-center">
+                    {% if order.status == '1' %}
+                        <span class="badge bg-warning text-teal-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                        d-inline-flex align-items-center">
+                            <i class="fa fa-circle text-warning fs-9px fa-fw me-5px"></i> Buyurtma berildi
+                        </span>
+                    {% elif order.status == '2' %}
+                        <span class="badge bg-teal text-teal-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                        d-inline-flex align-items-center">
+                            <i class="fa fa-circle text-teal fs-9px fa-fw me-5px"></i> Yetkazib berildi
+                        </span>
+                    {% elif order.status == '3' %}
+                        <span class="badge bg-danger text-danger-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                        d-inline-flex align-items-center">
+                            <i class="fa fa-circle text-danger fs-9px fa-fw me-5px"></i> Bekor qilindi
+                        </span>
+                    {% endif %}
+                </td>
+                <td class="text-end">
+                    <a href="{% url 'superadmin_edit_order_page' pk=order.id %}" class="btn btn-lg btn-theme">
+                        <i class="fa-solid fa-pen-to-square fs-20px"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<!-- Pagination Controls -->
+<div class="d-flex justify-content-between align-items-center mt-3">
+    <div class="text-muted">
+Buyurtmalarni {{ orders.start_index }} dan {{ orders.end_index }} gacha, jami {{ orders.paginator.count }} ta buyurtma    </div>
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            {% if orders.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1" aria-label="First">
+                        <span aria-hidden="true">&laquo;&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ orders.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+            {% for num in orders.paginator.page_range %}
+                {% if orders.number == num %}
+                    <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                {% elif num > orders.number|add:'-2' and num < orders.number|add:'2' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if orders.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ orders.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ orders.paginator.num_pages }}" aria-label="Last">
+                        <span aria-hidden="true">&raquo;&raquo;</span>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+</div>
+
+                        </div>
+            </div>
+        </div>
+
+    </div>
+
+    <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+
+
+    <div class="theme-panel">
+        <a href="javascript:;" data-click="theme-panel-expand" class="theme-collapse-btn"><i class="fa fa-cog"></i></a>
+        <div class="theme-panel-content">
+            <ul class="theme-list clearfix">
+                <li><a href="javascript:;" class="bg-red" data-theme="theme-red" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-pink" data-theme="theme-pink" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-orange" data-theme="theme-orange" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-yellow" data-theme="theme-yellow" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-lime" data-theme="theme-lime" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-green" data-theme="theme-green" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-teal" data-theme="theme-teal" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Teal"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-cyan" data-theme="theme-cyan" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Aqua"
+                       data-original-title title>&nbsp;</a></li>
+                <li class="active"><a href="javascript:;" class="bg-blue" data-theme data-click="theme-selector"
+                                      data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body"
+                                      data-bs-title="Default" data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-purple" data-theme="theme-purple" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-indigo" data-theme="theme-indigo" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-gray-600" data-theme="theme-gray-600" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Gray"
+                       data-original-title title>&nbsp;</a></li>
+            </ul>
+            <hr class="mb-0">
+            <div class="row mt-10px pt-3px">
+                <div class="col-9 control-label text-body-emphasis fw-bold">
+                    <div>Dark Mode <span class="badge bg-theme text-theme-color ms-1 position-relative py-4px px-6px"
+                                         style="top: -1px">NEW</span></div>
+                    <div class="lh-sm fs-13px fw-semibold">
+                        <small class="text-body-emphasis opacity-50">
+                            Adjust the appearance to reduce glare and give your eyes a break.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-3 d-flex">
+                    <div class="form-check form-switch ms-auto mb-0 mt-2px">
+                        <input type="checkbox" class="form-check-input" name="app-theme-dark-mode" id="appThemeDarkMode"
+                               value="1">
+                        <label class="form-check-label" for="appThemeDarkMode">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/vendor.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/app.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/plugins/apexcharts/dist/apexcharts.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/demo/dashboard.demo.js' %}" type="text/javascript"></script>
+
+<!--Dataset-->
+{#<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>#}
+{#<script>#}
+{#    let table = new DataTable('#myTable', {#}
+{#        order: [0, 'desc'],#}
+{#        buttons: [#}
+{#            'csv'#}
+{#        ]#}
+{#    });#}
+{#</script>#}
+</body>
+</html>

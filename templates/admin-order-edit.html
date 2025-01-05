@@ -1,0 +1,381 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="utf-8">
+    <title>Superadmin | Buyurtmalar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content>
+    <meta name="author" content>
+
+    <link href="{% static 'assets/css/vendor.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/css/app.min.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<div class="modal fade" id="modalLg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">PAROLINGIZNI KIRITING</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+          <form method="post">
+              {% csrf_token %}
+              <input name="parol" class="form-control" required type="number" placeholder="Parol. . .">
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Orqaga</button>
+                <button type="submit" class="btn btn-outline-success">Yuborish</button>
+              </div>
+          </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div id="app" class="app">
+
+    <div id="header" class="app-header">
+
+        <div class="mobile-toggler">
+            <button type="button" class="menu-toggler" data-toggle="sidebar-mobile">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+
+
+        <div class="brand">
+            <div class="desktop-toggler">
+                <button type="button" class="menu-toggler" data-toggle="sidebar-minify">
+                    <span class="bar"></span>
+                    <span class="bar"></span>
+                </button>
+            </div>
+            <a href="{% url 'home_page' %}" class="brand-logo" style="padding: 0;">
+                <img src="{{ site_settings.logo.url }}" class="invert-dark" alt="Logo">
+            </a>
+        </div>
+
+
+        <div class="menu">
+            <form class="menu-search" name="header_search_form">
+{#                <div class="menu-search-icon"><i class="fa fa-search"></i></div>#}
+{#                <div class="menu-search-input">#}
+{#                    <input type="text" class="form-control" placeholder="Qidiruv...">#}
+{#                </div>#}
+            </form>
+            <div class="menu-item dropdown">
+                <a href="#" data-bs-toggle="dropdown" data-display="static" class="menu-link">
+                    <div class="menu-img online">
+                        {% if request.user.image %}
+                        <img src="{{ request.user.image.url }}" alt class="ms-100 mh-100 rounded-circle">
+                        {% endif %}
+                    </div>
+                    <div class="menu-text"><span>@{{ request.user.username }}</span>
+                    </div>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end me-lg-3">
+                    <a class="dropdown-item d-flex align-items-center" href="/admin/user_app/user/">Profil <i
+                            class="fa fa-user-circle fa-fw ms-auto text-body text-opacity-50"></i></a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item d-flex align-items-center" href="{% url 'logout_page' %}">Chiqish <i
+                            class="fa fa-toggle-off fa-fw ms-auto text-body text-opacity-50"></i></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="sidebar" class="app-sidebar">
+
+        <div class="app-sidebar-content" data-scrollbar="true" data-height="100%">
+
+            <div class="menu">
+                <div class="menu-header">Boshqaruv</div>
+                <div class="menu-item active">
+                    <a href="{% url 'home_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-laptop"></i></span>
+                        <span class="menu-text">Bosh sahifa</span>
+                    </a>
+                </div>
+
+                <div class="menu-divider"></div>
+                <div class="menu-header" >Buyurtmalar</div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_all_orders_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-chart-pie"></i></span>
+                        <span class="menu-text" >Barchasi</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_1_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-chart-bar"></i></span>
+                        <span class="menu-text text-warning" >Buyurtma berilganlar ({{ orders_1 }})</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_2_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa-solid fa-check"></i></span>
+                        <span class="menu-text text-success" >Yetkazib berilganlar ({{ orders_2 }})</span>
+                    </a>
+                </div>
+                <div class="menu-item">
+                    <a href="{% url 'superadmin_orders_3_page' %}" class="menu-link">
+                        <span class="menu-icon"><i class="fa fa-question-circle"></i></span>
+                        <span class="menu-text text-danger" >Bekor qilinganlar ({{ orders_3 }})</span>
+                    </a>
+                </div>
+
+                <div class="p-3 px-4 mt-auto hide-on-minified">
+                    <a href="https://asliddinweb.uz" target="_blank"
+                       class="btn btn-secondary d-block w-100 fw-600 rounded-pill">
+                        <i class="fa fa-code-branch me-1 ms-n1 opacity-5"></i> Dasturchilar
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+        <button class="app-sidebar-mobile-backdrop" data-dismiss="sidebar-mobile"></button>
+
+    </div>
+
+    <div id="content" class="app-content">
+        <div class="d-flex align-items-center mb-3">
+            <div>
+                <h1 class="page-header mb-0">Buyurtma tafsilotlari:</h1>
+            </div>
+        </div>
+        <div class="row gx-4">
+            <div class="col-xl-8">
+                <div class="card mb-4">
+                    <div class="card-header d-flex align-items-center bg-none fw-semibold">
+                        Maxsulotlar ({{ order.maxsulotlar.all|length }})
+                        <a href="{% url 'home_page' %}"
+                           class="ms-auto text-decoration-none text-body text-opacity-50 fs-13px d-flex align-items-center"><i
+                                class="fa fa-truck me-2 my-n1"></i> Qarshi Vagon Depos</a>
+                    </div>
+                    <div class="card-body">
+                        {% for item in order.maxsulotlar.all %}
+                            <div class="row">
+                            <div class="col-lg-8 d-flex align-items-center">
+                                <div class="h-65px w-65px d-flex align-items-center justify-content-center position-relative bg-body rounded p-2">
+                                    <img src="{{ item.maxsulot.rasm.url }}" alt="" class="mw-100 mh-100">
+                                    <span class="w-20px h-20px p-0 d-flex align-items-center justify-content-center badge bg-theme text-theme-color position-absolute end-0 top-0 fw-bold fs-12px rounded-pill mt-n2 me-n2">{{ item.soni }}</span>
+                                </div>
+                                <div class="ps-3 flex-1">
+                                    <div class=""><a class="text-decoration-none text-body fw-bold">{{ item.maxsulot.nomi }}</a>
+                                    </div>
+                                    <div class="text-body text-opacity-50 small fw-bold">
+                                        {{ item.maxsulot.qoshimcha }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 m-0 ps-lg-3 fw-bold">
+                                {{ item.maxsulot.razmer }}
+                            </div>
+                            <div class="col-lg-2 m-0 text-end fw-bold">
+                                {{ item.soni }}ta
+                            </div>
+                        </div>
+                            <hr class="opacity-1 my-4">
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer bg-none d-flex p-3 justify-content-around align-items-center">
+                        <div>
+                            <h5 class="">Buyurtmani o'zgartirish:</h5>
+                        </div>
+                        <div>
+                            {% if order.status == '1' %}
+                                <button type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#modalLg"><i class="fa-regular fa-circle-check"></i> Yuborildi</button>
+                            {% elif order.status == '2' %}
+                                <span class="text-success fw-bold fs-16px">Buyurtma yuborilgan!</span>
+                            {% else %}
+                                <span class="text-danger fw-bold fs-16px">Buyurtma bekor qilindi. Sabab:</span> <span class="text-danger fs-16px">{{ order.bekor_qilish_sababi }}</span>
+                            {% endif %}
+
+<!--                            <a href="#" class="btn btn-lg btn-warning fw-semibold fs-13px ms-2"><i class="fa-regular fa-circle-xmark"></i> Buyurtma berildi</a>-->
+                        </div>
+                    </div>
+                </div>
+                {% if order.status == '1' %}
+                    <div class="card">
+                    <div class="card-header d-flex align-items-center fw-semibold bg-danger text-white">
+                        Buyurtmani bekor qilish
+                        <a class="ms-auto text-decoration-none fs-13px text-opacity-80 text-white"><i
+                                class="fab fa-paypal me-1 fa-lg"></i> Qarshi vagon Depos</a>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="form-group mb-3">
+                            <label class="form-label text-danger fw-bold" for="sababFor">Sabab</label>
+                            <textarea required name="sabab" class="form-control" id="sababFor" rows="3" placeholder="Bekor qilish sababini kiriting"></textarea>
+                            </div>
+                            <div class="card-footer bg-none d-flex p-3">
+                                <button type="submit" class="btn btn-danger ms-auto">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Bekor qilish</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+                {% endif %}
+
+            </div>
+            <div class="col-xl-4">
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center bg-none fw-semibold">
+                    Qo'shimcha xabar
+                </div>
+                <div class="card-body">
+                    {% if order.qoshimcha_matn %}
+                            {{ order.qoshimcha_matn }}
+                        {% else %}
+                            Qo'shimcha xabar yo'q!
+                        {% endif %}
+                    {% if order.qoshimcha_rasm %}
+                        <div class="mt-3">
+                            <a href="{{ order.qoshimcha_rasm.url }}" target="_blank">
+                                <img class="img-fluid" src="{{ order.qoshimcha_rasm.url }}" width="240px" alt="">
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center bg-none fw-semibold">
+                    Buyurtma berdi
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <a class="d-block">
+                          {% if order.foydalanuvchi.image %}
+                           <img src="{{ order.foydalanuvchi.image.url }}" alt="" width="45"
+                                                         class="rounded-pill">
+                          {% endif %}
+                        </a>
+                        <div class="flex-fill ps-2">
+                            <a class="d-block text-decoration-none text-body fw-semibold">{{ order.foydalanuvchi.role }}</a>
+                            <span class="fs-13px text-body text-opacity-50">{{ order.foydalanuvchi.username }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header d-flex align-items-center bg-none fw-semibold">
+                    Buyurtma xolati
+                </div>
+                <div class="card-body">
+                    {% if order.status == '1' %}
+                        <span class="badge bg-warning text-teal-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                        d-inline-flex align-items-center">
+                            <i class="fa fa-circle text-warning fs-9px fa-fw me-5px"></i> Buyurtma berilgan
+                        </span>
+                    {% elif order.status == '2' %}
+                        <span class="badge bg-teal text-teal-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                        d-inline-flex align-items-center">
+                            <i class="fa fa-circle text-teal fs-9px fa-fw me-5px"></i> Yetkazib berildi
+                        </span>
+                    {% elif order.status == '3' %}
+                        <span class="badge bg-danger text-danger-800 bg-opacity-25 px-2 pt-5px pb-5px rounded fs-12px
+                        d-inline-flex align-items-center">
+                            <i class="fa fa-circle text-danger fs-9px fa-fw me-5px"></i> Bekor qilindi
+                        </span>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <a href="#" data-click="scroll-top" class="btn-scroll-top fade"><i class="fa fa-arrow-up"></i></a>
+
+
+    <div class="theme-panel">
+        <a href="javascript:;" data-click="theme-panel-expand" class="theme-collapse-btn"><i class="fa fa-cog"></i></a>
+        <div class="theme-panel-content">
+            <ul class="theme-list clearfix">
+                <li><a href="javascript:;" class="bg-red" data-theme="theme-red" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Red"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-pink" data-theme="theme-pink" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Pink"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-orange" data-theme="theme-orange" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Orange"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-yellow" data-theme="theme-yellow" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Yellow"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-lime" data-theme="theme-lime" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Lime"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-green" data-theme="theme-green" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Green"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-teal" data-theme="theme-teal" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Teal"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-cyan" data-theme="theme-cyan" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Aqua"
+                       data-original-title title>&nbsp;</a></li>
+                <li class="active"><a href="javascript:;" class="bg-blue" data-theme data-click="theme-selector"
+                                      data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body"
+                                      data-bs-title="Default" data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-purple" data-theme="theme-purple" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Purple"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-indigo" data-theme="theme-indigo" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Indigo"
+                       data-original-title title>&nbsp;</a></li>
+                <li><a href="javascript:;" class="bg-gray-600" data-theme="theme-gray-600" data-click="theme-selector"
+                       data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-container="body" data-bs-title="Gray"
+                       data-original-title title>&nbsp;</a></li>
+            </ul>
+            <hr class="mb-0">
+            <div class="row mt-10px pt-3px">
+                <div class="col-9 control-label text-body-emphasis fw-bold">
+                    <div>Dark Mode <span class="badge bg-theme text-theme-color ms-1 position-relative py-4px px-6px"
+                                         style="top: -1px">NEW</span></div>
+                    <div class="lh-sm fs-13px fw-semibold">
+                        <small class="text-body-emphasis opacity-50">
+                            Adjust the appearance to reduce glare and give your eyes a break.
+                        </small>
+                    </div>
+                </div>
+                <div class="col-3 d-flex">
+                    <div class="form-check form-switch ms-auto mb-0 mt-2px">
+                        <input type="checkbox" class="form-check-input" name="app-theme-dark-mode" id="appThemeDarkMode"
+                               value="1">
+                        <label class="form-check-label" for="appThemeDarkMode">&nbsp;</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Scripts -->
+<script src="{% static 'assets/js/vendor.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/app.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/plugins/apexcharts/dist/apexcharts.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/js/demo/dashboard.demo.js' %}" type="text/javascript"></script>
+
+<script>
+    let table = new DataTable('#myTable', {
+        order: [1, 'asc'],
+        buttons: [
+            'csv'
+        ]
+    });
+</script>
+</body>
+</html>
