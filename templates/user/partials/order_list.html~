@@ -17,8 +17,10 @@
                     <a href="#">
                         <div class="symbol-label">
 
-                            <img src="{{ order.foydalanuvchi.image.url }}"
+                            {% if order.foydalanuvchi.image  %}
+                            	    <img src="{{ order.foydalanuvchi.image.url }}"
                                  alt="{{ order.foydalanuvchi.username }}" class="w-100"/>
+                            {% endif %}
 
                         </div>
                     </a>
