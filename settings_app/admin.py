@@ -1,5 +1,5 @@
 from django.contrib import admin
 
-from .models import SiteSettings, AdminParol
-admin.site.register(SiteSettings)
+from .models import AdminParol
+
 admin.site.register(AdminParol)

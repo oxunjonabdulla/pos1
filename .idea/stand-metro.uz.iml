@@ -17,7 +17,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.12 (poster)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 (pos)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery.dataTables" level="application" />
     <orderEntry type="library" name="jquery.dataTables" level="application" />

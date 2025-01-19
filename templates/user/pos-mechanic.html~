@@ -73,6 +73,13 @@
             display: inline;
         }
 
+        #kt_aside_logo {
+            position: relative; /* Ensure it stays within the flow */
+            z-index: 2; /* Bring it above scrollable areas if needed */
+            height: 80px; /* Set a fixed height */
+            padding: 0 10px; /* Optional: Adjust padding */
+            margin-bottom: 10px; /* Space below the logo */
+        }
     </style>
 </head>
 <!--end::Head-->
@@ -110,731 +117,727 @@
     <!--begin::Page-->
     <div class="page d-flex flex-row flex-column-fluid">
         <!--begin::Aside-->
+        <!--begin::Aside-->
         <div
                 id="kt_aside"
-                class="aside "
+                class="aside"
                 data-kt-drawer="true"
                 data-kt-drawer-name="aside"
                 data-kt-drawer-activate="{default: true, lg: false}"
                 data-kt-drawer-overlay="true"
                 data-kt-drawer-width="auto"
                 data-kt-drawer-direction="start"
-                data-kt-drawer-toggle="#kt_aside_toggle">
+                data-kt-drawer-toggle="#kt_aside_toggle"
+                style="padding-top: 15px; padding-bottom: 10px;"> <!-- Reduce top and bottom padding -->
 
             <!--begin::Logo-->
-            <div class="aside-logo flex-column-auto pt-10 pt-lg-20" id="kt_aside_logo">
-                <a href="#">
-                    <img style="width: 240px; height: auto;" alt="Logo" src="{% static 'assets2/logo-vagon (1).png' %}"
-                         class="h-auto"/>
+            <!--begin::Logo-->
+            <div class="aside-logo flex-column-auto" id="kt_aside_logo">
+                <a href="{% url "mechanic_page" %}">
+                    <img style="width: 220px; height: auto;" alt="Logo"
+                         src="{% static 'assets2/logo-vagon (1).png' %}"/>
                 </a>
-
             </div>
             <!--end::Logo-->
-
-            <!-- Include Font Awesome CSS -->
-
-            <!-- Include Font Awesome CSS -->
+            <!--end::Logo-->
 
             <!--begin::Nav-->
-            <div class="aside-menu flex-column-fluid pt-0 pb-7 py-lg-10" id="kt_aside_menu">
+            <div class="aside-menu flex-column-fluid py-0" id="kt_aside_menu"> <!-- Remove vertical padding -->
                 <!--begin::Aside menu-->
                 <div
-                        id="kt_aside_menu_wrapper" class="w-100 hover-scroll-y scroll-lg-ms d-flex"
+                        id="kt_aside_menu_wrapper"
+                        class="w-100 hover-scroll-y scroll-lg-ms d-flex"
                         data-kt-scroll="true"
                         data-kt-scroll-activate="{default: false, lg: true}"
                         data-kt-scroll-height="auto"
                         data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
                         data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu"
-                        data-kt-scroll-offset="0">
+                        data-kt-scroll-offset="0"
+                        style="padding-top: 10px;"> <!-- Reduce scroll wrapper padding -->
+
                     <div
                             id="kt_aside_menu"
                             class="menu menu-column menu-title-gray-600 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-icon-gray-500 menu-arrow-gray-500 fw-semibold fs-6 my-auto"
-                            data-kt-menu="true">
+                            data-kt-menu="true"
+                            style="gap: 10px;"> <!-- Add gap between sections -->
 
-                        <div id="departments-container">
+                        <div id="departments-container" class="d-flex flex-wrap justify-content-center"
+                             style="gap: 15px;">
+
                             <!-- Mechanic Section -->
-                            <a href="{% url 'mechanic_page' %}" class="menu-item-link">
+                            <a href="{% url 'mechanic_page' %}" class="menu-item-link section-link"
+                               data-section="Mechanic">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 120px; width: 120px;">
+                                     style="height: 110px; width: 110px;">
                                     <div class="menu-link menu-center">
                                     <span class="menu-icon me-0">
-                                        <i class="fas fa-tools" style="font-size: 4rem; color: #007bff;"
-                                           aria-hidden="true"></i>
+                                        <i class="fas fa-tools" style="font-size: 3.5rem; color: #007bff;"></i>
                                     </span>
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 1rem; font-weight: 500;">
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
                                         Mexanika</p>
                                 </div>
                             </a>
 
                             <!-- Warehouse Section -->
-                            <a href="{% url 'warehouse_page' %}" class="menu-item-link">
+                            <a href="{% url 'warehouse_page' %}" class="menu-item-link section-link"
+                               data-section="Warehouse">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 120px; width: 120px;">
+                                     style="height: 110px; width: 110px;">
                                     <div class="menu-link menu-center">
                                     <span class="menu-icon me-0">
-                                        <i class="fas fa-warehouse" style="font-size: 4rem; color: #28a745;"
-                                           aria-hidden="true"></i>
+                                        <i class="fas fa-warehouse" style="font-size: 3.5rem; color: #28a745;"></i>
                                     </span>
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 1rem; font-weight: 500;">
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
                                         Omborxona</p>
-
                                 </div>
                             </a>
-                            <a href="#" class="menu-item-link">
+
+
+                            <!-- Order Page Section -->
+                            <a href="{% url 'orders_page' %}" class="menu-item-link"
+                               style="text-decoration: none; color: inherit;">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 120px; width: 120px;">
+                                     style="height: 110px; width: 110px;">
                                     <div class="menu-link menu-center">
                                     <span class="menu-icon me-0">
-                                        <i class="fas fa-sign-out-alt" style="font-size: 4rem; color: #dc3545;"
-                                           aria-hidden="true"></i>
+                                        <!-- Changed icon to 'fa-shopping-cart' for the order page -->
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #ffc107;"></i>
                                     </span>
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 1rem; font-weight: 500;">
-                                        Chiqish</p>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        Buyurtmalar</p> <!-- Changed text to "Buyurtmalar" (Orders) -->
                                 </div>
                             </a>
 
+                            <!-- Logout Section -->
+                            <a href="/auth/logout/" class="menu-item-link" onclick="logoutConfirm(event)">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+                                <span class="menu-icon me-0">
+                                    <i class="fas fa-sign-out-alt" style="font-size: 3.5rem; color: #dc3545;"></i>
+                                </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        Chiqish
+                                    </p>
+                                </div>
+                            </a>
                         </div>
 
-
                     </div>
                 </div>
-                <!--end::Aside menu-->
             </div>
-            <!--end::Nav-->
-
-
+            <!--end::Aside menu-->
         </div>
         <!--end::Aside-->
+        <!--end::Nav-->
+    </div>
+    <!--end::Aside-->
 
 
-        <!--begin::Wrapper-->
-        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-            <!--begin::Header tablet and mobile-->
-            <div class="header-mobile py-3">
-                <!--begin::Container-->
-                <div class="container d-flex flex-stack">
-                    <!--begin::Mobile logo-->
-                    <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
-                        <a href="../index.html">
-                            <img style="width: 100px; height: auto;" alt="Logo"
-                                 src="{% static 'assets2/logo-vagon (1).png' %}" class="h-auto"/>
-                        </a>
+    <!--begin::Wrapper-->
+    <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+        <!--begin::Header tablet and mobile-->
+        <div class="header-mobile py-3">
+            <!--begin::Container-->
+            <div class="container d-flex flex-stack">
+                <!--begin::Mobile logo-->
+                <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                    <a href="{% url "mechanic_page" %}">
+                        <img style="width: 100px; height: auto;" alt="Logo"
+                             src="{% static 'assets2/logo-vagon (1).png' %}" class="h-auto"/>
+                    </a>
 
-                    </div>
-                    <!--end::Mobile logo-->
-
-                    <!--begin::Aside toggle-->
-                    <button class="btn btn-icon btn-active-color-primary me-n4" id="kt_aside_toggle">
-                        <i class="fas fa-bars fs-2x"></i>
-                    </button>
-
-                    <!--end::Aside toggle-->
                 </div>
-                <!--end::Container-->
+                <!--end::Mobile logo-->
+
+                <!--begin::Aside toggle-->
+                <button class="btn btn-icon btn-active-color-primary me-n4" id="kt_aside_toggle">
+                    <i class="fas fa-bars fs-2x"></i>
+                </button>
+
+                <!--end::Aside toggle-->
             </div>
-            <!--end::Header tablet and mobile-->
+            <!--end::Container-->
+        </div>
+        <!--end::Header tablet and mobile-->
 
-            <!--begin::Header-->
-            <div id="kt_header" class="header  py-6 py-lg-0" data-kt-sticky="true"
-                 data-kt-sticky-name="header"
-                 data-kt-sticky-offset="{lg: '300px'}"
+        <!--begin::Header-->
+        <div id="kt_header" class="header  py-6 py-lg-0" data-kt-sticky="true"
+             data-kt-sticky-name="header"
+             data-kt-sticky-offset="{lg: '300px'}"
 
-            >
-                <!--begin::Container-->
-                <div class="header-container  container-xxl ">
+        >
+            <!--begin::Container-->
+            <div class="header-container  container-xxl ">
 
-                    <!--begin::Page title-->
-                    <div
-                            class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
+                <!--begin::Page title-->
+                <div
+                        class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
 
-                        <!--begin::Heading-->
-                        <h1 class="d-flex flex-column text-gray-900 fw-bold my-1">
-                            <span class="text-white fs-1">Railway Poster</span>
+                    <!--begin::Heading-->
+                    <h1 class="d-flex flex-column text-gray-900 fw-bold my-1">
+                        <span class="text-white fs-1">Railway Poster</span>
 
-                        </h1>
-                        <!--end::Heading-->
+                    </h1>
+                    <!--end::Heading-->
 
-                    </div>
-                    <!--end::Page title--->
-                    <!--begin::Wrapper-->
-                    <div class="d-flex align-items-center flex-wrap">
+                </div>
+                <!--end::Page title--->
+                <!--begin::Wrapper-->
+                <div class="d-flex align-items-center flex-wrap">
+
+                    <!--begin::Search-->
+                    <div class="header-search py-3 py-lg-0 me-3">
+
                         <!--begin::Search-->
-                        <div class="header-search py-3 py-lg-0 me-3">
+                        <div
+                                id="kt_header_search"
+                                class="header-search d-flex align-items-center w-lg-250px"
 
-                            <!--begin::Search-->
-                            <div
-                                    id="kt_header_search"
-                                    class="header-search d-flex align-items-center w-lg-250px"
+                                data-kt-search-keypress="true"
+                                data-kt-search-min-length="2"
+                                data-kt-search-enter="enter"
+                                data-kt-search-layout="menu"
+                                data-kt-search-responsive="false"
 
-                                    data-kt-search-keypress="true"
-                                    data-kt-search-min-length="2"
-                                    data-kt-search-enter="enter"
-                                    data-kt-search-layout="menu"
-                                    data-kt-search-responsive="false"
+                                data-kt-menu-trigger="auto"
+                                data-kt-menu-permanent="true"
+                                data-kt-menu-placement="bottom-end">
 
-                                    data-kt-menu-trigger="auto"
-                                    data-kt-menu-permanent="true"
-                                    data-kt-menu-placement="bottom-end"
+                            <!--begin::Tablet and mobile search toggle-->
+                            <!--end::Tablet and mobile search toggle-->
 
-
-                            >
-
-                                <!--begin::Tablet and mobile search toggle-->
-                                <!--end::Tablet and mobile search toggle-->
-
-                                <!--begin::Form-->
-                                <form data-kt-search-element="form" class="w-100 position-relative" autocomplete="off">
-                                    <!--begin::Hidden input(Added to disable form autocomplete)-->
-                                    <input type="hidden"/>
-                                    <!--end::Hidden input-->
-
-                                    <!--begin::Icon-->
-                                    <i class="ki-duotone ki-magnifier fs-2 search-icon position-absolute top-50 translate-middle-y ms-4"><span
-                                            class="path1"></span><span class="path2"></span></i>    <!--end::Icon-->
-
-                                    <!--begin::Input Group-->
-                                    <div class="input-group">
-                                        <!--begin::Icon-->
-                                        <span class="input-group-text  border-0 pe-2">
+                            <form data-kt-search-element="form" class="w-100 position-relative" autocomplete="off"
+                                  id="search-form" action="{% url search_url %}">
+                                <div class="input-group">
+                                    <span class="input-group-text border-0 pe-2">
                                         <i class="fas fa-search"></i>
                                     </span>
-                                        <!--end::Icon-->
+                                    <input type="text" class="form-control custom-form-control ps-2" name="query"
+                                           id="search-input" placeholder="Qidiruv ..."/>
+                                </div>
+                                <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
+                                      id="search-spinner">
+                                <span class="spinner-border h-15px w-15px align-middle text-gray-500"></span>
+                            </span>
+                            </form>
 
-                                        <!--begin::Input-->
-                                        <input type="text" class="form-control custom-form-control ps-2" name="search"
-                                               placeholder="Qidiruv ..." data-kt-search-element="input"/>
-                                        <!--end::Input-->
+                        </div>
+                        <!--end::Search-->            </div>
+                    <!--end::Search-->
+
+                    <!--begin::Action-->
+                    <div class="d-flex align-items-center py-3 py-lg-0">
+                        <!--begin::Item-->
+                        <div class="me-3">
+                            <a href="#" class="btn btn-icon btn-custom btn-active-color-primary position-relative"
+                               data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                               data-kt-menu-placement="bottom-end">
+                                <!-- Replaced ki-duotone ki-notification-bing with Font Awesome bell icon -->
+                                <i class="fas fa-bell fs-1"></i>
+                                <!-- Notification dot -->
+                                <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                            </a>
+
+                            <!--begin::Menu-->
+                            <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
+                                 data-kt-menu="true" id="kt_menu_notifications">
+                                <!--begin::Heading-->
+                                <div class="d-flex flex-column bgi-no-repeat rounded-top"
+                                     style="background-image:url({% static "/assets2/media/misc/menu-header-bg.jpg" %})">
+                                    <!--begin::Title-->
+                                    <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
+                                        Bildirishnomalar <span class="fs-8 opacity-75 ps-3">{{ today_orders.count }} ta buyurtmalar</span>
+                                    </h3>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::Heading-->
+
+                                <!--begin::Content-->
+                                <div class="scroll-y mh-325px my-5 px-8">
+                                    <!--begin::Item-->
+                                    {% for order in today_orders %}
+                                        <div class="d-flex flex-stack py-4">
+                                            <!--begin::Section-->
+                                            <div class="d-flex align-items-center me-2">
+                                                <!--begin::Label-->
+                                                <span class="badge badge-light fs-8">#{{ order.id }}</span>
+                                                <!--end::Label-->
+                                                <!--begin::Title-->
+                                                <a href="#"
+                                                   class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
+                                                <!--end::Title-->
+                                            </div>
+                                            <!--end::Section-->
+
+                                            <!--begin::Code-->
+                                            {% if order.status == '1' %}
+                                                <span class="w-70px badge badge-light-primary me-4">Buyurtma berildi</span>
+                                            {% elif order.status == '2' %}
+                                                <span class="w-70px badge badge-light-success me-4">Bajarildi</span>
+                                            {% elif order.status == '3' %}
+                                                <span class="w-70px badge badge-light-danger me-4">Bekor qilindi</span>
+                                            {% endif %}
+                                            <!--end::Code-->
+
+                                        </div>
+                                    {% endfor %}
+                                    <!--end::Item-->
+                                </div>
+                                <!--end::Content-->
+
+                                <!--begin::View more-->
+                                <div class="py-3 text-center border-top">
+                                    <a href="{% url "orders_page" %}"
+                                       class="btn btn-color-gray-600 btn-active-color-primary">
+                                        Hammasini ko'rish
+                                        <i class="fas fa-arrow-right fs-5"></i>
+
+                                    </a>
+                                </div>
+                                <!--end::View more-->
+                            </div>
+                            <!--end::Menu-->
+
+                        </div>
+                        <!--end::Item-->
+
+                        <!--begin::Item-->
+                        <div class="me-3">
+                            <a href="#" class="btn btn-icon btn-custom btn-active-color-primary"
+                               data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                               data-kt-menu-placement="bottom-end">
+                                <!-- Replaced ki-duotone ki-user with Font Awesome user icon -->
+                                <i class="fas fa-user fs-1"></i>
+                            </a>
+
+                            <!--begin::User account menu-->
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
+                                 data-kt-menu="true">
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3">
+                                    <div class="menu-content d-flex align-items-center px-3">
+                                        <!--begin::Avatar-->
+                                        <div class="symbol symbol-50px me-5">
+                                            <img alt="Logo" src="{{ request.user.image.url }}"/>
+                                        </div>
+                                        <!--end::Avatar-->
+
+                                        <!--begin::Username-->
+                                        <div class="d-flex flex-column">
+                                            <div class="fw-bold d-flex align-items-center fs-5">
+                                                {{ request.user.username }}
+                                                {% if request.user.role != None %}
+                                                    <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ request.user.role }}</span>
+                                                {% endif %}
+                                            </div>
+
+                                            <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
+                                            </a>
+                                        </div>
+                                        <!--end::Username-->
                                     </div>
-                                    <!--end::Input Group-->
+                                </div>
+                                <!--end::Menu item-->
 
+                                <!--begin::Menu separator-->
+                                <div class="separator my-2"></div>
+                                <!--end::Menu separator-->
 
-                                    <!--begin::Spinner-->
-                                    <span class="position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-5"
-                                          data-kt-search-element="spinner">
-                                    <span class="spinner-border h-15px w-15px align-middle text-gray-500"></span>
-                                </span>
-                                    <!--end::Spinner-->
-
-                                    <!--begin::Reset-->
-                                    <span class="btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-4"
-                                          data-kt-search-element="clear">
-                                    <i class="ki-duotone ki-cross fs-2 fs-lg-1 me-0"><span class="path1"></span><span
-                                            class="path2"></span></i>    </span>
-                                    <!--end::Reset-->
-                                </form>
-                                <!--end::Form-->
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-5">
+                                    <a href="{% url "tutorial_page" %}" class="menu-link px-5">
+                                        Foydalanish bo'yicha qo'llanma
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
 
                             </div>
-                            <!--end::Search-->            </div>
-                        <!--end::Search-->
+                            <!--end::User account menu-->
+                        </div>
+                        <!--end::Item-->
 
-                        <!--begin::Action-->
-                        <div class="d-flex align-items-center py-3 py-lg-0">
-                            <!--begin::Item-->
-                            <div class="me-3">
-                                <a href="#" class="btn btn-icon btn-custom btn-active-color-primary position-relative"
-                                   data-kt-menu-trigger="click" data-kt-menu-attach="parent"
-                                   data-kt-menu-placement="bottom-end">
-                                    <!-- Replaced ki-duotone ki-notification-bing with Font Awesome bell icon -->
-                                    <i class="fas fa-bell fs-1"></i>
-                                    <!-- Notification dot -->
-                                    <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
-                                </a>
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
-                                     data-kt-menu="true" id="kt_menu_notifications">
-                                    <!--begin::Heading-->
-                                    <div class="d-flex flex-column bgi-no-repeat rounded-top"
-                                         style="background-image:url('../assets/media/misc/menu-header-bg.jpg')">
-                                        <!--begin::Title-->
-                                        <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
-                                            Notifications <span class="fs-8 opacity-75 ps-3">24 reports</span>
-                                        </h3>
-                                        <!--end::Title-->
+                        <!--begin::Theme mode-->
+                        <!-- Font Awesome CSS -->
 
-                                        <!--begin::Tabs-->
-                                        <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-semibold px-9">
-                                            <li class="nav-item">
-                                                <a class="nav-link text-white opacity-75 opacity-state-100 pb-4"
-                                                   data-bs-toggle="tab" href="#kt_topbar_notifications_3">Logs</a>
-                                            </li>
-                                        </ul>
-                                        <!--end::Tabs-->
-                                    </div>
-                                    <!--end::Heading-->
+                        <div class="d-flex align-items-center me-3">
+                            <!--begin::Menu toggle-->
+                            <a href="#" class="btn btn-icon btn-custom btn-active-color-primary"
+                               data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent"
+                               data-kt-menu-placement="bottom-end">
+                                <i class="fas fa-sun theme-light-show fs-1"></i>
+                                <i class="fas fa-moon theme-dark-show fs-1"></i>
+                            </a>
+                            <!--end::Menu toggle-->
 
-                                    <!--begin::Tab content-->
-                                    <div class="tab-content">
-
-                                        <!--begin::Tab panel-->
-                                        <div class="tab-pane fade" id="kt_topbar_notifications_3" role="tabpanel">
-                                            <!--begin::Items-->
-                                            <div class="scroll-y mh-325px my-5 px-8">
-                                                <!--begin::Item-->
-                                                <div class="d-flex flex-stack py-4">
-                                                    <!--begin::Section-->
-                                                    <div class="d-flex align-items-center me-2">
-                                                        <!--begin::Code-->
-                                                        <span class="w-70px badge badge-light-success me-4">200 OK</span>
-                                                        <!--end::Code-->
-
-                                                        <!--begin::Title-->
-                                                        <a href="#"
-                                                           class="text-gray-800 text-hover-primary fw-semibold">New
-                                                            order</a>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Section-->
-
-                                                    <!--begin::Label-->
-                                                    <span class="badge badge-light fs-8">Just now</span>
-                                                    <!--end::Label-->
-                                                </div>
-                                                <!--end::Item-->
-
-
-                                            </div>
-                                            <!--end::Items-->
-
-                                            <!--begin::View more-->
-                                            <div class="py-3 text-center border-top">
-                                                <a href="../pages/user-profile/activity.html"
-                                                   class="btn btn-color-gray-600 btn-active-color-primary">
-                                                    View All
-                                                    <i class="ki-duotone ki-arrow-right fs-5"><span
-                                                            class="path1"></span><span class="path2"></span></i> </a>
-                                            </div>
-                                            <!--end::View more-->
-                                        </div>
-                                        <!--end::Tab panel-->
-                                    </div>
-                                    <!--end::Tab content-->
-                                </div>
-                                <!--end::Menu-->                </div>
-                            <!--end::Item-->
-
-                            <!--begin::Item-->
-                            <div class="me-3">
-                                <a href="#" class="btn btn-icon btn-custom btn-active-color-primary"
-                                   data-kt-menu-trigger="click" data-kt-menu-attach="parent"
-                                   data-kt-menu-placement="bottom-end">
-                                    <!-- Replaced ki-duotone ki-user with Font Awesome user icon -->
-                                    <i class="fas fa-user fs-1"></i>
-                                </a>
-
-                                <!--begin::User account menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
-                                     data-kt-menu="true">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3">
-                                        <div class="menu-content d-flex align-items-center px-3">
-                                            <!--begin::Avatar-->
-                                            <div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="{% static  "assets2/media/avatars/300-1.jpg" %}"/>
-                                            </div>
-                                            <!--end::Avatar-->
-
-                                            <!--begin::Username-->
-                                            <div class="d-flex flex-column">
-                                                <div class="fw-bold d-flex align-items-center fs-5">
-                                                    Max Smith <span
-                                                        class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span>
-                                                </div>
-
-                                                <a href="#" class="fw-semibold text-muted text-hover-primary fs-7">
-                                                    max@kt.com </a>
-                                            </div>
-                                            <!--end::Username-->
-                                        </div>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu separator-->
-                                    <div class="separator my-2"></div>
-                                    <!--end::Menu separator-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-5">
-                                        <a href="#" class="menu-link px-5">
-                                            My Profile
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                </div>
-                                <!--end::User account menu-->
-                            </div>
-                            <!--end::Item-->
-
-                            <!--begin::Theme mode-->
-                            <!-- Font Awesome CSS -->
-
-                            <div class="d-flex align-items-center me-3">
-                                <!--begin::Menu toggle-->
-                                <a href="#" class="btn btn-icon btn-custom btn-active-color-primary"
-                                   data-kt-menu-trigger="{default:'click', lg: 'hover'}" data-kt-menu-attach="parent"
-                                   data-kt-menu-placement="bottom-end">
-                                    <i class="fas fa-sun theme-light-show fs-1"></i>
-                                    <i class="fas fa-moon theme-dark-show fs-1"></i>
-                                </a>
-                                <!--end::Menu toggle-->
-
-                                <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
-                                     data-kt-menu="true" data-kt-element="theme-mode-menu">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-0">
-                                        <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                           data-kt-value="light">
+                            <!--begin::Menu-->
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
+                                 data-kt-menu="true" data-kt-element="theme-mode-menu">
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3 my-0">
+                                    <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
+                                       data-kt-value="light">
                 <span class="menu-icon" data-kt-element="icon">
                     <i class="fas fa-sun fs-2"></i>
                 </span>
-                                            <span class="menu-title">Light</span>
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-0">
-                                        <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                           data-kt-value="dark">
-                <span class="menu-icon" data-kt-element="icon">
-                    <i class="fas fa-moon fs-2"></i>
-                </span>
-                                            <span class="menu-title">Dark</span>
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-0">
-                                        <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                           data-kt-value="system">
-                <span class="menu-icon" data-kt-element="icon">
-                    <i class="fas fa-desktop fs-2"></i>
-                </span>
-                                            <span class="menu-title">System</span>
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
-                                </div>
-                                <!--end::Menu-->
-                            </div>
-
-                            <div class="d-flex align-items-center me-3">
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="" class="menu-link d-flex px-5 active">
-                                            <span class="symbol symbol-20px me-4">
-                                                <img class="rounded-1"
-                                                     src="{% static  "assets2/media/flags/uzbekistan.svg" %}"
-                                                     alt=""/>
-                                            </span>
-                                        Uzbek
+                                        <span class="menu-title">Light</span>
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
 
                                 <!--begin::Menu item-->
-                                <div class="menu-item px-3">
-                                    <a href="#" class="menu-link d-flex px-5">
-                                    <span class="symbol symbol-20px me-4">
-                                        <img class="rounded-1" src="{% static  "assets2/media/flags/russia.svg" %}"
-                                             alt=""/>
-                                    </span>
-                                        Russian
+                                <div class="menu-item px-3 my-0">
+                                    <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
+                                       data-kt-value="dark">
+                <span class="menu-icon" data-kt-element="icon">
+                    <i class="fas fa-moon fs-2"></i>
+                </span>
+                                        <span class="menu-title">Dark</span>
                                     </a>
                                 </div>
+                                <!--end::Menu item-->
 
-
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3 my-0">
+                                    <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
+                                       data-kt-value="system">
+                <span class="menu-icon" data-kt-element="icon">
+                    <i class="fas fa-desktop fs-2"></i>
+                </span>
+                                        <span class="menu-title">System</span>
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
                             </div>
-                            <!-- end::Theme mode-->
+                            <!--end::Menu-->
                         </div>
-                        <!--end::Action-->
+
+                        <!-- begin::Language settings -->
+                        <div class="dropdown">
+                            <a class="btn btn-icon btn-custom btn-active-color-primary dropdown-toggle" href="#"
+                               id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="rounded-1" src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
+                                     alt="" style="width: 24px;">
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <img class="rounded-1 me-2"
+                                             src="{% static 'assets2/media/flags/uzbekistan.svg' %}" alt=""
+                                             style="width: 20px;"> Uzbek
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                        <img class="rounded-1 me-2"
+                                             src="{% static 'assets2/media/flags/russia.svg' %}" alt=""
+                                             style="width: 20px;"> Russian
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- end::Language settings -->
+
+                        <!-- end::Theme mode-->
                     </div>
-                    <!--end::Wrapper-->
+                    <!--end::Action-->
+
                 </div>
-                <!--end::Container-->
-
-                <div class="header-offset"></div>
+                <!--end::Wrapper-->
             </div>
-            <!--end::Header-->
+            <!--end::Container-->
+
+            <div class="header-offset"></div>
+        </div>
+        <!--end::Header-->
 
 
-            <!-- begin::Content-->
-            <!-- Product Display Section -->
-            <!-- Dynamically loaded products will appear here -->
-            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-                <!--begin::Container-->
-                <div class=" container-xxl " id="kt_content_container">
-                    <!--begin::Layout-->
-                    <div class="d-flex flex-column flex-xl-row">
-                        <!--begin::Content-->
-                        <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
+        <!-- begin::Content-->
+        <!-- Product Display Section -->
+        <!-- Dynamically loaded products will appear here -->
+        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+            <!--begin::Container-->
+            <div class=" container-xxl " id="kt_content_container">
+                <!--begin::Layout-->
+                <div class="d-flex flex-column flex-xl-row">
+                    <!--begin::Content-->
+                    <div class="d-flex flex-row-fluid me-xl-9 mb-10 mb-xl-0">
 
-                            <!--begin::Pos food-->
-                            <div class="card card-flush card-p-0 bg-transparent border-0 ">
+                        <!--begin::Pos food-->
+                        <div class="card card-flush card-p-0 bg-transparent border-0 ">
 
 
-                                <!-- Category and Product Filters -->
+                            <!-- Category and Product Filters -->
 
-                                <div class="card-body">
-                                    <!-- Categories List -->
-                                    <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6">
-                                        {% for category in categories %}
-                                            <li class="nav-item mb-3 me-0">
-                                                <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg {% if category.id == active_category %}active{% endif %}"
-                                                   href="javascript:void(0);"
-                                                   data-category-id="{{ category.id }}"
-                                                   style="width: 138px; height: 180px;">
-                                                    <div class="nav-icon mb-3">
-                                                        <img src="{{ category.image.url }}" class="w-50px" alt=""/>
-                                                    </div>
-                                                    <div>
-                                                        <span class="text-gray-800 fw-bold fs-2 d-block">{{ category.nomi }}</span>
-                                                        {% if category.maxsulot_count != 0 %}
-                                                            <span class="text-gray-500 fw-semibold fs-7">{{ category.maxsulot_count }} ta maxsulot</span>
-                                                        {% else %}
-                                                            <span class="text-gray-500 fw-semibold fs-7">Mahsulot yo'q</span>
-                                                        {% endif %}
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
+                            <div class="card-body">
+                                <!-- Categories List -->
+                                <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6">
+                                    {% for category in categories %}
+                                        <li class="nav-item mb-3 me-0">
+                                            <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg {% if category.id == active_category %}active{% endif %}"
+                                               href="javascript:void(0);"
+                                               data-category-id="{{ category.id }}"
+                                               style="width: 138px; height: 180px;">
+                                                <div class="nav-icon mb-3">
+                                                    <img src="{{ category.image.url }}" class="w-50px" alt=""/>
+                                                </div>
+                                                <div>
+                                                    <span class="text-gray-800 fw-bold fs-2 d-block">{{ category.nomi }}</span>
+                                                    {% if category.maxsulot_count != 0 %}
+                                                        <span class="text-gray-500 fw-semibold fs-7">{{ category.maxsulot_count }} ta maxsulot</span>
+                                                    {% else %}
+                                                        <span class="text-gray-500 fw-semibold fs-7">Mahsulot yo'q</span>
+                                                    {% endif %}
+                                                </div>
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
 
-                                    <!-- Products List -->
-                                    <div id="product-container" class="tab-content">
-                                        <div class="d-flex flex-wrap d-grid gap-5 gap-xxl-9">
-                                            {% if products %}
-                                                 {% for product in products %}
-                                                        <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
-                                                            <div class="card-body text-center">
-                                                                <img src="{{ product.rasm.url }}"
-                                                                     class="rounded-3 mb-4 w-150px h-150px" alt=""/>
-                                                                <div class="mb-2">
-                                                                    <div class="text-center">
-                                                                        <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">{{ product.nomi }}</span>
-                                                                        <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">O'lchami: {{ product.kategoriya.nomi }}</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="position-relative d-flex justify-content-center align-items-center mb-4">
-                                                                    <button type="button"
-                                                                            class="btn btn-icon btn-sm btn-light btn-icon-gray-500"
-                                                                            onclick="decreaseQuantity('{{ product.id }}')">
-                                                                        <i class="fas fa-minus"></i>
-                                                                    </button>
-                                                                    <input type="text"
-                                                                           class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input"
-                                                                           id="quantity_{{ product.id }}" value="1"
-                                                                           readonly/>
-                                                                    <button type="button"
-                                                                            class="btn btn-icon btn-sm btn-light btn-icon-gray-500"
-                                                                            onclick="increaseQuantity('{{ product.id }}')">
-                                                                        <i class="fas fa-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                                <button class="btn btn-primary add-to-cart"
-                                                                        data-product-id="{{ product.id }}"
-                                                                        id="add-to-cart-{{ product.id }}">
-                                                                    Savatga qo'shish
-                                                                </button>
+                                <!-- Products List -->
+                                <div id="products-container" class="tab-content">
+                                    <div class="d-flex flex-wrap d-grid gap-5 gap-xxl-9">
+                                        {% if products %}
+                                            {% for product in products %}
+                                                <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
+                                                    <div class="card-body text-center">
+                                                        <img src="{{ product.rasm.url }}"
+                                                             class="rounded-3 mb-4 w-150px h-150px" alt=""/>
+                                                        <div class="mb-2">
+                                                            <div class="text-center">
+                                                                <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">{{ product.nomi }}</span>
+                                                                <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">O'lchami: {{ product.kategoriya.nomi }}</span>
                                                             </div>
                                                         </div>
-                                                    {% endfor %}
-                                            {% else %}
-                                                <p>No products available.</p>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                            </div>
-                            <!--end::Pos food-->
-                        </div>
-                        <!--end::Content-->
-
-                        <!--begin::Sidebar-->
-                        <div class="flex-row-auto w-xl-450px">
-
-                            <!--begin::Pos order-->
-                            <div class="card card-flush bg-body " id="kt_pos_form">
-                                <!--begin::Header-->
-                                <div class="card-header pt-5">
-                                    <h3 class="card-title fw-bold text-gray-800 fs-2qx">Joriy buyurtma</h3>
-
-                                    <!--begin::Toolbar-->
-                                    <div class="card-toolbar">
-                                        <button id="clear-cart-button" class="btn btn-light-danger fs-4 fw-bold py-4">
-                                            Tozalash
-                                        </button>
-                                    </div>
-                                    <!--end::Toolbar-->
-                                </div>
-                                <!--end::Header-->
-
-                                <!--begin::Body-->
-                                <div class="card-body pt-0">
-                                    <!--begin::Table container-->
-                                    <div class="table-responsive mb-8">
-                                        <!--begin::Table-->
-                                        <table class="table align-middle gs-0 gy-4 my-0">
-                                            <!--begin::Table head-->
-                                            <thead>
-                                            <tr>
-                                                <th class="min-w-175px"></th>
-                                                <th class="w-125px"></th>
-                                                <th class="w-60px"></th>
-                                            </tr>
-                                            </thead>
-                                            <!--end::Table head-->
-
-                                            <!--begin::Table body-->
-                                            <tbody id="cart-sidebar">
-                                            {% for cart_item in cart_items %}
-                                                <tr data-kt-pos-element="item" data-kt-pos-item-price="33">
-                                                    <td class="pe-0">
-                                                        <div class="d-flex align-items-center">
-                                                            <img src="{{ cart_item.maxsulot.rasm.url }}"
-                                                                 class="w-50px h-50px rounded-3 me-3" alt=""/>
-                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">{{ cart_item.maxsulot.nomi }}</span>
-                                                        </div>
-                                                    </td>
-
-                                                    <td class="pe-0">
-                                                        <!--begin::Dialer-->
-                                                        <div class="position-relative d-flex align-items-center"
-                                                             data-kt-dialer="true"
-                                                             data-kt-dialer-min="1"
-                                                             data-kt-dialer-max="10"
-                                                             data-kt-dialer-step="1"
-                                                             data-kt-dialer-decimals="0">
-
+                                                        <div class="position-relative d-flex justify-content-center align-items-center mb-4">
                                                             <button type="button"
                                                                     class="btn btn-icon btn-sm btn-light btn-icon-gray-500"
-                                                                    data-kt-dialer-control="decrease">
+                                                                    onclick="decreaseQuantity('{{ product.id }}')">
                                                                 <i class="fas fa-minus"></i>
                                                             </button>
-
-                                                            <!--begin::Input control-->
                                                             <input type="text"
-                                                                   class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px"
-                                                                   data-kt-dialer-control="input" placeholder="Amount"
-                                                                   name="manageBudget" readonly value="2"/>
-                                                            <!--end::Input control-->
-
+                                                                   class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input"
+                                                                   id="quantity_{{ product.id }}" value="1"
+                                                                   readonly/>
                                                             <button type="button"
                                                                     class="btn btn-icon btn-sm btn-light btn-icon-gray-500"
-                                                                    data-kt-dialer-control="increase">
+                                                                    onclick="increaseQuantity('{{ product.id }}')">
                                                                 <i class="fas fa-plus"></i>
                                                             </button>
                                                         </div>
-                                                        <!-- end::Dialer-->
-                                                    </td>
-
-                                                    <td class="text-end">
-                                                <span class="fw-bold text-primary fs-2"
-                                                      data-kt-pos-element="item-total">{{ cart_item.soni }} ta</span>
-                                                    </td>
-                                                </tr>
+                                                        <button class="btn btn-primary add-to-cart"
+                                                                data-product-id="{{ product.id }}"
+                                                                id="add-to-cart-{{ product.id }}">
+                                                            Savatga qo'shish
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             {% endfor %}
-                                            </tbody>
-                                            <!--end::Table body-->
-                                        </table>
-                                        <!--end::Table-->
+                                        {% else %}
+                                            <p>No products available.</p>
+                                        {% endif %}
                                     </div>
-                                    <!--end::Table container-->
-
-                                    <!--begin::Summary-->
-                                    <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-11">
-                                        <!--begin::Content-->
-                                        <div class="fs-6 fw-bold text-white">
-                                            <span class="d-block lh-1 mb-2">Buyurtma ID</span>
-                                            <span class="d-block mb-2">Buyurtma beruvchi</span>
-                                            <span class="d-block mb-9">Qayerga</span>
-                                            <span class="d-block fs-2qx lh-1">Jami</span>
-                                        </div>
-                                        <!--end::Content-->
-
-                                        <!--begin::Content-->
-                                        <div class="fs-6 fw-bold text-white text-end">
-                                            <span class="d-block lh-1 mb-2" data-kt-pos-element="total">#001150</span>
-                                            <span class="d-block mb-2"
-                                                  data-kt-pos-element="discount">Yiguv bo'linmasi</span>
-                                            <span class="d-block mb-9" data-kt-pos-element="tax">Omborxonaga</span>
-                                            <span class="d-block fs-2qx lh-1"
-                                                  data-kt-pos-element="grant-total">100 ta </span>
-                                        </div>
-                                        <!--end::Content-->
-                                    </div>
-                                    <!--end::Summary-->
-
-                                    <!--begin::Payment Method-->
-                                    <div class="m-0">
-                                        <!--begin::Title-->
-                                        <h1 class="fw-bold text-gray-800 mb-5">Qo'shimcha matn</h1>
-                                        <!--end::Title-->
-
-                                        <!--begin::Input group-->
-                                        <div class="mb-12">
-                                        <textarea id="additional-text" class="form-control form-control-solid" rows="4"
-                                                  placeholder="Qo'shimcha matnni kiriting..."></textarea>
-                                        </div>
-                                        <!--end::Input group-->
-
-                                        <!--begin::Actions-->
-                                        <button class="btn btn-primary fs-1 w-100 py-4">Buyurtma berish</button>
-                                        <!--end::Actions-->
-                                    </div>
-                                    <!--end::Payment Method-->
                                 </div>
-                                <!--end: Card Body-->
                             </div>
-                            <!--end::Pos order-->    </div>
-                        <!--end::Sidebar-->
+
+
+                        </div>
+                        <!--end::Pos food-->
                     </div>
-                    <!--end::Layout--></div>
-
-                <!--end::Container-->
-            </div>
-            <!-- end::Content-->
+                    <!--end::Content-->
 
 
-            <!-- begin::Footer-->
-            <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
-                <!--begin::Container-->
-                <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
-                    <!--begin::Copyright-->
-                    <div class="text-gray-900 order-2 order-md-1">
-                        <span class="text-gray-500 fw-semibold me-1">Muallif : </span>
-                        <a href="https://keenthemes.com/" target="_blank"
-                           class="text-muted text-hover-primary fw-semibold me-2 fs-6">Oxunjon</a>
+                    <div class="flex-row-auto w-xl-450px">
+                        <!--begin::Pos order-->
+                        <div class="card card-flush bg-body" id="kt_pos_form">
+                            <!--begin::Header-->
+                            <div class="card-header pt-5">
+                                <h3 class="card-title fw-bold text-gray-800 fs-2qx">Joriy buyurtma</h3>
+                                <!--begin::Toolbar-->
+                                <div class="card-toolbar">
+                                    <button id="clear-cart-button" class="btn btn-light-danger fs-4 fw-bold py-4">
+                                        Tozalash
+                                    </button>
+                                </div>
+                                <!--end::Toolbar-->
+                            </div>
+                            <!--end::Header-->
+
+                            <!--begin::Body-->
+                            <div class="card-body pt-0">
+                                <!--begin::Table container-->
+                                <div class="table-responsive mb-8">
+                                    <table class="table align-middle gs-0 gy-4 my-0">
+                                        <thead>
+                                        <tr>
+                                            <th class="min-w-175px"></th>
+                                            <th class="w-125px"></th>
+                                            <th class="w-60px"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="cart-sidebar">
+                                        {% for cart_item in cart_items %}
+                                            <tr id="cart-item-{{ cart_item.id }}"
+                                                data-cart-item-id="{{ cart_item.id }}">
+                                                <td class="pe-0">
+                                                    <div class="d-flex align-items-center">
+                                                        <img src="{{ cart_item.maxsulot.rasm.url }}"
+                                                             class="w-50px h-50px rounded-3 me-3" alt="Mahsulot rasmi"/>
+                                                        <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">{{ cart_item.maxsulot.nomi }}</span>
+                                                    </div>
+                                                </td>
+                                                <td class="pe-0">
+                                                    <div class="position-relative d-flex align-items-center">
+                                                        <button type="button"
+                                                                class="btn btn-icon btn-sm btn-light btn-icon-gray-500 decrease-quantity-cart"
+                                                                data-cart-item-id="{{ cart_item.id }}"
+                                                                data-action="decrease">
+                                                            <i class="fas fa-minus"></i>
+                                                        </button>
+                                                        <input type="text"
+                                                               class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px cart-item-quantity"
+                                                               value="{{ cart_item.soni }}" readonly/>
+                                                        <button type="button"
+                                                                class="btn btn-icon btn-sm btn-light btn-icon-gray-500 increase-quantity-cart"
+                                                                data-cart-item-id="{{ cart_item.id }}"
+                                                                data-action="increase">
+                                                            <i class="fas fa-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td class="text-end">
+                                                    <button type="button" class="btn btn-icon btn-danger btn-sm"
+                                                            onclick="removeCartItem('{{ cart_item.id }}')">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!--end::Table container-->
+
+                                <!--begin::Summary-->
+                                <div class="d-flex flex-stack bg-success rounded-3 p-6 mb-11">
+                                    <!--begin::Content-->
+                                    <div class="fs-6 fw-bold text-white">
+                                        <span class="d-block mb-2">Buyurtma beruvchi</span>
+                                        <span class="d-block mb-9">Qayerga</span>
+                                        <span class="d-block fs-2qx lh-1">Jami</span>
+                                    </div>
+                                    <!--end::Content-->
+
+                                    <!--begin::Content-->
+                                    <div class="fs-6 fw-bold text-white text-end">
+
+                                        <span class="d-block mb-2"
+                                              data-kt-pos-element="discount">{{ request.user.username|upper }}</span>
+                                        <span class="d-block mb-9" data-kt-pos-element="tax">Mexanika bo'limi</span>
+                                        {% if cart_items|length > 0 %}
+                                            <span class="d-block fs-2qx lh-1" id="cart-items-count"
+                                                  data-kt-pos-element="grant-total">
+                                            {{ cart_items|length  }} ta
+                                        </span>
+                                        {% else %}
+                                            <span class="d-block fs-2qx lh-1" id="cart-items-count"
+                                                  data-kt-pos-element="grant-total">
+                                                savatcha bo'sh
+                                            </span>
+                                        {% endif %}
+                                    </div>
+                                    <!--end::Content-->
+                                </div>
+                                <!--end::Summary-->
+
+                                <!--begin::Order Placement-->
+                                <div>
+                                    <h1 class="fw-bold text-gray-800 mb-5">Qo'shimcha matn</h1>
+                                    <textarea id="additional-text" name="qoshimchaMatn"
+                                              class="form-control form-control-solid" rows="4"
+                                              placeholder="Qo'shimcha matnni kiriting..."></textarea>
+                                    <button id="place-order-button" class="btn btn-primary fs-1 w-100 py-4 mt-5">
+                                        Buyurtma berish
+                                    </button>
+                                    <div id="order-status-message" class="mt-3"></div>
+                                </div>
+                                <!--end::Order Placement-->
+                            </div>
+                            <!--end::Body-->
+
+
+                        </div>
+                        <!--end::Pos order-->
+
+                        <!-- Modal -->
+
+                        <div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Buyurtmani tasdiqlang</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Buyurtmani tasdiqlamoqchimisiz?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Bekor
+                                            qilish
+                                        </button>
+                                        <button type="button" id="confirm-order" class="btn btn-primary">Tasdiqlash
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
-                    <!--end::Copyright-->
 
-                    <!--begin::Menu-->
-                    <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                        <li class="menu-item"><a href="https://keenthemes.com/" target="_blank"
-                                                 class="menu-link px-2">Railway Poster</a></li>
-                    </ul>
-                    <!--end::Menu-->
+
                 </div>
-                <!--end::Container-->
-            </div>
-            <!--end::Footer-->
+                <!-- end::Layout--></div>
+
+            <!-- end::Container-->
         </div>
-        <!--end::Wrapper-->
+        <!-- end::Content-->
+
+
+        <!-- begin::Footer-->
+        <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
+            <!--begin::Container-->
+            <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
+                <!-- begin::Copyright-->
+                <div class="text-gray-900 order-2 order-md-1">
+                    <span class="text-gray-500 fw-semibold me-1">Muallif : </span>
+                    <a href="https://t.me/oxunjonabdulla/" target="_blank"
+                       class="text-muted text-hover-primary fw-semibold me-2 fs-6">Oxunjon</a>
+                </div>
+                <!-- end::Copyright-->
+
+                <!--begin::Menu-->
+                <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+                    <li class="menu-item"><a href="#"
+                                             class="menu-link px-2">Railway Poster</a></li>
+                </ul>
+                <!--end::Menu-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Footer-->
+
     </div>
-    <!--end::Page-->
+    <!--end::Wrapper-->
 </div>
+<!--end::Page-->
 <!--end::Root-->
 
-<!--begin::Scrolltop-->
-<!-- Scroll to Top Button -->
 <!-- Scroll to Top Button -->
 <button id="scrollTop" class="scrolltop" data-kt-scrolltop="true">
     <i class="fas fa-chevron-circle-up"></i>
@@ -849,11 +852,11 @@
 <script src="{% static  "assets2/js/scripts.bundle.js" %}"></script>
 <!--end::Global Javascript Bundle-->
 
-<!--begin::Vendors Javascript(used for this page only)-->
+<!-- begin::Vendors Javascript(used for this page only)-->
 <script src="{% static  "assets2/plugins/custom/datatables/datatables.bundle.js" %}"></script>
-<!--end::Vendors Javascript-->
+<!-- end::Vendors Javascript-->
 
-<!--begin::Custom Javascript(used for this page only)-->
+<!-- begin::Custom Javascript(used for this page only)-->
 <script src="{% static  "assets2/js/custom/pages/general/pos.js" %}"></script>
 <script src="{% static  "assets2/js/widgets.bundle.js" %}"></script>
 <script src="{% static  "assets2/js/custom/widgets.js" %}"></script>
@@ -864,11 +867,61 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <script>
+    // Handing the increase or decrease button click
+    document.querySelector("tbody").addEventListener("click", function (event) {
+        const button = event.target.closest("button");
+        if (!button) return;
 
-    <script>
+        const cartItemId = button.getAttribute("data-cart-item-id");
+        const action = button.getAttribute("data-action");
+
+        if (button.classList.contains("decrease-quantity-cart")) {
+            const quantityInput = document.querySelector(`#cart-item-${cartItemId} .cart-item-quantity`);
+            let currentQuantity = parseInt(quantityInput.value);
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                updateCartQuantity(cartItemId, currentQuantity);
+            }
+        } else if (button.classList.contains("increase-quantity-cart")) {
+            const quantityInput = document.querySelector(`#cart-item-${cartItemId} .cart-item-quantity`);
+            let currentQuantity = parseInt(quantityInput.value);
+            currentQuantity++;
+            updateCartQuantity(cartItemId, currentQuantity);
+        }
+    });
+
+    // Update cart quantity via AJAX
+    function updateCartQuantity(cartItemId, newQuantity) {
+        fetch(`/update-cart-quantity/${cartItemId}/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                new_quantity: newQuantity
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const quantityInput = document.querySelector(`#cart-item-${cartItemId} .cart-item-quantity`);
+                    quantityInput.value = data.new_quantity;
+                } else {
+                    alert(data.message); // Show error if necessary
+                }
+            })
+            .catch(error => {
+                alert("Error updating quantity. Please try again.");
+                console.error(error);
+            });
+    }
+</script>
+
+<script>
     document.addEventListener("DOMContentLoaded", function () {
         const categoryLinks = document.querySelectorAll(".nav-link");
-        const productContainer = document.querySelector("#product-container .d-flex");
+        const productContainer = document.querySelector("#products-container .d-flex");
 
         categoryLinks.forEach(link => {
             link.addEventListener("click", function () {
@@ -924,13 +977,50 @@
                                 `;
 
                                 // Attach event listener to the "add-to-cart" button
-                                document.querySelector(`#add-to-cart-${product.id}`).addEventListener("click", function () {
-                                    // Your add-to-cart functionality here
-                                    const productId = product.id;
-                                    console.log(`Product added to cart: ${productId}`);
-                                    // Example: Add product to cart logic
-                                    // cart.push(productId);
+                                document.querySelectorAll(".add-to-cart").forEach(button => {
+                                    button.addEventListener("click", function () {
+                                        const productId = this.getAttribute("data-product-id");
+                                        const quantityInput = this.closest(".card").querySelector(".quantity-input");
+                                        const quantity = parseInt(quantityInput.value) || 1;
+
+                                        fetch(`/add-to-cart/${productId}/`, {
+                                            method: "POST",
+                                            headers: {
+                                                "X-CSRFToken": "{{ csrf_token }}",
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({qty: quantity})
+                                        })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                if (data.success) {
+                                                    showAlert("Mahsulot savatga muvaffaqiyatli qo'shildi!", "success");
+                                                    updateCartSidebar(); // Refresh the cart sidebar
+                                                    updateCartCount(data.cart_items_count); // Update cart item count
+
+                                                } else {
+                                                    showAlert(data.message || "Xatolik yuz berdi.", "warning");
+                                                }
+                                            })
+                                            .catch(error => {
+                                                console.error("Error:", error);
+                                                showAlert("Xatolik yuz berdi.", "danger");
+                                            });
+                                    });
                                 });
+
+                                // Update Cart Item Count in UI
+                                function updateCartCount(count) {
+                                    const cartCountElement = document.querySelector("#cart-items-count"); // Adjust selector if necessary
+                                    if (cartCountElement) {
+                                        if (count > 0) {
+                                            cartCountElement.textContent = `${count} ta`; // Format with "ta"
+                                        } else {
+                                            cartCountElement.textContent = "savatcha bo'sh"; // Display empty cart message
+                                        }
+                                    }
+                                }
+
                             });
                         }
                     })
@@ -940,6 +1030,154 @@
     });
 </script>
 
+<script>
+
+    document.getElementById("search-input").addEventListener("input", function () {
+        const query = this.value.trim();
+        const spinner = document.getElementById("search-spinner");
+        const productsContainer = document.getElementById("products-container");
+
+        // Get the search URL from the form's action attribute
+        const searchUrl = document.getElementById("search-form").getAttribute("action");
+
+        // Show spinner while fetching
+        spinner.classList.remove("d-none");
+
+        // Dynamically fetch products based on the search URL and department
+        fetch(`${searchUrl}?query=${encodeURIComponent(query)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Clear and update the products container
+                productsContainer.innerHTML = "";
+                if (data.products.length === 0) {
+                    productsContainer.innerHTML = '<p class="text-center mt-4">Mahsulot topilmadi</p>';
+                } else if (query === "") {
+                    // Clear the products container and reset to the default state
+                    productsContainer.innerHTML = "";
+                    // Optionally reload the page to restore the original content
+                    location.reload(); // Uncomment this line if you want a full refresh
+                } else {
+                    const gridContainer = document.createElement("div");
+                    gridContainer.classList.add("d-flex", "flex-wrap", "d-grid", "gap-5", "gap-xxl-9");
+
+                    data.products.forEach(product => {
+                        const productHtml = `
+                    <div class="card card-flush flex-row-fluid p-6 pb-5 mw-100">
+                        <div class="card-body text-center">
+                            <img src="${product.rasm}" class="rounded-3 mb-4 w-150px h-150px" alt=""/>
+                            <div class="mb-2">
+                                <span class="fw-bold text-gray-800 text-hover-primary fs-3">${product.nomi}</span>
+                                <span class="text-gray-500 fw-semibold d-block fs-6">O'lchami: ${product.kategoriya}</span>
+                            </div>
+                            <div class="position-relative d-flex justify-content-center align-items-center mb-4">
+                                <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500 decrease-quantity" data-product-id="${product.id}">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" data-product-id="${product.id}" value="1" readonly/>
+                                <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500 increase-quantity" data-product-id="${product.id}">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                            <button class="btn btn-primary add-to-cart" data-product-id="${product.id}">
+                                Savatga qo'shish
+                            </button>
+                        </div>
+                    </div>`;
+                        gridContainer.innerHTML += productHtml;
+                    });
+
+                    productsContainer.appendChild(gridContainer);
+
+                    // Attach event listeners after products are appended
+                    attachEventListeners();
+                }
+            })
+            .catch(error => console.error("Error fetching products:", error))
+            .finally(() => {
+                // Hide spinner after fetching
+                spinner.classList.add("d-none");
+            });
+    });
+
+    // Helper function to attach event listeners
+    function attachEventListeners() {
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function () {
+                const productId = this.getAttribute("data-product-id");
+                const quantityInput = this.closest(".card").querySelector(".quantity-input");
+                const quantity = parseInt(quantityInput.value) || 1;
+
+                fetch(`/add-to-cart/${productId}/`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRFToken": "{{ csrf_token }}", // Ensure CSRF token is provided dynamically
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({qty: quantity})
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showAlert("Mahsulot savatga muvaffaqiyatli qo'shildi!", "success");
+                            updateCartSidebar(); // Refresh the cart sidebar
+                            updateCartCount(data.cart_items_count); // Update cart item count
+                        } else {
+                            showAlert(data.message || "Xatolik yuz berdi.", "warning");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        showAlert("Xatolik yuz berdi.", "danger");
+                    });
+            });
+        });
+
+        // Update Cart Item Count in UI
+        function updateCartCount(count) {
+            const cartCountElement = document.querySelector("#cart-items-count"); // Adjust selector if necessary
+            if (cartCountElement) {
+                if (count > 0) {
+                    cartCountElement.textContent = `${count} ta`; // Format with "ta"
+                } else {
+                    cartCountElement.textContent = "savatcha bo'sh"; // Display empty cart message
+                }
+            }
+        }
+
+        document.querySelectorAll(".decrease-quantity").forEach(button => {
+            button.addEventListener("click", function () {
+                const productId = this.getAttribute("data-product-id");
+                const quantityInput = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+                let quantity = parseInt(quantityInput.value) || 1;
+                if (quantity > 1) {
+                    quantityInput.value = quantity - 1;
+                }
+            });
+        });
+
+        document.querySelectorAll(".increase-quantity").forEach(button => {
+            button.addEventListener("click", function () {
+                const productId = this.getAttribute("data-product-id");
+                const quantityInput = document.querySelector(`.quantity-input[data-product-id="${productId}"]`);
+                let quantity = parseInt(quantityInput.value) || 1;
+                quantityInput.value = quantity + 1;
+            });
+        });
+    }
+
+    // Define `showAlert` and `updateCartSidebar` if not already implemented
+    function showAlert(message, type) {
+        alert(`${type.toUpperCase()}: ${message}`);
+    }
+
+    function updateCartSidebar() {
+        // Add logic to update the cart sidebar
+    }
 
 </script>
 
@@ -951,11 +1189,11 @@
         alertBox.role = "alert";
         alertBox.style.marginTop = "20px";
         alertBox.innerHTML = `
-            <div class="container">
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        `;
+        <div class="container">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
         document.body.appendChild(alertBox);
 
         setTimeout(() => {
@@ -982,6 +1220,71 @@
         }
     }
 
+    function removeCartItem(itemId) {
+        // Send AJAX request to remove the cart item
+        fetch(`/remove-cart-item/${itemId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'), // Ensure CSRF token is included
+                'Content-Type': 'application/json',
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Remove the cart item row from the UI
+                    const cartRow = document.querySelector(`#cart-item-${itemId}`);
+                    if (cartRow) {
+                        cartRow.remove();
+                    }
+
+                    // Decrease the item count in the summary section
+                    const totalElement = document.querySelector('[data-kt-pos-element="grant-total"]');
+                    const currentCount = parseInt(totalElement.textContent) || 0;
+                    if (currentCount > 1) {
+                        totalElement.textContent = `${currentCount - 1} ta`;
+                    } else {
+                        // If no items are left, update UI to show empty cart message
+                        document.querySelector("tbody").innerHTML = `
+                                <tr>
+                                    <td colspan="3" class="text-center">
+                                        <span class="d-block lh-1 mb-2" data-kt-pos-element="total">savatcha bo'sh</span>
+                                    </td>
+                                </tr>
+                            `;
+                        totalElement.innerHTML = `<span class="d-block lh-1 mb-2" data-kt-pos-element="total">savatcha bo'sh</span>`;
+
+                    }
+
+                    // Optionally show a success message
+                    showAlert(data.message, "success");
+                } else {
+                    // Handle errors
+                    showAlert(data.message || "Xatolik yuz berdi.", "danger");
+                }
+            })
+            .catch(error => {
+                console.error("Savatdan o'chirishda xatolik yuz berdi:", error);
+                showAlert("Xatolik yuz berdi.", "danger");
+            });
+    }
+
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
     // Function to fetch and update the cart sidebar
     function updateCartSidebar() {
         fetch("/get-cart-items/")
@@ -995,29 +1298,43 @@
                 } else {
                     data.cart_items.forEach(item => {
                         const row = `
-                            <tr data-kt-pos-element="item">
-                                <td class="pe-0">
-                                    <div class="d-flex align-items-center">
-                                        <img src="${item.maxsulot_rasm}" class="w-50px h-50px rounded-3 me-3" alt=""/>
-                                        <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">${item.maxsulot_nomi}</span>
-                                    </div>
-                                </td>
-                                <td class="pe-0">
-                                    <div class="position-relative d-flex align-items-center">
-                                        <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500" onclick="decreaseQuantity('${item.id}')">
-                                            <i class="fas fa-minus"></i>
-                                        </button>
-                                        <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px" readonly value="${item.soni}"/>
-                                        <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500" onclick="increaseQuantity('${item.id}')">
-                                            <i class="fas fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                                <td class="text-end">
-                                    <span class="fw-bold text-primary fs-2">${item.soni} ta</span>
-                                </td>
-                            </tr>
-                        `;
+                        <tr id="cart-item-${item.id}" data-cart-item-id="${item.id}">
+                            <td class="pe-0">
+                                <div class="d-flex align-items-center">
+                                    <img src="${item.maxsulot_rasm}" class="w-50px h-50px rounded-3 me-3" alt=""/>
+                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-6 me-1">
+                                        ${item.maxsulot_nomi}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="pe-0">
+                                <div class="position-relative d-flex align-items-center">
+                                    <button type="button"
+                                            class="btn btn-icon btn-sm btn-light btn-icon-gray-500 decrease-quantity-cart"
+                                            data-cart-item-id="${item.id}"
+                                            data-action="decrease">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="text"
+                                           class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-30px cart-item-quantity"
+                                           value="${item.soni}"
+                                           readonly/>
+                                    <button type="button"
+                                            class="btn btn-icon btn-sm btn-light btn-icon-gray-500 increase-quantity-cart"
+                                            data-cart-item-id="${item.id}"
+                                            data-action="increase">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <button type="button"
+                                        class="btn btn-icon btn-danger btn-sm"
+                                        onclick="removeCartItem('${item.id}')">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>`;
                         cartSidebar.innerHTML += row;
                     });
                 }
@@ -1037,7 +1354,7 @@
             fetch(`/add-to-cart/${productId}/`, {
                 method: "POST",
                 headers: {
-                    "X-CSRFToken": "{{ csrf_token }}",
+                    "X-CSRFToken": getCookie('csrftoken'), // Ensure CSRF token is included
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({qty: quantity})
@@ -1045,18 +1362,33 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        showAlert("Mahsulot savatga muvaffaqiyatli qo'shildi!", "success");
+                        showAlert(data.message, "success"); // Show success alert
                         updateCartSidebar(); // Refresh the cart sidebar
+                        updateCartCount(data.cart_items_count); // Update cart item count
                     } else {
-                        showAlert(data.message || "Xatolik yuz berdi.", "warning");
+                        showAlert(data.message || "Xatolik yuz berdi.", "warning"); // Show error message
                     }
                 })
                 .catch(error => {
-                    console.error("Error:", error);
+                    console.error("Error adding product to cart:", error);
                     showAlert("Xatolik yuz berdi.", "danger");
                 });
         });
     });
+
+    // Update Cart Item Count in UI
+    function updateCartCount(count) {
+        const cartCountElement = document.querySelector("#cart-items-count"); // Adjust selector if necessary
+        if (cartCountElement) {
+            if (count > 0) {
+                cartCountElement.textContent = `${count} ta`; // Format with "ta"
+            } else {
+                cartCountElement.textContent = "savatcha bo'sh"; // Display empty cart message
+            }
+        }
+    }
+
+
 </script>
 
 <script>
@@ -1086,6 +1418,7 @@
                     .then(data => {
                         if (data.success) {
                             showAlert(data.message, "success");
+                            window.location.reload();
 
                             // Update cart UI to show "Cart empty"
                             const cartSidebar = document.querySelector("tbody");
@@ -1136,6 +1469,7 @@
         modal.querySelector("#confirm-clear-cart").addEventListener("click", function () {
             bsModal.hide();
             modal.remove();
+
             if (onConfirm) onConfirm(); // Call the confirm callback
         });
 
@@ -1168,7 +1502,241 @@
     }
 </script>
 
-<!--end::Javascript-->
+<script>
+    function showConfirmationModal(message, onConfirm) {
+        const modal = document.createElement("div");
+        modal.className = "modal fade";
+        modal.tabIndex = "-1";
+        modal.role = "dialog";
+        modal.innerHTML = `
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tasdiqlash</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${message}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yo'q</button>
+                        <button type="button" class="btn btn-danger" id="confirm-clear-cart">Ha</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+        const bsModal = new bootstrap.Modal(modal);
+
+        // Attach event listener for confirm button
+        modal.querySelector("#confirm-clear-cart").addEventListener("click", function () {
+            bsModal.hide();
+            modal.remove();
+
+            if (onConfirm) onConfirm(); // Call the confirm callback
+        });
+
+        // Show the modal
+        bsModal.show();
+
+        // Remove modal from DOM on close
+        modal.addEventListener("hidden.bs.modal", function () {
+            modal.remove();
+        });
+    }
+
+    function logoutConfirm(event) {
+        event.preventDefault(); // Prevent the default anchor behavior
+
+        showConfirmationModal("Rostdan ham tizimni tark etmoqchimisiz?", function () {
+            console.log("Ok");
+            window.location.href = '/auth/logout/';
+        });
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Attach click event to all section links
+        document.querySelectorAll(".section-link").forEach(link => {
+            link.addEventListener("click", function (e) {
+                e.preventDefault(); // Prevent default navigation
+
+                const sectionUrl = this.getAttribute("href");
+                const sectionName = this.getAttribute("data-section");
+
+                // Send AJAX request to check cart section
+                fetch(`/check-section/`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": "{{ csrf_token }}"
+                    },
+                    body: JSON.stringify({section: sectionName})
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Navigate to the section
+                            window.location.href = sectionUrl;
+                        } else {
+                            // Show confirmation modal with section URL
+                            showConfirmationModal(data.message, sectionUrl);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error:", error);
+                        alert("An error occurred. Please try again.");
+                    });
+            });
+        });
+
+        // Function to show a confirmation modal
+        function showConfirmationModal(message, sectionUrl) {
+            console.log(sectionUrl);
+            const modal = document.createElement("div");
+            modal.className = "modal fade";
+            modal.tabIndex = "-1";
+            modal.role = "dialog";
+            // Determine button text based on section URL
+            let buttonText;
+            if (sectionUrl === "/mechanic/") {
+                buttonText = "Omborxona bo'limiga o'tish";
+            } else if (sectionUrl === "/warehouse/") {
+                buttonText = "Mexanika bo'limiga o'tish";
+            } else {
+                buttonText = "Davom etish"; // Default button text
+            }
+            modal.innerHTML = `
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tasdiqlash</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>${message}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+
+                            <button type="button" class="btn btn-primary" id="confirm-action">${buttonText}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+            const bsModal = new bootstrap.Modal(modal);
+
+            // Attach event listener for confirm button
+            modal.querySelector("#confirm-action").addEventListener("click", function () {
+                bsModal.hide();
+                modal.remove();
+
+                // Navigate to the section URL after confirmation
+                window.location.href = sectionUrl;
+            });
+
+            // Show the modal
+            bsModal.show();
+
+            // Remove modal from DOM on close
+            modal.addEventListener("hidden.bs.modal", function () {
+                modal.remove();
+            });
+        }
+    });
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Function to check if the cart is empty
+    function isCartEmpty() {
+        const cartItems = document.querySelectorAll("#cart-sidebar tr").length;
+        return cartItems === 0; // Returns true if cart is empty
+    }
+
+    // Add event listener to the "Place Order" button
+    document.getElementById("place-order-button").addEventListener("click", function () {
+        if (isCartEmpty()) {
+            showAlert("Savatcha bo'sh. Iltimos, mahsulot qo'shing!", "warning");
+            return; // Prevent the modal from opening
+        }
+
+        const modal = new bootstrap.Modal(document.getElementById("confirmOrderModal"));
+        modal.show();
+    });
+
+    // Add event listener to the "Confirm Order" button in the modal
+    document.getElementById("confirm-order").addEventListener("click", function () {
+        const additionalText = document.getElementById("additional-text").value;
+        const toField = document.querySelector('[data-kt-pos-element="tax"]').innerText.trim();
+
+        fetch("{% url 'order_page' %}", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({
+                additionalText: additionalText,
+                toField: toField
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById("confirmOrderModal"));
+                modal.hide();
+
+                if (data.success) {
+                    showAlert("Buyurtma muvaffaqiyatli yuborildi!", "success");
+
+                    document.getElementById("cart-sidebar").innerHTML = "";
+                    document.getElementById("additional-text").value = "";
+
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    showAlert(data.message, "danger");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+
+                const modal = bootstrap.Modal.getInstance(document.getElementById("confirmOrderModal"));
+                modal.hide();
+
+                showAlert("Xatolik yuz berdi. Qaytadan urinib ko'ring.", "danger");
+            });
+    });
+
+    function showAlert(message, type = "info") {
+        const alertBox = document.createElement("div");
+        alertBox.className = `alert alert-${type} alert-dismissible fade show fixed-top`;
+        alertBox.role = "alert";
+        alertBox.style.marginTop = "20px";
+        alertBox.innerHTML = `
+            <div class="container">
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        `;
+        document.body.appendChild(alertBox);
+
+        setTimeout(() => {
+            alertBox.remove();
+        }, 5000);
+    }
+});
+
+</script>
+
+
+
+
+<!-- end::Javascript-->
 </body>
 <!--end::Body-->
 
