@@ -278,5 +278,5 @@ def users_page(request):
         }
         return render(request,
                       template_name='user/users.html',
-                      context=user_ctx)
+                      context={"user_ctx":user_ctx})
     return redirect('mechanic_page')

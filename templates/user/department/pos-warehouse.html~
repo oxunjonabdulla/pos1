@@ -612,10 +612,10 @@
                                                                     onclick="decreaseQuantity('{{ product.id }}')">
                                                                 <i class="fas fa-minus"></i>
                                                             </button>
-                                                            <input type="text"
+                                                            <input type="number"
                                                                    class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input"
                                                                    id="quantity_{{ product.id }}" value="1"
-                                                                   readonly/>
+                                                                   min="1" />
                                                             <button type="button"
                                                                     class="btn btn-icon btn-sm btn-light btn-icon-gray-500"
                                                                     onclick="increaseQuantity('{{ product.id }}')">
@@ -957,7 +957,7 @@
                                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500" onclick="decreaseQuantity('${product.id}')">
                                                     <i class="fas fa-minus"></i>
                                                 </button>
-                                                <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" id="quantity_${product.id}" value="1" readonly/>
+                                                <input type="number" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" id="quantity_${product.id}" value="1" min="1"/>
                                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500" onclick="increaseQuantity('${product.id}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -1071,7 +1071,7 @@
                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500 decrease-quantity" data-product-id="${product.id}">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" data-product-id="${product.id}" value="1" readonly/>
+                                <input type="number" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" data-product-id="${product.id}" value="1" min="1"/>
                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500 increase-quantity" data-product-id="${product.id}">
                                     <i class="fas fa-plus"></i>
                                 </button>

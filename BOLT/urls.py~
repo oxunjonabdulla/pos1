@@ -43,7 +43,7 @@ urlpatterns = [
     path('mechanic/', mechanic_page, name='mechanic_page'),
     path('check-section/', check_section, name='check_section'),
 
-    path("users-page/ ", users_page, name="users_page"),
+    path('users-page/', users_page, name='users_page'),
 
     # Search and Filter
     path('warehouse/search-products/', search_products, name='warehouse_search_products'),

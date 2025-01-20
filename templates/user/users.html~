@@ -669,27 +669,7 @@
 <!--end::Global Javascript Bundle-->
 
 <script src="{% static 'assets2/plugins/custom/datatables/datatables.bundle.js' %}"></script>
-<script>
-    $(document).ready(function () {
-        // Check if the DataTable is already initialized
-        if ($.fn.DataTable.isDataTable('#kt_ecommerce_sales_table')) {
-            // Destroy the existing instance
-            $('#kt_ecommerce_sales_table').DataTable().destroy();
-        }
 
-        // Initialize the DataTable
-        $('#kt_ecommerce_sales_table').DataTable({
-            paging: false, // Disable automatic pagination
-            info: false,   // Disable the "showing x of y entries" info
-            searching: false, // Disable search if not needed
-            ordering: false, // Disable column sorting
-            language: {
-                emptyTable: "Ma'lumot mavjud emas" // Customize "no data" message
-            }
-        });
-    });
-
-</script>
 
 
 <!-- begin::Custom Javascript(used for this page only)-->
