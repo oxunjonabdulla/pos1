@@ -612,10 +612,10 @@
                                                                     onclick="decreaseQuantity('{{ product.id }}')">
                                                                 <i class="fas fa-minus"></i>
                                                             </button>
-                                                            <input type="text"
+                                                            <input type="number"
                                                                    class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input"
                                                                    id="quantity_{{ product.id }}" value="1"
-                                                                   readonly/>
+                                                                   min="1" />
                                                             <button type="button"
                                                                     class="btn btn-icon btn-sm btn-light btn-icon-gray-500"
                                                                     onclick="increaseQuantity('{{ product.id }}')">
@@ -957,7 +957,7 @@
                                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500" onclick="decreaseQuantity('${product.id}')">
                                                     <i class="fas fa-minus"></i>
                                                 </button>
-                                                <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" id="quantity_${product.id}" value="1" readonly/>
+                                                <input type="number" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" id="quantity_${product.id}" value="1" min="1"/>
                                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500" onclick="increaseQuantity('${product.id}')">
                                                     <i class="fas fa-plus"></i>
                                                 </button>
@@ -1071,7 +1071,7 @@
                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500 decrease-quantity" data-product-id="${product.id}">
                                     <i class="fas fa-minus"></i>
                                 </button>
-                                <input type="text" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" data-product-id="${product.id}" value="1" readonly/>
+                                <input type="number" class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input" data-product-id="${product.id}" value="1" min="1"/>
                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500 increase-quantity" data-product-id="${product.id}">
                                     <i class="fas fa-plus"></i>
                                 </button>
@@ -1641,92 +1641,18 @@
             });
         }
     });
-</script>
 
-{#<script>#}
-{#    // Add event listener to the "Place Order" button#}
-{#    document.getElementById("place-order-button").addEventListener("click", function () {#}
-{#        // Dynamically fetch the cart item count#}
-{#        const cartItems = document.querySelectorAll("#cart-sidebar tr").length;#}
-{##}
-{#        if (cartItems === 0) {#}
-{#            // Show warning if cart is empty#}
-{#            showAlert("Savatcha bo'sh. Iltimos, mahsulot qo'shing!", "warning");#}
-{#            return; // Prevent the modal from opening#}
-{#        }#}
-{##}
-{#        // Show the confirmation modal#}
-{#        const modal = new bootstrap.Modal(document.getElementById("confirmOrderModal"));#}
-{#        modal.show();#}
-{#    });#}
-{##}
-{#    // Add event listener to the "Confirm Order" button in the modal#}
-{#    document.getElementById("confirm-order").addEventListener("click", function () {#}
-{#        const additionalText = document.getElementById("additional-text").value;#}
-{##}
-{#        fetch("{% url 'order_page' %}", {#}
-{#            method: "POST",#}
-{#            headers: {#}
-{#                "Content-Type": "application/json",#}
-{#                "X-CSRFToken": "{{ csrf_token }}"#}
-{#            },#}
-{#            body: JSON.stringify({#}
-{#                additionalText: additionalText#}
-{#            })#}
-{#        })#}
-{#            .then(response => response.json())#}
-{#            .then(data => {#}
-{#                // Hide the modal after receiving the response#}
-{#                const modal = bootstrap.Modal.getInstance(document.getElementById("confirmOrderModal"));#}
-{#                modal.hide();#}
-{##}
-{#                if (data.success) {#}
-{#                    // Show success message#}
-{#                    showAlert("Buyurtma muvaffaqiyatli yuborildi!", "success");#}
-{##}
-{#                    // Clear the cart and input field#}
-{#                    document.getElementById("cart-sidebar").innerHTML = "";#}
-{#                    document.getElementById("additional-text").value = "";#}
-{##}
-{#                    // Refresh the page after 2 seconds#}
-{#                    setTimeout(() => location.reload(), 2000);#}
-{#                } else {#}
-{#                    // Show error message#}
-{#                    showAlert(data.message, "danger");#}
-{#                }#}
-{#            })#}
-{#            .catch(error => {#}
-{#                console.error("Error:", error);#}
-{##}
-{#                // Hide the modal in case of error#}
-{#                const modal = bootstrap.Modal.getInstance(document.getElementById("confirmOrderModal"));#}
-{#                modal.hide();#}
-{##}
-{#                // Show error alert#}
-{#                showAlert("Xatolik yuz berdi. Qaytadan urinib ko'ring.", "danger");#}
-{#            });#}
-{#    });#}
-{##}
-{#    // Function to display alerts#}
-{#    function showAlert(message, type = "info") {#}
-{#        const alertBox = document.createElement("div");#}
-{#        alertBox.className = `alert alert-${type} alert-dismissible fade show fixed-top`;#}
-{#        alertBox.role = "alert";#}
-{#        alertBox.style.marginTop = "20px";#}
-{#        alertBox.innerHTML = `#}
-{#        <div class="container">#}
-{#            ${message}#}
-{#            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
-{#        </div>#}
-{#    `;#}
-{#        document.body.appendChild(alertBox);#}
-{##}
-{#        // Automatically remove alert after 5 seconds#}
-{#        setTimeout(() => {#}
-{#            alertBox.remove();#}
-{#        }, 5000);#}
-{#    }#}
-{#</script>#}
+     // Get all quantity input fields
+    document.querySelectorAll('.quantity-input').forEach(input => {
+        // Listen for changes in the input
+        input.addEventListener('input', function () {
+            // Prevent invalid values
+            if (this.value < 1) {
+                this.value = 1; // Reset to minimum value
+            }
+        });
+    });
+</script>
 
 
 <script>

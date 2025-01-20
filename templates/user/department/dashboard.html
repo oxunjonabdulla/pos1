@@ -161,6 +161,21 @@
                         <div id="departments-container" class="d-flex flex-wrap justify-content-center"
                              style="gap: 15px;">
 
+                            <a href="{% url "users_page" %}" class="menu-item-link">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+            <span class="menu-icon me-0">
+                <i class="fas fa-users" style="font-size: 3.5rem; color: #FFC107;"></i>
+            </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        Xodimlar
+                                    </p>
+                                </div>
+                            </a>
+
+
                             <a href="{% url "admin_tutor" %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                      style="height: 110px; width: 110px;">
@@ -337,11 +352,11 @@
                                     <div class="menu-item px-3">
                                         <div class="menu-content d-flex align-items-center px-3">
                                             <!--begin::Avatar-->
-                                             {% if request.user.image %}
-                                             	<div class="symbol symbol-50px me-5">
-                                                <img alt="Logo" src="{{ request.user.image.url }}"/>
-                                            </div>
-                                             {% endif %}
+                                            {% if request.user.image %}
+                                                <div class="symbol symbol-50px me-5">
+                                                    <img alt="Logo" src="{{ request.user.image.url }}"/>
+                                                </div>
+                                            {% endif %}
 
                                             <!--end::Avatar-->
 
@@ -384,7 +399,7 @@
                                 </a>
                                 <!--end::Menu toggle-->
 
-                                 <!--begin::Menu-->
+                                <!--begin::Menu-->
                                 <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
                                      data-kt-menu="true" data-kt-element="theme-mode-menu">
                                     <!--begin::Menu item-->
@@ -459,10 +474,12 @@
                 <!--begin::Container-->
                 <div class=" container-xxl " id="kt_content_container">
 
+
                     <!--begin::Row-->
                     <div class="row gx-5 gx-xl-10 mb-xl-10">
+
                         <!--begin::Col-->
-                        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-10">
+                        <div class="col-6 mb-10">
 
                             <!--begin::Card widget 4-->
                             <div class="card card-flush h-md-50 mb-5 mb-xl-10">
@@ -548,7 +565,7 @@
                         <!--end::Col-->
 
                         <!--begin::Col-->
-                        <div class="col-md-6 col-lg-6 col-xl-6 col-xxl-3 mb-10">
+                        <div class="col-6 mb-10">
                             <!--begin::Card widget 6-->
                             <div class="card card-flush  h-md-50 mb-5 mb-xl-10">
                                 <!--begin::Header-->
@@ -635,295 +652,233 @@
                             <!--end::Card widget 7-->    </div>
                         <!--end::Col-->
 
+
+                    </div>
+                    <!--end::Row-->
+
+                    <!--begin::Row-->
+                    <div class="row gy-5 g-xl-10">
                         <!--begin::Col-->
-                        <div class="col-lg-12 col-xl-12 col-xxl-6 mb-5 mb-xl-0">
-                            <!--begin::Chart widget 3-->
-                            <div class="card card-flush overflow-hidden h-md-100">
-                                <!--begin::Header-->
-                                <div class="card-header py-5">
-                                    <!--begin::Title-->
-                                    <h3 class="card-title align-items-start flex-column">
-                                        <span class="card-label fw-bold text-gray-900">Barcha foydalanuvchilar</span>
-                                    </h3>
-                                    <!--end::Title-->
+                        <div class="col-12">
 
+                            <!-- begin::Products-->
+                            <div class="card card-flush" style="
+                                    background-color: #f9f9f9;
+                                    border: 5px solid #125B76;
+                                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), inset 0 0 15px rgba(18, 91, 118, 0.3);
+                                    border-radius: 20px;
+                                    padding: 20px;
+                                    transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                                <!--begin::Card header-->
+                                <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                                    <!--begin::Card title-->
+                                    <div class="card-title">
+                                        <!--begin::Search-->
+                                        <div class="d-flex align-items-center position-relative my-1">
+                                            <i class="fas fa-search fs-3 position-absolute ms-4"></i>
+                                            <input type="text"
+                                                   data-kt-ecommerce-order-filter="search"
+                                                   class="form-control form-control-solid w-250px ps-12"
+                                                   placeholder="Qidiruv ..." style="background-color: #e1dfdf;"/>
+                                        </div>
+                                        <!--end::Search-->
+                                    </div>
+                                    <!--end::Card title-->
 
+                                    <!--begin::Card toolbar-->
+                                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                        <a class="btn btn-primary">
+                                            Buyurtma berilgan {{ orders_1|length }} ta
+                                        </a>
+                                        <a class="btn btn-success">
+                                            Bajarildi {{ orders_2|length }} ta
+                                        </a>
+                                        <a class="btn btn-danger">
+                                            Bekor qilindi {{ orders_3|length }} ta
+                                        </a>
+                                    </div>
+                                    <!--end::Card toolbar-->
                                 </div>
-                                <!--end::Header-->
-                                <!--begin::Col-->
-                                <div class="card-body d-flex justify-content-between flex-column pb-1 px-0">
+                                <!--end::Card header-->
 
-                                    <!--begin::Table widget 2-->
-                                    <div class="">
+                                <!--begin::Card body-->
+                                <div class="card-body pt-0">
+                                    <!--begin::Table-->
+                                    <div class="table-responsive">
+                                        <table class="table align-middle table-row-dashed fs-6 gy-5"
+                                               id="kt_ecommerce_sales_table">
+                                            <thead>
+                                            <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                                <th class="text-start w-10px pe-2">
+                                                    <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                        <input class="form-check-input" type="checkbox"
+                                                               data-kt-check="true"
+                                                               data-kt-check-target="#kt_ecommerce_sales_table .form-check-input"
+                                                               value="1"/>
+                                                    </div>
+                                                </th>
+                                                <th class="min-w-100px">Buyurtma ID</th>
+                                                <th class="min-w-175px">Buyurtmachi</th>
+                                                <th class="text-end min-w-70px">Holati</th>
+                                                <th class="text-end min-w-100px">Jami</th>
+                                                <th class="text-end min-w-100px">Qo'shilgan sana</th>
+                                                <th class="text-end min-w-100px">O'zgartirilgan sana</th>
+                                                <th class="text-end min-w-100px">Amallar</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="fw-semibold text-gray-600" id="order-table-body">
 
+                                            {% include 'user/partials/order_list.html' %}
 
-                                        <!--begin::Body-->
-                                        <div class="card-body pt-2">
-                                            <!--begin::Nav-->
-                                            <ul class="nav nav-pills nav-pills-custom mb-3">
-
-                                                <!--begin::Item-->
-                                                {% for user in users %}
-                                                    <li class="nav-item mb-3 me-3 me-lg-6">
-                                                        <!--begin::Link-->
-                                                        <a class="nav-link d-flex justify-content-between flex-column flex-center overflow-hidden active w-80px h-85px py-4"
-                                                           data-bs-toggle="pill" href="#">
-                                                            <!--begin::Icon-->
-                                                            {% if user.image %}
-                                                                <div class="nav-icon">
-                                                                    <img alt="" src="{{ user.image.url }}" class=""/>
-                                                                </div>
-                                                            {% else %}
-                                                                <div class="nav-icon">
-                                                                    <i class="fas fa-user-circle"></i>
-                                                                </div>
-                                                            {% endif %}
-
-
-                                                            <!--end::Icon-->
-
-                                                            <!--begin::Subtitle-->
-                                                            <span class="nav-text text-gray-700 fw-bold fs-6 lh-1">
-                                                                {{ user.username }}
-                                                            </span>
-                                                            <!--end::Subtitle-->
-
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!--end::Table-->
+                                    <div class="d-flex justify-content-between align-items-center mt-4">
+                                        <div>
+                                            <p class="mb-0">
+                                                Ko‘rsatilmoqda: {{ user_orders.start_index }}
+                                                dan {{ user_orders.end_index }} gacha,
+                                                jami: {{ user_orders.paginator.count }} buyurtma
+                                            </p>
+                                        </div>
+                                        <nav>
+                                            <ul class="pagination pagination-sm justify-content-center">
+                                                {% if user_orders.has_previous %}
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="?q={{ query }}&page=1"
+                                                           aria-label="First">
+                                                            <i class="fas fa-angle-double-left"></i>
                                                         </a>
-                                                        <!--end::Link-->
                                                     </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                           href="?q={{ query }}&page={{ user_orders.previous_page_number }}"
+                                                           aria-label="Previous">
+                                                            <i class="fas fa-angle-left"></i>
+                                                        </a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item disabled"><span class="page-link"><i
+                                                            class="fas fa-angle-double-left"></i></span></li>
+                                                    <li class="page-item disabled"><span class="page-link"><i
+                                                            class="fas fa-angle-left"></i></span></li>
+                                                {% endif %}
+                                                {% for page_num in user_orders.paginator.page_range %}
+                                                    {% if page_num == user_orders.number %}
+                                                        <li class="page-item active"><span
+                                                                class="page-link">{{ page_num }}</span></li>
+                                                    {% elif page_num >= user_orders.number|add:-2 and page_num <= user_orders.number|add:2 %}
+                                                        <li class="page-item"><a class="page-link"
+                                                                                 href="?q={{ query }}&page={{ page_num }}">{{ page_num }}</a>
+                                                        </li>
+                                                    {% endif %}
                                                 {% endfor %}
-                                                <!--end::Item-->
+                                                {% if user_orders.has_next %}
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                           href="?q={{ query }}&page={{ user_orders.next_page_number }}"
+                                                           aria-label="Next">
+                                                            <i class="fas fa-angle-right"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                           href="?q={{ query }}&page={{ user_orders.paginator.num_pages }}"
+                                                           aria-label="Last">
+                                                            <i class="fas fa-angle-double-right"></i>
+                                                        </a>
+                                                    </li>
+                                                {% else %}
+                                                    <li class="page-item disabled"><span class="page-link"><i
+                                                            class="fas fa-angle-right"></i></span></li>
+                                                    <li class="page-item disabled"><span class="page-link"><i
+                                                            class="fas fa-angle-double-right"></i></span></li>
+                                                {% endif %}
                                             </ul>
-                                            <!--end::Nav-->
-                                        </div>
-                                        <!--end: Card Body-->
-
-
-                                        <!--end::Table widget 2-->
+                                        </nav>
                                     </div>
-                                    <!--end::Col-->
                                 </div>
-                                <!--end::Chart widget 3-->    </div>
-                            <!--end::Col-->
-
-                        </div>
-                        <!--end::Row-->
-
-                        <!--begin::Row-->
-                        <div class="row gy-5 g-xl-10">
-                            <!--begin::Col-->
-                            <div class="col-12">
-
-                                <!-- begin::Products-->
-                                <div class="card card-flush">
-                                    <!--begin::Card header-->
-                                    <div class="card-header align-items-center py-5 gap-2 gap-md-5">
-                                        <!--begin::Card title-->
-                                        <div class="card-title">
-                                            <!--begin::Search-->
-                                            <div class="d-flex align-items-center position-relative my-1">
-                                                <i class="fas fa-search fs-3 position-absolute ms-4"></i>
-                                                 <input type="text"
-                                           data-kt-ecommerce-order-filter="search"
-                                           class="form-control form-control-solid w-250px ps-12"
-                                           placeholder="Qidiruv ..."/>
-                                            </div>
-                                            <!--end::Search-->
-                                        </div>
-                                        <!--end::Card title-->
-
-                                        <!--begin::Card toolbar-->
-                                        <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                                            <a class="btn btn-primary">
-                                                Buyurtma berilgan {{ orders_1|length }} ta
-                                            </a>
-                                            <a class="btn btn-success">
-                                                Bajarildi {{ orders_2|length }} ta
-                                            </a>
-                                            <a class="btn btn-danger">
-                                                Bekor qilindi {{ orders_3|length }} ta
-                                            </a>
-                                        </div>
-                                        <!--end::Card toolbar-->
-                                    </div>
-                                    <!--end::Card header-->
-
-                                    <!--begin::Card body-->
-                                    <div class="card-body pt-0">
-                                        <!--begin::Table-->
-                                        <div class="table-responsive">
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5"
-                                                   id="kt_ecommerce_sales_table">
-                                                <thead>
-                                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                                    <th class="text-start w-10px pe-2">
-                                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                   data-kt-check="true"
-                                                                   data-kt-check-target="#kt_ecommerce_sales_table .form-check-input"
-                                                                   value="1"/>
-                                                        </div>
-                                                    </th>
-                                                    <th class="min-w-100px">Buyurtma ID</th>
-                                                    <th class="min-w-175px">Buyurtmachi</th>
-                                                    <th class="text-end min-w-70px">Holati</th>
-                                                    <th class="text-end min-w-100px">Jami</th>
-                                                    <th class="text-end min-w-100px">Qo'shilgan sana</th>
-                                                    <th class="text-end min-w-100px">O'zgartirilgan sana</th>
-                                                    <th class="text-end min-w-100px">Amallar</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody class="fw-semibold text-gray-600" id="order-table-body">
-
-                                                {% include 'user/partials/order_list.html' %}
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <!--end::Table-->
-                                        <div class="d-flex justify-content-between align-items-center mt-4">
-                                            <div>
-                                                <p class="mb-0">
-                                                    Ko‘rsatilmoqda: {{ user_orders.start_index }}
-                                                    dan {{ user_orders.end_index }} gacha,
-                                                    jami: {{ user_orders.paginator.count }} buyurtma
-                                                </p>
-                                            </div>
-                                            <nav>
-                                                <ul class="pagination pagination-sm justify-content-center">
-                                                    {% if user_orders.has_previous %}
-                                                        <li class="page-item">
-                                                            <a class="page-link" href="?q={{ query }}&page=1"
-                                                               aria-label="First">
-                                                                <i class="fas fa-angle-double-left"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="page-item">
-                                                            <a class="page-link"
-                                                               href="?q={{ query }}&page={{ user_orders.previous_page_number }}"
-                                                               aria-label="Previous">
-                                                                <i class="fas fa-angle-left"></i>
-                                                            </a>
-                                                        </li>
-                                                    {% else %}
-                                                        <li class="page-item disabled"><span class="page-link"><i
-                                                                class="fas fa-angle-double-left"></i></span></li>
-                                                        <li class="page-item disabled"><span class="page-link"><i
-                                                                class="fas fa-angle-left"></i></span></li>
-                                                    {% endif %}
-                                                    {% for page_num in user_orders.paginator.page_range %}
-                                                        {% if page_num == user_orders.number %}
-                                                            <li class="page-item active"><span
-                                                                    class="page-link">{{ page_num }}</span></li>
-                                                        {% elif page_num >= user_orders.number|add:-2 and page_num <= user_orders.number|add:2 %}
-                                                            <li class="page-item"><a class="page-link"
-                                                                                     href="?q={{ query }}&page={{ page_num }}">{{ page_num }}</a>
-                                                            </li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                    {% if user_orders.has_next %}
-                                                        <li class="page-item">
-                                                            <a class="page-link"
-                                                               href="?q={{ query }}&page={{ user_orders.next_page_number }}"
-                                                               aria-label="Next">
-                                                                <i class="fas fa-angle-right"></i>
-                                                            </a>
-                                                        </li>
-                                                        <li class="page-item">
-                                                            <a class="page-link"
-                                                               href="?q={{ query }}&page={{ user_orders.paginator.num_pages }}"
-                                                               aria-label="Last">
-                                                                <i class="fas fa-angle-double-right"></i>
-                                                            </a>
-                                                        </li>
-                                                    {% else %}
-                                                        <li class="page-item disabled"><span class="page-link"><i
-                                                                class="fas fa-angle-right"></i></span></li>
-                                                        <li class="page-item disabled"><span class="page-link"><i
-                                                                class="fas fa-angle-double-right"></i></span></li>
-                                                    {% endif %}
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>
-                                    <!--end::Card body-->
-                                </div>
-                                <!--end::Products-->
-
+                                <!--end::Card body-->
                             </div>
-                            <!--end::Col-->
+                            <!--end::Products-->
+
                         </div>
-                        <!--end::Row-->
-
-
+                        <!--end::Col-->
                     </div>
-                    <!--end::Content-->
+                    <!--end::Row-->
 
-                    <!-- begin::Footer-->
-                    <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
-                        <!--begin::Container-->
-                        <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
-                            <!--begin::Copyright-->
-                            <div class="text-gray-900 order-2 order-md-1">
-                                <span class="text-gray-500 fw-semibold me-1">Muallif : </span>
-                                <a href="https://t.me/oxunjonabdulla" target="_blank"
-                                   class="text-muted text-hover-primary fw-semibold me-2 fs-6">Oxunjon</a>
-                            </div>
-                            <!--end::Copyright-->
-
-                            <!--begin::Menu-->
-                            <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                                <li class="menu-item"><a href="#"
-                                                         class="menu-link px-2">Railway Poster</a></li>
-                            </ul>
-                            <!--end::Menu-->
-                        </div>
-                        <!--end::Container-->
-                    </div>
-                    <!--end::Footer-->
 
                 </div>
-                <!--end::Wrapper-->
+                <!--end::Content-->
+
+                <!-- begin::Footer-->
+                <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
+                    <!--begin::Container-->
+                    <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
+                        <!--begin::Copyright-->
+                        <div class="text-gray-900 order-2 order-md-1">
+                            <span class="text-gray-500 fw-semibold me-1">Muallif : </span>
+                            <a href="https://t.me/oxunjonabdulla" target="_blank"
+                               class="text-muted text-hover-primary fw-semibold me-2 fs-6">Oxunjon</a>
+                        </div>
+                        <!--end::Copyright-->
+
+                        <!--begin::Menu-->
+                        <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+                            <li class="menu-item"><a href="#"
+                                                     class="menu-link px-2">Railway Poster</a></li>
+                        </ul>
+                        <!--end::Menu-->
+                    </div>
+                    <!--end::Container-->
+                </div>
+                <!--end::Footer-->
+
             </div>
-            <!--end::Page-->
+            <!--end::Wrapper-->
         </div>
-        <!--end::Root-->
+        <!--end::Page-->
+    </div>
+    <!--end::Root-->
 
 
-        <!-- Scroll to Top Button -->
-        <button id="scrollTop" class="scrolltop" data-kt-scrolltop="true">
-            <i class="fas fa-chevron-circle-up"></i>
-        </button>
+    <!-- Scroll to Top Button -->
+    <button id="scrollTop" class="scrolltop" data-kt-scrolltop="true">
+        <i class="fas fa-chevron-circle-up"></i>
+    </button>
 
 
-        <!--begin::Javascript-->
-        <script>
-            var hostUrl = "{% static "assets2/index.html" %}";        </script>
+    <!--begin::Javascript-->
+    <script>
+        var hostUrl = "{% static "assets2/index.html" %}";        </script>
 
-        <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-        <script src="{% static "assets2/plugins/global/plugins.bundle.js" %}"></script>
-        <script src="{% static "assets2/js/scripts.bundle.js" %}"></script>
-        <!--end::Global Javascript Bundle-->
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="{% static "assets2/plugins/global/plugins.bundle.js" %}"></script>
+    <script src="{% static "assets2/js/scripts.bundle.js" %}"></script>
+    <!--end::Global Javascript Bundle-->
 
-        <!--begin::Vendors Javascript(used for this page only)-->
-        <script src="{% static "assets2/plugins/custom/datatables/datatables.bundle.js" %}"></script>
-        <script src="{% static "assets2/plugins/custom/vis-timeline/vis-timeline.bundle.js" %}"></script>
-        <!--end::Vendors Javascript-->
+    <!--begin::Vendors Javascript(used for this page only)-->
+    <script src="{% static "assets2/plugins/custom/datatables/datatables.bundle.js" %}"></script>
+    <script src="{% static "assets2/plugins/custom/vis-timeline/vis-timeline.bundle.js" %}"></script>
+    <!--end::Vendors Javascript-->
 
-        <!--begin::Custom Javascript(used for this page only)-->
-        <script src="{% static "assets2/js/widgets.bundle.js" %}"></script>
-        <script src="{% static "assets2/js/custom/widgets.js" %}"></script>
-        <script src="{% static "assets2/js/custom/apps/chat/chat.js" %}"></script>
-        <script src="{% static "assets2/js/custom/utilities/modals/upgrade-plan.js" %}"></script>
-        <script src="{% static "assets2/js/custom/utilities/modals/create-app.js" %}"></script>
-        <script src="{% static "assets2/js/custom/utilities/modals/users-search.js" %}"></script>
-        <script>
-            function showConfirmationModal(message, onConfirm) {
-                const modal = document.createElement("div");
-                modal.className = "modal fade";
-                modal.tabIndex = "-1";
-                modal.role = "dialog";
-                modal.innerHTML = `
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{% static "assets2/js/widgets.bundle.js" %}"></script>
+    <script src="{% static "assets2/js/custom/widgets.js" %}"></script>
+    <script src="{% static "assets2/js/custom/apps/chat/chat.js" %}"></script>
+    <script src="{% static "assets2/js/custom/utilities/modals/upgrade-plan.js" %}"></script>
+    <script src="{% static "assets2/js/custom/utilities/modals/create-app.js" %}"></script>
+    <script src="{% static "assets2/js/custom/utilities/modals/users-search.js" %}"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <script>
+        function showConfirmationModal(message, onConfirm) {
+            const modal = document.createElement("div");
+            modal.className = "modal fade";
+            modal.tabIndex = "-1";
+            modal.role = "dialog";
+            modal.innerHTML = `
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -941,40 +896,40 @@
             </div>
         `;
 
-                document.body.appendChild(modal);
-                const bsModal = new bootstrap.Modal(modal);
+            document.body.appendChild(modal);
+            const bsModal = new bootstrap.Modal(modal);
 
-                // Attach event listener for confirm button
-                modal.querySelector("#confirm-clear-cart").addEventListener("click", function () {
-                    bsModal.hide();
-                    modal.remove();
+            // Attach event listener for confirm button
+            modal.querySelector("#confirm-clear-cart").addEventListener("click", function () {
+                bsModal.hide();
+                modal.remove();
 
-                    if (onConfirm) onConfirm(); // Call the confirm callback
-                });
+                if (onConfirm) onConfirm(); // Call the confirm callback
+            });
 
-                // Show the modal
-                bsModal.show();
+            // Show the modal
+            bsModal.show();
 
-                // Remove modal from DOM on close
-                modal.addEventListener("hidden.bs.modal", function () {
-                    modal.remove();
-                });
-            }
+            // Remove modal from DOM on close
+            modal.addEventListener("hidden.bs.modal", function () {
+                modal.remove();
+            });
+        }
 
-            function logoutConfirm(event) {
-                event.preventDefault(); // Prevent the default anchor behavior
+        function logoutConfirm(event) {
+            event.preventDefault(); // Prevent the default anchor behavior
 
-                showConfirmationModal("Rostdan ham tizimni tark etmoqchimisiz?", function () {
-                    console.log("Ok");
-                    window.location.href = '/auth/logout/';
-                });
-            }
-        </script>
+            showConfirmationModal("Rostdan ham tizimni tark etmoqchimisiz?", function () {
+                console.log("Ok");
+                window.location.href = '/auth/logout/';
+            });
+        }
+    </script>
 
 
-        <!--end::Custom Javascript-->
-        <!--end::Javascript-->
-    </div>
+    <!--end::Custom Javascript-->
+    <!--end::Javascript-->
+</div>
 </div>
 </body>
 <!-- end::Body-->

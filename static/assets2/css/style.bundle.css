@@ -55444,14 +55444,14 @@ body[data-kt-sticky-landing-header=on] {
 [data-bs-theme=light] {
     --bs-page-bg: #ffffff;
     --bs-app-blank-bg: #ffffff;
-    --bs-header-general-bg-color: #2C294B;
+    --bs-header-general-bg-color: #125B76;
     --bs-header-general-box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
     --bs-header-search-icon-color: #ffffff;
-    --bs-header-search-bg-color: #403E5E;
+    --bs-header-search-bg-color: #0F4C5C ;
     --bs-header-search-placeholder-color: #636674;
     --bs-header-search-font-color: #9A9CAE;
     --bs-header-button-icon-color: #ffffff;
-    --bs-header-button-bg-color: #403E5E;
+    --bs-header-button-bg-color: #0F4C5C ;
     --bs-header-button-icon-color-active: #ffffff;
     --bs-header-mobile-bg-color: #ffffff;
     --bs-aside-bg-color: #ffffff;

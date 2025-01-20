@@ -263,3 +263,13 @@ def check_section(request):
 @login_required(login_url='login_page')
 def bad_request_view(request, exception=None):
     return render(request, 'user/error-404.html')
+
+
+@login_required(login_url='login_page')
+def users_page(request):
+    print(request.user.is_superuser)
+    if request.user.is_superuser:
+        users = User.objects.all()
+        return render(request, 'user/users.html', {'users': users})
+    else:
+        return redirect('mechanic_page')

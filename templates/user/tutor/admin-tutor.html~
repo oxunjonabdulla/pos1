@@ -177,6 +177,20 @@
                                 </div>
                             </a>
 
+                                <a href="" class="menu-item-link">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+            <span class="menu-icon me-0">
+                <i class="fas fa-users" style="font-size: 3.5rem; color: #FFC107;"></i>
+            </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        Xodimlar
+                                    </p>
+                                </div>
+                            </a>
+
                             <a href="{% url "admin_tutor" %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                      style="height: 110px; width: 110px;">
@@ -316,7 +330,7 @@
                                                     <!--end::Label-->
                                                     <!--begin::Title-->
                                                     <a
-                                                       class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
+                                                            class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
                                                     <!--end::Title-->
                                                 </div>
                                                 <!--end::Section-->
@@ -364,7 +378,7 @@
                                         <!--begin::Avatar-->
                                         <div class="symbol symbol-50px me-5">
                                             {% if request.user.image %}
-                                            	 <img alt="Logo" src="{{ request.user.image.url }}"/>
+                                                <img alt="Logo" src="{{ request.user.image.url }}"/>
                                             {% endif %}
 
                                         </div>
@@ -417,10 +431,10 @@
                                 <div class="menu-item px-3 my-0">
                                     <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
                                        data-kt-value="light">
-                <span class="menu-icon" data-kt-element="icon">
-                    <i class="fas fa-sun fs-2"></i>
-                </span>
-                                        <span class="menu-title">Light</span>
+                                    <span class="menu-icon" data-kt-element="icon">
+                                        <i class="fas fa-sun fs-2"></i>
+                                    </span>
+                                        <span class="menu-title">Tongi rejim</span>
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -429,26 +443,15 @@
                                 <div class="menu-item px-3 my-0">
                                     <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
                                        data-kt-value="dark">
-                <span class="menu-icon" data-kt-element="icon">
-                    <i class="fas fa-moon fs-2"></i>
-                </span>
-                                        <span class="menu-title">Dark</span>
-                                    </a>
-                                </div>
-                                <!--end::Menu item-->
-
-                                <!--begin::Menu item-->
-                                <div class="menu-item px-3 my-0">
-                                    <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                       data-kt-value="system">
-                <span class="menu-icon" data-kt-element="icon">
-                    <i class="fas fa-desktop fs-2"></i>
-                </span>
-                                        <span class="menu-title">System</span>
+                                    <span class="menu-icon" data-kt-element="icon">
+                                        <i class="fas fa-moon fs-2"></i>
+                                    </span>
+                                        <span class="menu-title">Tungi rejim</span>
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
                             </div>
+
                             <!--end::Menu-->
                         </div>
 

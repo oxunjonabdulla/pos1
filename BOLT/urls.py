@@ -17,7 +17,7 @@ from BOLT.views.main import (
     dashboard_page,
     search_products,
     filter_products,
-    bad_request_view,
+    bad_request_view, users_page,
 )
 from BOLT.views.order import (
     search_orders,
@@ -42,6 +42,8 @@ urlpatterns = [
     path('warehouse/', warehouse_page, name='warehouse_page'),
     path('mechanic/', mechanic_page, name='mechanic_page'),
     path('check-section/', check_section, name='check_section'),
+
+    path('users-page/', users_page, name='users_page'),
 
     # Search and Filter
     path('warehouse/search-products/', search_products, name='warehouse_search_products'),
