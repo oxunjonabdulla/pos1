@@ -80,4 +80,4 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # Custom Error Handlers
-handler404 = 'BOLT.views.main.bad_request_view'
+# handler404 = 'BOLT.views.main.bad_request_view'

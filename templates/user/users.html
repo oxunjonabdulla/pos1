@@ -82,57 +82,23 @@
             margin-bottom: 10px; /* Space below the logo */
         }
 
-        .table td {
-            white-space: nowrap; /* Prevent text wrapping */
-            text-overflow: ellipsis;
-            overflow: hidden;
+
+        /* Make table scrollable on small screens */
+        .table-responsive {
+            overflow-x: auto;
         }
 
-        .table .min-w-100px {
-            max-width: 100px;
-        }
-
+        /* Responsive adjustments for mobile devices */
         @media (max-width: 768px) {
-            .pagination {
-                font-size: 12px;
-            }
-
-            .table td {
-                font-size: 14px;
-                padding: 8px;
-            }
-        }
-
-        .pagination .page-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-        }
-
-        .pagination .page-link i {
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .d-flex.align-items-center.py-3.py-lg-0.flex-wrap {
-                justify-content: center;
-            }
-
-            .me-3 {
-                margin-right: 0.5rem !important;
-                margin-bottom: 0.5rem;
-            }
-
-            .btn-icon {
-                width: 40px;
-                height: 40px;
-            }
-
-            .btn-icon i {
-                font-size: 1.2rem;
+            /* Ensure location column text wraps or truncates */
+            #kt_ecommerce_sales_table td:nth-child(4),
+            #kt_ecommerce_sales_table th:nth-child(4) {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
         }
+
 
     </style>
 </head>
@@ -341,8 +307,13 @@
                                 <a href="#" class="btn btn-icon btn-custom btn-active-color-primary position-relative"
                                    data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                    data-kt-menu-placement="bottom-end">
+                                    <!-- Font Awesome bell icon -->
                                     <i class="fas fa-bell fs-1"></i>
-                                    <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+
+                                    <!-- Conditional Notification Dot -->
+                                    {% if today_orders.count > 0 %}
+                                        <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                                    {% endif %}
                                 </a>
 
                                 <!-- begin::Notification menu -->
@@ -421,11 +392,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="separator my-2"></div>
-                                    <div class="menu-item px-5">
-                                        <a href="{% url "tutorial_page" %}" class="menu-link px-5">Foydalanish bo'yicha
-                                            qo'llanma</a>
-                                    </div>
+
                                 </div>
                             </div>
                             <!-- end::User -->
@@ -542,70 +509,45 @@
 
                         <!--begin::Card body-->
                         <div class="card-body pt-0">
-
-                            <!--begin::Table-->
-                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_sales_table">
-                                <thead>
-                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="text-start w-10px pe-2">
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                                   data-kt-check-target="#kt_ecommerce_sales_table .form-check-input"
-                                                   value="1"/>
-                                        </div>
-                                    </th>
-                                     <th class="min-w-125px">Foydalanuvchi</th>
-                                <th class="min-w-125px">Roli</th>
-                                <th class="min-w-125px">Oxirgi kirish</th>
-                                <th class="min-w-125px">Manzil</th>
-
-                                </tr>
-                                </thead>
-
-                                <tbody class="fw-semibold text-gray-600" id="order-table-body">
-                                {% for user in users %}
-                                    <tr>
-                                        <td class="text-start">
-                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="1"/>
-                                            </div>
-                                        </td>
-                                        <td class="d-flex align-items-center">
-                                    <!--begin:: Avatar -->
-                                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                                        <a >
-                                            <div class="symbol-label">
-                                                {% if user.image %}
-                                                	<img src="{{ user.image.url }}" alt="{{ user.username }}"
-                                                     class="w-100"/>
-                                                {% endif %}
-                                            </div>
-                                        </a>
-                                    </div>
-                                    <!--end::Avatar-->
-                                    <!--begin::User details-->
-                                    <div class="d-flex flex-column">
-                                        <a  class="text-gray-800 text-hover-primary mb-1">{{ user.username }}</a>
-                                    </div>
-                                    <!--begin::User details-->
-                                </td>
-                                <td>
-                                    {{ user.role }}
-                                </td>
-                                <td>
-                                    <div class="badge badge-light fw-bold">{{ user.last_login }}</div>
-                                </td>
-                                <td>
-                                    {{ user.location }}
-                                </td>
-
+                            <div class="table-responsive">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5"
+                                       id="kt_ecommerce_sales_table">
+                                    <thead>
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="min-w-125px">Foydalanuvchi</th>
+                                        <th class="min-w-125px">Roli</th>
+                                        <th class="min-w-125px">Oxirgi kirish</th>
+                                        <th class="min-w-125px">Manzil</th>
                                     </tr>
-                                {% endfor %}
-                                </tbody>
-
-
-                            </table>
-                            <!--end::Table-->
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600" id="order-table-body">
+                                    {% for user in users %}
+                                        <tr>
+                                            <td class="d-flex align-items-center">
+                                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                    <a>
+                                                        <div class="symbol-label">
+                                                            {% if user.image %}
+                                                                <img src="{{ user.image.url }}"
+                                                                     alt="{{ user.username }}" class="w-100"/>
+                                                            {% endif %}
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <a class="text-gray-800 text-hover-primary mb-1">{{ user.username }}</a>
+                                                </div>
+                                            </td>
+                                            <td>{{ user.role }}</td>
+                                            <td>
+                                                <div class="badge badge-light fw-bold">{{ user.last_login }}</div>
+                                            </td>
+                                            <td>{% if user.location != None %}{{ user.location }}{% endif %}</td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
 
                         </div>
 
@@ -667,29 +609,6 @@
 <script src="{% static "assets2/plugins/global/plugins.bundle.js" %}"></script>
 <script src="{% static "assets2/js/scripts.bundle.js" %}"></script>
 <!--end::Global Javascript Bundle-->
-
-<script src="{% static 'assets2/plugins/custom/datatables/datatables.bundle.js' %}"></script>
-<script>
-    $(document).ready(function () {
-        // Check if the DataTable is already initialized
-        if ($.fn.DataTable.isDataTable('#kt_ecommerce_sales_table')) {
-            // Destroy the existing instance
-            $('#kt_ecommerce_sales_table').DataTable().destroy();
-        }
-
-        // Initialize the DataTable
-        $('#kt_ecommerce_sales_table').DataTable({
-            paging: false, // Disable automatic pagination
-            info: false,   // Disable the "showing x of y entries" info
-            searching: false, // Disable search if not needed
-            ordering: false, // Disable column sorting
-            language: {
-                emptyTable: "Ma'lumot mavjud emas" // Customize "no data" message
-            }
-        });
-    });
-
-</script>
 
 
 <!-- begin::Custom Javascript(used for this page only)-->

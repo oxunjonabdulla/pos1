@@ -337,11 +337,15 @@
                             <a href="#" class="btn btn-icon btn-custom btn-active-color-primary position-relative"
                                data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                data-kt-menu-placement="bottom-end">
-                                <!-- Replaced ki-duotone ki-notification-bing with Font Awesome bell icon -->
+                                <!-- Font Awesome bell icon -->
                                 <i class="fas fa-bell fs-1"></i>
-                                <!-- Notification dot -->
-                                <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+
+                                <!-- Conditional Notification Dot -->
+                                {% if today_orders.count > 0 %}
+                                    <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                                {% endif %}
                             </a>
+
 
                             <!--begin::Menu-->
                             <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
@@ -615,7 +619,7 @@
                                                             <input type="number"
                                                                    class="form-control border-0 text-center px-0 fs-3 fw-bold text-gray-800 w-50px quantity-input"
                                                                    id="quantity_{{ product.id }}" value="1"
-                                                                   min="1" />
+                                                                   min="1"/>
                                                             <button type="button"
                                                                     class="btn btn-icon btn-sm btn-light btn-icon-gray-500"
                                                                     onclick="increaseQuantity('{{ product.id }}')">
@@ -1642,7 +1646,7 @@
         }
     });
 
-     // Get all quantity input fields
+    // Get all quantity input fields
     document.querySelectorAll('.quantity-input').forEach(input => {
         // Listen for changes in the input
         input.addEventListener('input', function () {

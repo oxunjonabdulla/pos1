@@ -300,13 +300,8 @@
                             <a href="#" class="btn btn-icon btn-custom btn-active-color-primary position-relative"
                                data-kt-menu-trigger="click" data-kt-menu-attach="parent"
                                data-kt-menu-placement="bottom-end">
-                                <!-- Font Awesome bell icon -->
                                 <i class="fas fa-bell fs-1"></i>
-
-                                <!-- Conditional Notification Dot -->
-                                {% if today_orders.count > 0 %}
-                                    <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
-                                {% endif %}
+                                <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
                             </a>
 
                             <!-- begin::Notification menu -->
