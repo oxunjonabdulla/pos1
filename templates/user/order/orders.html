@@ -134,6 +134,7 @@
             }
         }
 
+
     </style>
 </head>
 <!--end::Head-->
@@ -531,18 +532,15 @@
                 <!--begin::Container-->
                 <div class=" container-xxl " id="kt_content_container">
                     <!-- begin::Products-->
-                    <div class="card card-flush" style="
-                    background-color: #f9f9f9;
-                    border: 5px solid #125B76;
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), inset 0 0 15px rgba(18, 91, 118, 0.3);
-                    border-radius: 20px;
-                    padding: 20px;
-                    transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <div class="card card-flush">
 
                         <!--begin::Card header-->
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+
                             <!--begin::Card title-->
                             <div class="card-title">
+
+
                                 <!--begin::Search-->
                                 <div class="d-flex align-items-center position-relative my-1">
                                     <i class="fas fa-search fs-3 position-absolute ms-4"></i>
@@ -557,19 +555,23 @@
                             <!--end::Card title-->
 
                             <!--begin::Card toolbar-->
-                            {#                            <div class="card-toolbar flex-row-fluid justify-content-end gap-5">#}
-                            {#                                <!--begin::Add product-->#}
-                            {#                                <a href="#" class="btn btn-primary">#}
-                            {#                                    Buyurtma berilgan {{ orders_1_count }} ta#}
-                            {#                                </a>#}
-                            {#                                <a href="#" class="btn btn-success">#}
-                            {#                                    Bajarildi {{ orders_2_count }} ta#}
-                            {#                                </a>#}
-                            {#                                <a href="#" class="btn btn-danger">#}
-                            {#                                    Bekor qilindi {{ orders_3_count }} ta#}
-                            {#                                </a>#}
-                            {#                                <!--end::Add product-->#}
-                            {#                            </div>#}
+                            <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
+                                <!--begin::Add product-->
+                                <div class="w-100" style="max-width: 220px;">
+                                    <!--begin::Select2-->
+                                    <select class="form-select form-select-solid" data-control="select2"
+                                            data-hide-search="true" data-placeholder="Buyurtma holati"
+                                            data-kt-ecommerce-order-filter="status">
+                                        <option></option>
+                                        <option value="all">Hammasi</option>
+                                        <option value="Pending">Buyurtma berildi {{ orders_1|length }} ta</option>
+                                        <option value="Delivered">Bajarildi {{ orders_2|length }} ta</option>
+                                        <option value="Cancelled">Bekor qilindi {{ orders_3|length }} ta</option>
+                                    </select>
+                                    <!--end::Select2-->
+                                </div>
+                                <!--end::Add product-->
+                            </div>
                             <!--end::Card toolbar-->
 
                         </div>
@@ -600,12 +602,11 @@
                                 </thead>
 
                                 <tbody class="fw-semibold text-gray-600" id="order-table-body">
-                                {% include 'user/partials/order_list.html' %}
+                                {% include "user/partials/order_list.html" %}
                                 </tbody>
-
-
                             </table>
                             <!--end::Table-->
+
 
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <!-- Ko‘rsatilayotgan ma'lumotlar haqida -->

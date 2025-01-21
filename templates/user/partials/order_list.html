@@ -1,91 +1,98 @@
+
+
 {% for order in user_orders %}
+    <!-- Begin Order Row -->
     <tr>
+        <!-- Checkbox -->
         <td class="text-start">
             <div class="form-check form-check-sm form-check-custom form-check-solid">
                 <input class="form-check-input" type="checkbox" value="1"/>
             </div>
         </td>
+
+        <!-- Order ID -->
         <td class="text-start" data-kt-ecommerce-order-filter="order_id">
             {% if request.user.is_superuser %}
-            	 <a href="{% url "order1-detail" pk=order.id %}"
-               class="text-gray-800 text-hover-primary fw-bold">
-                #{{ order.id }} </a>
-
-             {% elif request.user.is_staff %}
-                 <a href="{% url "user_order_details" pk=order.id %}"
-               class="text-gray-800 text-hover-primary fw-bold">
-                #{{ order.id }} </a>
+                <a href="{% url 'order1-detail' pk=order.id %}"
+                   class="text-gray-800 text-hover-primary fw-bold border-bottom border-primary pb-1">
+                    #{{ order.id }}
+                </a>
+            {% elif request.user.is_staff %}
+                <a href="{% url 'user_order_details' pk=order.id %}"
+                   class="text-gray-800 text-hover-primary fw-bold border-bottom border-secondary pb-1">
+                    #{{ order.id }}
+                </a>
             {% endif %}
-
         </td>
+
+        <!-- Buyurtmachi -->
         <td>
             <div class="d-flex align-items-center">
-                <!--begin:: Avatar -->
+                <!-- Avatar -->
                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                     <a href="#">
                         <div class="symbol-label">
-
-                            {% if order.foydalanuvchi.image  %}
-                            	    <img src="{{ order.foydalanuvchi.image.url }}"
-                                 alt="{{ order.foydalanuvchi.username }}" class="w-100"/>
+                            {% if order.foydalanuvchi.image %}
+                                <img src="{{ order.foydalanuvchi.image.url }}" alt="{{ order.foydalanuvchi.username }}"
+                                     class="w-100 rounded-circle border shadow-sm"/>
                             {% endif %}
-
                         </div>
                     </a>
                 </div>
-                <!--end::Avatar-->
-
+                <!-- Username -->
                 <div class="ms-5">
-                    <!--begin::Title-->
-                    <span href="#"
-                          class="text-gray-800 text-hover-primary fs-5 fw-bold">{{ order.foydalanuvchi.username }}</span>
-                    <!--end::Title-->
+                <span class="text-gray-800 text-hover-primary fs-5 fw-bold border-bottom border-info pb-1">
+                    {{ order.foydalanuvchi.username }}
+                </span>
                 </div>
             </div>
         </td>
-        <td class="text-end pe-0" data-order="Cancelled">
-            <!--begin::Badges-->
-            {% if order.status == '1' %}
-                <div class="badge badge-light-primary">Buyurtma berildi</div>
-            {% elif order.status == '2' %}
-                <!--begin::Badges-->
-                <div class="badge badge-light-success">Bajarildi</div>
-                <!--end::Badges-->
-            {% elif order.status == '3' %}
-                <!--begin::Badges-->
-                <div class="badge badge-light-danger">Bekor qilindi</div>
 
-                <!--end::Badges-->
+        <!-- Order Status -->
+        <td class="text-end pe-0" data-order="{{ order.status }}">
+            {% if order.status == '1' %}
+                <div class="badge badge-light-primary border border-primary shadow-sm">Buyurtma berildi</div>
+            {% elif order.status == '2' %}
+                <div class="badge badge-light-success border border-success shadow-sm">Bajarildi</div>
+            {% elif order.status == '3' %}
+                <div class="badge badge-light-danger border border-danger shadow-sm">Bekor qilindi</div>
             {% endif %}
-            <!--end::Badges-->
         </td>
+
+        <!-- Jami -->
         <td class="text-end pe-0">
-            <span class="fw-bold">{{ order.jami_maxsulot }} ta</span>
+            <span class="fw-bold text-primary border-bottom border-warning pb-1">{{ order.jami_maxsulot }} ta</span>
         </td>
+
+        <!-- Created At -->
         <td class="text-end" data-order="{{ order.created_at }}">
-            <span class="fw-bold">{{ order.created_at }}</span>
+        <span class="fw-bold text-success border-bottom border-light pb-1">
+            {{ order.created_at|date:"d-m-y H:i" }}
+        </span>
         </td>
+
+        <!-- Updated At -->
         <td class="text-end" data-order="{{ order.updated_at }}">
-            <span class="fw-bold">{{ order.updated_at }}</span>
+            <span class="fw-bold text-danger border-bottom border-dark pb-1">{{ order.updated_at|date:"d-m-y H:i" }}</span>
         </td>
+
+        <!-- Actions -->
         <td class="text-end">
             {% if request.user.is_superuser %}
-            <a href="{% url "order1-detail" pk=order.id %}"
-               class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
-               data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                Batafsil
-            </a>
+                <a href="{% url 'order1-detail' pk=order.id %}"
+                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm">
+                    Batafsil
+                </a>
             {% elif request.user.is_staff %}
-            <a href="{% url "user_order_details" pk=order.id %}"
-               class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary"
-               data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                Batafsil
-            </a>
+                <a href="{% url 'user_order_details' pk=order.id %}"
+                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm">
+                    Batafsil
+                </a>
             {% endif %}
-
-            <!--begin::Menu-->
-            <!--end::Menu-->                </td>
+        </td>
     </tr>
+
+    <!-- End Order Row -->
 {% endfor %}
 
 <script>

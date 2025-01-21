@@ -80,9 +80,6 @@
         }
 
 
-
-
-
     </style>
 </head>
 <!--end::Head-->
@@ -285,7 +282,6 @@
                                         <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
                                     {% endif %}
                                 </a>
-
 
 
                                 <!--begin::Menu-->
@@ -669,13 +665,7 @@
                         <div class="col-12">
 
                             <!-- begin::Products-->
-                            <div class="card card-flush" style="
-                                    background-color: #f9f9f9;
-                                    border: 5px solid #125B76;
-                                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), inset 0 0 15px rgba(18, 91, 118, 0.3);
-                                    border-radius: 20px;
-                                    padding: 20px;
-                                    transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                            <div class="card card-flush">
                                 <!--begin::Card header-->
                                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                                     <!--begin::Card title-->
@@ -694,15 +684,23 @@
 
                                     <!--begin::Card toolbar-->
                                     <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                                        <a class="btn btn-primary">
-                                            Buyurtma berilgan {{ orders_1|length }} ta
-                                        </a>
-                                        <a class="btn btn-success">
-                                            Bajarildi {{ orders_2|length }} ta
-                                        </a>
-                                        <a class="btn btn-danger">
-                                            Bekor qilindi {{ orders_3|length }} ta
-                                        </a>
+                                        <!--begin::Add product-->
+                                        <div class="w-100" style="max-width: 220px;">
+                                            <!--begin::Select2-->
+                                            <select class="form-select form-select-solid" data-control="select2"
+                                                    data-hide-search="true" data-placeholder="Buyurtma holati"
+                                                    data-kt-ecommerce-order-filter="status">
+                                                <option></option>
+                                                <option value="all">Hammasi</option>
+                                                <option value="Pending">Buyurtma berildi {{ orders_1|length }} ta
+                                                </option>
+                                                <option value="Delivered">Bajarildi {{ orders_2|length }} ta</option>
+                                                <option value="Cancelled">Bekor qilindi {{ orders_3|length }} ta
+                                                </option>
+                                            </select>
+                                            <!--end::Select2-->
+                                        </div>
+                                        <!--end::Add product-->
                                     </div>
                                     <!--end::Card toolbar-->
                                 </div>

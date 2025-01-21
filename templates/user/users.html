@@ -486,13 +486,7 @@
                 <!--begin::Container-->
                 <div class=" container-xxl " id="kt_content_container">
                     <!-- begin::Products-->
-                    <div class="card card-flush" style="
-                    background-color: #f9f9f9;
-                    border: 5px solid #125B76;
-                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1), inset 0 0 15px rgba(18, 91, 118, 0.3);
-                    border-radius: 20px;
-                    padding: 20px;
-                    transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <div class="card card-flush">
 
                         <!--begin::Card header-->
                         <div class="card-header align-items-center py-5 gap-2 gap-md-5">
@@ -523,27 +517,48 @@
                                     <tbody class="fw-semibold text-gray-600" id="order-table-body">
                                     {% for user in users %}
                                         <tr>
+                                            <!-- User Avatar and Username -->
                                             <td class="d-flex align-items-center">
                                                 <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
                                                     <a>
                                                         <div class="symbol-label">
                                                             {% if user.image %}
                                                                 <img src="{{ user.image.url }}"
-                                                                     alt="{{ user.username }}" class="w-100"/>
+                                                                     alt="{{ user.username }}"
+                                                                     class="w-100 rounded-circle border shadow-sm"/>
                                                             {% endif %}
                                                         </div>
                                                     </a>
                                                 </div>
                                                 <div class="d-flex flex-column">
-                                                    <a class="text-gray-800 text-hover-primary mb-1">{{ user.username }}</a>
+                                                    <a class="text-gray-800 text-hover-primary mb-1 fs-5 fw-bold border-bottom border-info pb-1">{{ user.username }}</a>
                                                 </div>
                                             </td>
-                                            <td>{{ user.role }}</td>
-                                            <td>
-                                                <div class="badge badge-light fw-bold">{{ user.last_login }}</div>
+
+                                            <!-- User Role -->
+                                            <td class="text-start">
+                                                {% if user.role == None %}
+                                                    <span class="text-muted fs-6">Mavjud emas</span>
+                                                {% else %}
+                                                    <span class="fw-bold text-primary border-bottom border-warning pb-1">{{ user.role }}</span>
+                                                {% endif %}
                                             </td>
-                                            <td>{% if user.location != None %}{{ user.location }}{% endif %}</td>
+
+                                            <!-- Last Login -->
+                                            <td class="text-start" data-order="{{ user.last_login }}">
+                                                <div class="badge badge-light fw-bold text-dark border border-dark shadow-sm">{{ user.last_login|date:"d-m-y H:i" }}</div>
+                                            </td>
+
+                                            <!-- Location -->
+                                            <td class="text-start">
+                                                {% if user.location %}
+                                                    <span class="text-gray-800 text-hover-primary fs-6 border-bottom border-light pb-1">{{ user.location }}</span>
+                                                {% else %}
+                                                    <span class="text-muted fs-6">Manzil topilmadi</span>
+                                                {% endif %}
+                                            </td>
                                         </tr>
+
                                     {% endfor %}
                                     </tbody>
                                 </table>
