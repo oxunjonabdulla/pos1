@@ -135,18 +135,38 @@ def submit_order(request, pk):
     return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi."})
 
 
+
+
+
+
+
 @csrf_exempt
 def cancel_order(request, pk):
     order = get_object_or_404(Order, id=pk)
     if request.method == "POST":
         data = json.loads(request.body)
+        password = data.get("password")
         reason = data.get("reason")
-        if reason:
-            order.status = '3'
-            order.bekor_qilish_sababi = reason
-            order.save()
-            return JsonResponse({"success": True})
-        return JsonResponse({"success": False, "message": "Bekor qilish sababi talab qilinadi!"})
+
+        # Check if password is provided and valid
+        if not password:
+            return JsonResponse({"success": False, "message": "Parol talab qilinadi!"})
+
+        try:
+            password = int(password)  # Try to convert the password to an integer
+        except (TypeError, ValueError):  # Catch invalid type or value errors
+            return JsonResponse({"success": False, "message": "Noto'g'ri parol!"})
+
+        parol = AdminParol.objects.last()
+        if parol and password == int(parol.parol):  # Validate password
+            if reason:
+                order.status = '3'  # Mark order as canceled
+                order.bekor_qilish_sababi = reason  # Save cancellation reason
+                order.save()
+                return JsonResponse({"success": True})
+            return JsonResponse({"success": False, "message": "Bekor qilish sababi talab qilinadi!"})
+        return JsonResponse({"success": False, "message": "Noto'g'ri parol!"})
+
     return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi."})
 
 

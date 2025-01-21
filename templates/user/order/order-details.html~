@@ -912,21 +912,20 @@
     document.getElementById("cancelOrderForm").addEventListener("submit", function (event) {
         event.preventDefault();
 
-        const password = document.getElementById("cancelOrderPassword").value;
-        const orderPk = document.getElementById("cancelOrderForm").dataset.orderPk; // Fetch pk from form dataset
+        const modalElement = document.getElementById("cancelOrderModal");
+        const pk = modalElement.getAttribute("data-pk"); // Get pk from modal's data attribute
         const reason = document.getElementById("cancelOrderReason").value;
 
-        fetch(`/cancel-order/${orderPk}/`, {
+        fetch(`/cancel-order/${pk}/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": "{{ csrf_token }}"
             },
-            body: JSON.stringify({password, reason})
+            body: JSON.stringify({reason})
         })
             .then(response => response.json())
             .then(data => {
-                const modalElement = document.getElementById("cancelOrderModal");
                 const modal = bootstrap.Modal.getInstance(modalElement);
                 modal.hide();
 
@@ -952,6 +951,7 @@
         });
     });
 
+
     // Function to display alerts
     function showAlert(message, type = "info") {
         const alertBox = document.createElement("div");
@@ -959,11 +959,11 @@
         alertBox.role = "alert";
         alertBox.style.marginTop = "20px";
         alertBox.innerHTML = `
-    <div class="container">
-        ${message}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-`;
+        <div class="container">
+            ${message}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    `;
         document.body.appendChild(alertBox);
 
         setTimeout(() => alertBox.remove(), 5000);

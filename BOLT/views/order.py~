@@ -39,9 +39,9 @@ def orders_page(request):
     except EmptyPage:
         paginated_orders = paginator.page(paginator.num_pages)
 
-    orders_1_count = user_orders.objects.filter(status='1').count()
-    orders_2_count = user_orders.objects.filter(status='2').count()
-    orders_3_count = user_orders.objects.filter(status='3').count()
+    orders_1_count = user_orders.filter(status='1').count()
+    orders_2_count = user_orders.filter(status='2').count()
+    orders_3_count = user_orders.filter(status='3').count()
 
     user_ctx = {
         "order_id": order_id,
