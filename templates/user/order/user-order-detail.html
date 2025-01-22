@@ -814,17 +814,17 @@
         });
     }
 </script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Attach click event to all section links
         document.querySelectorAll(".section-link").forEach(link => {
             link.addEventListener("click", function (e) {
-                e.preventDefault(); // Prevent default navigation
+                e.preventDefault(); // Prevent navigation
 
                 const sectionUrl = this.getAttribute("href");
                 const sectionName = this.getAttribute("data-section");
 
-                // Send AJAX request to check cart section
+                // AJAX request to check cart section
                 fetch(`/check-section/`, {
                     method: "POST",
                     headers: {
@@ -839,7 +839,7 @@
                             // Navigate to the section
                             window.location.href = sectionUrl;
                         } else {
-                            // Show confirmation modal with section URL
+                            // Show confirmation modal
                             showConfirmationModal(data.message, sectionUrl);
                         }
                     })
@@ -850,23 +850,9 @@
             });
         });
 
-        // Function to show a confirmation modal
         function showConfirmationModal(message, sectionUrl) {
-            console.log(sectionUrl);
-            const modal = document.createElement("div");
-            modal.className = "modal fade";
-            modal.tabIndex = "-1";
-            modal.role = "dialog";
-            // Determine button text based on section URL
-            let buttonText;
-            if (sectionUrl === "/mechanic/") {
-                buttonText = "Omborxona bo'limiga o'tish";
-            } else if (sectionUrl === "/warehouse/") {
-                buttonText = "Mexanika bo'limiga o'tish";
-            } else {
-                buttonText = "Davom etish"; // Default button text
-            }
-            modal.innerHTML = `
+            const modalHtml = `
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -878,34 +864,34 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
-
-                            <button type="button" class="btn btn-primary" id="confirm-action">${buttonText}</button>
+                            <button type="button" class="btn btn-primary" id="confirm-action">Davom etish</button>
                         </div>
                     </div>
                 </div>
-            `;
+            </div>
+        `;
 
-            document.body.appendChild(modal);
-            const bsModal = new bootstrap.Modal(modal);
+            // Append modal to the body
+            document.body.insertAdjacentHTML("beforeend", modalHtml);
+            const modal = new bootstrap.Modal(document.getElementById("confirmationModal"));
 
-            // Attach event listener for confirm button
-            modal.querySelector("#confirm-action").addEventListener("click", function () {
-                bsModal.hide();
-                modal.remove();
-
-                // Navigate to the section URL after confirmation
+            // Confirm button event
+            document.getElementById("confirm-action").addEventListener("click", function () {
+                modal.hide();
+                document.getElementById("confirmationModal").remove();
                 window.location.href = sectionUrl;
             });
 
             // Show the modal
-            bsModal.show();
+            modal.show();
 
-            // Remove modal from DOM on close
-            modal.addEventListener("hidden.bs.modal", function () {
-                modal.remove();
+            // Clean up modal after closing
+            document.getElementById("confirmationModal").addEventListener("hidden.bs.modal", function () {
+                document.getElementById("confirmationModal").remove();
             });
         }
     });
+
 </script>
 
 <!-- end::Javascript-->

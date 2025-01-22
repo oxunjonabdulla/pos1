@@ -107,7 +107,7 @@ def search_orders(request):
 
         return JsonResponse({'html': html})
 
-    return JsonResponse({'error': 'Invalid request type'}, status=400)
+    return JsonResponse({'error': "Noto'g'ri so'rov turi"}, status=400)
 
 
 

@@ -216,6 +216,42 @@ def search_products(request):
     return JsonResponse({'products': product_list})
 
 
+# @login_required(login_url='login_page')
+# def check_section(request):
+#     if request.method == "POST":
+#         import json
+#         data = json.loads(request.body)
+#         target_section = data.get("section")
+#
+#         cart_items = CartItems.objects.filter(foydalanuvchi=request.user)
+#
+#         if cart_items.exists():
+#             current_section = cart_items.first().maxsulot.kategoriya.department.name
+#             if current_section != target_section:
+#                 if current_section == "Omborxona":
+#                     current_section = "Omborxona"
+#                 elif current_section == "Mexanika bo'limi":
+#                     current_section = "Mexanika bo'limi"
+#                 if target_section == "Warehouse":
+#                     target_section = "Omborxona"
+#                 elif target_section == "Mechanic":
+#                     target_section = "Mexanika bo'limi"
+#                 return JsonResponse({
+#                     "success": False,
+#                     "message": (
+#                         f"<span style='color: #007bff; font-weight: bold;'>{target_section}</span> "
+#                         "bo'limga o'tish uchun avval "
+#                         f"<span style='color: #dc3545; font-weight: bold;'>{current_section}</span> "
+#                         "savatidagi mahsulotlarni o'chiring yoki buyurtma bering."
+#                     )
+#                 }, status=400)
+#
+#         return JsonResponse({"success": True})
+#     return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi"}, status=405)
+
+
+
+
 @login_required(login_url='login_page')
 def check_section(request):
     if request.method == "POST":
@@ -223,23 +259,30 @@ def check_section(request):
         data = json.loads(request.body)
         target_section = data.get("section")
 
+        # Get cart items for the current user
         cart_items = CartItems.objects.filter(foydalanuvchi=request.user)
 
         if cart_items.exists():
+            # Get the current section from the first cart item
             current_section = cart_items.first().maxsulot.kategoriya.department.name
-            if current_section != target_section:
-                if current_section == "Omborxona":
-                    current_section = "Omborxona"
-                elif current_section == "Mexanika bo'limi":
-                    current_section = "Mexanika bo'limi"
-                if target_section == "Omborxona":
-                    target_section = "Omborxona"
-                elif target_section == "Mexanika bo'limi":
-                    target_section = "Mexanika bo'limi"
+
+            # Map section names for comparison
+            section_map = {
+                "Omborxona": "Warehouse",
+                "Mexanika bo'limi": "Mechanic"
+            }
+            reverse_map = {v: k for k, v in section_map.items()}
+
+            # Convert sections for consistency
+            current_section_en = section_map.get(current_section, current_section)
+            target_section_uz = reverse_map.get(target_section, target_section)
+
+            # If sections don't match, send error response
+            if current_section_en != target_section:
                 return JsonResponse({
                     "success": False,
                     "message": (
-                        f"<span style='color: #007bff; font-weight: bold;'>{target_section}</span> "
+                        f"<span style='color: #007bff; font-weight: bold;'>{target_section_uz}</span> "
                         "bo'limga o'tish uchun avval "
                         f"<span style='color: #dc3545; font-weight: bold;'>{current_section}</span> "
                         "savatidagi mahsulotlarni o'chiring yoki buyurtma bering."
@@ -247,7 +290,9 @@ def check_section(request):
                 }, status=400)
 
         return JsonResponse({"success": True})
-    return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi"}, status=405)
+    return JsonResponse({"success": False, "message": "Invalid request method"}, status=405)
+
+
 
 
 @login_required(login_url='login_page')
