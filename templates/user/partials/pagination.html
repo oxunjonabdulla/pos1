@@ -1,0 +1,61 @@
+{% load i18n %}
+<ul class="pagination pagination-sm justify-content-center">
+    {% if user_orders.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?q={{ query }}&page=1" aria-label="First">
+                <i class="fas fa-angle-double-left"></i>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"
+               href="?q={{ query }}&page={{ user_orders.previous_page_number }}"
+               aria-label="Previous">
+                <i class="fas fa-angle-left"></i>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-angle-double-left"></i></span>
+        </li>
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-angle-left"></i></span>
+        </li>
+    {% endif %}
+
+    {% for page_num in user_orders.paginator.page_range %}
+        {% if page_num == user_orders.number %}
+            <li class="page-item active">
+                <span class="page-link">{{ page_num }}</span>
+            </li>
+        {% elif page_num >= user_orders.number|add:-2 and page_num <= user_orders.number|add:2 %}
+            <li class="page-item">
+                <a class="page-link"
+                   href="?q={{ query }}&page={{ page_num }}">{{ page_num }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+
+    {% if user_orders.has_next %}
+        <li class="page-item">
+            <a class="page-link"
+               href="?q={{ query }}&page={{ user_orders.next_page_number }}"
+               aria-label="Next">
+                <i class="fas fa-angle-right"></i>
+            </a>
+        </li>
+        <li class="page-item">
+            <a class="page-link"
+               href="?q={{ query }}&page={{ user_orders.paginator.num_pages }}"
+               aria-label="Last">
+                <i class="fas fa-angle-double-right"></i>
+            </a>
+        </li>
+    {% else %}
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-angle-right"></i></span>
+        </li>
+        <li class="page-item disabled">
+            <span class="page-link"><i class="fas fa-angle-double-right"></i></span>
+        </li>
+    {% endif %}
+</ul>

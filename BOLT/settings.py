@@ -17,12 +17,13 @@ ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'jazzmin',
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'modeltranslation',
+    'django.contrib.admin',
 
     # Local APPS
     'user_app',
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',  # YENİ
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -110,19 +112,35 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'uz'
 
-TIME_ZONE = 'Asia/Tashkent'
+USE_TZ = True
+
+USE_L10N = True
 
 USE_I18N = True
 
-USE_TZ = True
+TIME_ZONE = 'Asia/Tashkent'
+
+
+LANGUAGES = (
+    ('uz', 'Uzbek'),
+    ('ru', 'Russian'),
+)
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),
+]
+
+
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'uz'
+MODELTRANSLATION_LANGUAGES = ('uz', 'ru')
 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = [BASE_DIR / "static/"]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [BASE_DIR / "static/"]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 MEDIA_URL = '/media/'
@@ -146,116 +164,89 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # JAZZMIN SETTINGS
 JAZZMIN_SETTINGS = {
-    "site_title": "RAILWAY POSTER",
-
-    "site_header": "RAILWAY POSTER",
-
-    "site_brand": "RAILWAY POSTER",
-
-    "site_logo": "custom/1.png",
-
-    "login_logo": "custom/1.png",
-
-    "login_logo_dark": "custom/1.png",
-
+    "site_title": "Railway Poster",
+    "site_header": "Railway Poster",
+    "site_brand": "Railway Poster",
+    "site_logo": "custom/logo.png",  # Use a high-quality logo
+    "login_logo": "custom/logo.png",
+    "login_logo_dark": "custom/logo.png",
     "site_logo_classes": "img-circle",
-
-    "site_icon": None,
-
-    "welcome_sign": "QARSHI TEMIR YO‘L TA'MIRLASH KORXONASI - ADMIN PANELIGA XUSH KELIBSIZ!",
-
-    "copyright": "QARSHI TEMIR YO‘L TA'MIRLASH KORXONASI",
-
+    "site_icon": "custom/logo.png",  # Add a favicon for better branding
+    "welcome_sign": "Xush kelibsiz Railway Poster Admin Paneliga!",
+    "copyright": "© Qarshi Vagon Deposi",
     "search_model": ["product_app.Maxsulot", "product_app.Order"],
+    "user_avatar": "auth.User.profile_image",  # Example for user avatars
 
-    "user_avatar": None,
-
-    # Links to put along the top menu
+    # Top menu links
     "topmenu_links": [
-        {
-            "name": "Bosh sahifa",
-            "url": "admin:index",
-            "permissions": ["auth.view_user"]
-        },
+        {"name": "Dashboard", "url": "admin:index", "permissions": ["auth.view_user"]},
+        {"name": "Documentation", "url": "https://docs.djangoproject.com/", "new_window": True},
+        {"name": "Support", "url": "mailto:support@railway.com"},
     ],
 
-    "usermenu_links": [
-    ],
+
 
     "show_sidebar": True,
-
-    # Whether to aut expand the menu
     "navigation_expanded": True,
-
     "hide_apps": [],
-
     "hide_models": ["auth.user", "auth.group"],
 
-    # List of apps (and/or models) to base side menu ordering off of (does not need to contain all apps/models)
-    "order_with_respect_to": [],
+    # Sidebar ordering
+    "order_with_respect_to": ["product_app", "auth", "django.contrib"],
 
+    # Icons for apps/models
     "icons": {
         "auth": "fas fa-users-cog",
-        "user_app.user": "fas fa-user",
         "auth.Group": "fas fa-users",
+        "product_app.Maxsulot": "fas fa-box-open",
+        "product_app.Order": "fas fa-shopping-cart",
     },
-
     "default_icon_parents": "fas fa-chevron-circle-right",
     "default_icon_children": "fas fa-circle",
 
-    #################
-    # Related Modal #
-    #################
-    # Use modals instead of popups
-    "related_modal_active": False,
+    # Related modal
+    "related_modal_active": True,
 
-    #############
-    # UI Tweaks #
-    #############
-    # Relative paths to custom CSS/JS scripts (must be present in static files)
-    "custom_css": "custom/custom.css",
-    "custom_js": "custom/custom.js",
-    # Whether to link font from fonts.googleapis.com (use custom_css to supply font otherwise)
+    # UI Tweaks
+    "custom_css": "custom/custom.css",  # Include CSS for refined UI
+    "custom_js": "custom/custom.js",    # Add JavaScript for interactive UI
     "use_google_fonts_cdn": True,
-    # Whether to show the UI customizer on the sidebar
     "show_ui_builder": False,
-
     "changeform_format": "horizontal_tabs",
-    # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
-    # Add a language dropdown into the admin
-    "language_chooser": False,
+    "language_chooser": True,  # Add a language chooser if needed
 }
 
+# Jazzmin UI Tweaks
 JAZZMIN_UI_TWEAKS = {
     "navbar_small_text": False,
     "footer_small_text": False,
     "body_small_text": False,
-    "brand_small_text": False,
-    "brand_colour": "navbar-info",
-    "accent": "accent-teal",
-    "navbar": "navbar-white navbar-light",
-    "no_navbar_border": False,
+    "brand_small_text": True,
+    "brand_colour": "navbar-primary",
+    "accent": "accent-cyan",
+    "navbar": "navbar-dark navbar-primary",
+    "no_navbar_border": True,
     "navbar_fixed": True,
     "layout_boxed": False,
-    "footer_fixed": True,
+    "footer_fixed": False,
     "sidebar_fixed": True,
-    "sidebar": "sidebar-light-info",
+    "sidebar": "sidebar-dark-primary",
     "sidebar_nav_small_text": False,
     "sidebar_disable_expand": False,
-    "sidebar_nav_child_indent": False,
+    "sidebar_nav_child_indent": True,
     "sidebar_nav_compact_style": False,
     "sidebar_nav_legacy_style": False,
     "sidebar_nav_flat_style": False,
-    "theme": "lux",
-    "dark_mode_theme": None,
+    "theme": "minty",  # Use a modern theme
+    "dark_mode_theme": "darkly",  # Add a dark mode option
     "button_classes": {
-        "primary": "btn-outline-primary",
-        "secondary": "btn-outline-secondary",
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
         "info": "btn-info",
         "warning": "btn-warning",
         "danger": "btn-danger",
-        "success": "btn-success"
+        "success": "btn-success",
     },
-    "actions_sticky_top": True
+    "actions_sticky_top": True,
 }

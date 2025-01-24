@@ -1,0 +1,361 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-01-24 10:34+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+
+msgid "Joriy buyurtma"
+msgstr "Текущий заказ"
+
+msgid "Tozalash"
+msgstr "Очистка"
+
+
+msgid "Buyurtma beruvchi"
+msgstr "Заказчик"
+
+msgid "Qayerga"
+msgstr "Куда"
+
+
+msgid "Mexanika bo'limi"
+msgstr "Механический отдел"
+
+msgid "savatcha bo'sh"
+msgstr "Корзина пуста"
+
+msgid "Qo'shimcha matn"
+msgstr "Дополнительный текст"
+
+msgid "Qo'shimcha matnni kiriting..."
+msgstr "Введите дополнительный текст..."
+
+msgid "Buyurtma berish"
+msgstr "Оформить заказ"
+
+msgid "Buyurtmani tasdiqlang"
+msgstr "Подтвердите заказ"
+
+msgid "Buyurtmani tasdiqlamoqchimisiz?"
+msgstr "Вы хотите подтвердить заказ?"
+
+msgid "Bekor qilish"
+msgstr "Отменить"
+
+msgid "Tasdiqlash"
+msgstr "Подтвердить"
+
+
+msgid "Muallif"
+msgstr "Автор"
+
+msgid "Oxunjon Abdullayev"
+msgstr "Охунжон Абдуллаев"
+
+
+msgid "Railway Poster - Mexanika bo'limi"
+msgstr "Railway Poster - Механический отдел"
+
+msgid "Qidiruv ..."
+msgstr "Поиск ..."
+
+msgid "Bildirishnomalar"
+msgstr "Уведомления"
+
+msgid "ta buyurtmalar"
+msgstr "заказов"
+
+msgid "Buyurtma berildi"
+msgstr "Заказ отправлен"
+
+msgid "Bajarildi"
+msgstr "Выполнено"
+
+msgid "Bekor qilindi"
+msgstr "Отменено"
+
+msgid "Barchasini ko'rish"
+msgstr "Посмотреть все"
+
+msgid "Foydalanish bo'yicha qo'llanma"
+msgstr "Руководство пользователя"
+
+msgid "Tongi rejim"
+msgstr "Дневной режим"
+
+msgid "Tungi rejim"
+msgstr "Ночной режим"
+
+msgid "O'zbek tili"
+msgstr "Узбекский язык"
+
+msgid "Rus tili"
+msgstr "Русский язык"
+
+msgid "ta maxsulot"
+msgstr "товаров"
+
+msgid "Mahsulot yo'q"
+msgstr "Товаров нет"
+
+msgid "O'lchami"
+msgstr "Размер"
+
+msgid "Savatga qo'shish"
+msgstr "Добавить в корзину"
+
+msgid "Mahsulotlar yo'q"
+msgstr "Товаров нет"
+
+
+msgid "Mahsulot savatga muvaffaqiyatli qo'shildi!"
+msgstr "Товар успешно добавлен в корзину!"
+
+msgid "Xatolik yuz berdi."
+msgstr "Произошла ошибка."
+
+msgid "Savatchani tozalashni istaysizmi?"
+msgstr "Вы хотите очистить корзину?"
+
+msgid "Savatdan o'chirishda xatolik yuz berdi:"
+msgstr "Ошибка при удалении из корзины:"
+
+msgid "Sizning savatchangiz bo'sh!"
+msgstr "Ваша корзина пуста!"
+
+msgid "Savatcha bo'sh. Iltimos, mahsulot qo'shing!"
+msgstr "Корзина пуста. Пожалуйста, добавьте товары!"
+
+msgid "Yo'q"
+msgstr "Нет"
+
+msgid "Ha"
+msgstr "Да"
+
+msgid "Xatolik yuz berdi. Qaytadan urinib ko'ring."
+msgstr "Произошла ошибка. Попробуйте снова."
+
+
+msgid "Mexanika"
+msgstr "Механика"
+
+msgid "Omborxona"
+msgstr "Склад"
+
+msgid "Buyurtmalar"
+msgstr "Заказы"
+
+msgid "Chiqish"
+msgstr "Выход"
+
+msgid "Railway Poster - Omborxona"
+msgstr "Railway Poster - Склад"
+
+
+msgid "Xodimlar"
+msgstr "Сотрудники"
+
+msgid "Qo'llanma"
+msgstr "Руководство"
+
+msgid "ta"
+msgstr "шт."
+
+msgid "Bajarilgan buyurtmalar"
+msgstr "Выполненные заказы"
+
+msgid "Barcha buyurtmalar"
+msgstr "Все заказы"
+
+msgid "Kutishdagi buyurtmalar"
+msgstr "Заказы в ожидании"
+
+msgid "Bekor qilinganlar"
+msgstr "Отмененные заказы"
+
+msgid "Buyurtma berilganlar soni"
+msgstr "Количество сделанных заказов"
+
+msgid "Yuborilgan buyurtmalar soni"
+msgstr "Количество отправленных заказов"
+
+msgid "Bekor qilingan buyurtmalar soni"
+msgstr "Количество отмененных заказов"
+
+msgid "Buyurtma ID"
+msgstr "ID заказа"
+
+msgid "Buyurtmachi"
+msgstr "Заказчик"
+
+msgid "Holati"
+msgstr "Статус"
+
+msgid "Jami"
+msgstr "Сумма"
+
+msgid "Qo'shilgan sana"
+msgstr "Дата добавления"
+
+msgid "O'zgartirilgan sana"
+msgstr "Дата изменения"
+
+msgid "Amallar"
+msgstr "Действия"
+
+msgid "jami"
+msgstr "cумма"
+
+
+msgid "buyurtma"
+msgid_plural "buyurtmalar"
+
+msgstr[0] "заказ"
+msgstr[1] "заказы"
+
+
+msgid  "Ko‘rsatilmoqda"
+msgstr "Отображается"
+
+msgid "Boshqaruv paneli"
+msgstr "Панель управления"
+
+msgid "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!"
+msgstr "ВИДЕО ИНСТРУКЦИЯ ПО ИСПОЛЬЗОВАНИЮ ПЛАТФОРМЫ!"
+
+msgid "Qo'shimcha savollar uchun telegram orqali murojat qiling."
+msgstr "Для дополнительных вопросов свяжитесь через Telegram."
+
+msgid "Bog'lanish"
+msgstr "Связаться"
+
+msgid "PLATFORMADA MAVJUD FOYDALANUVCHILAR!"
+msgstr "ПОЛЬЗОВАТЕЛИ, ПРИСУТСТВУЮЩИЕ НА ПЛАТФОРМЕ!"
+
+msgid "Foydalanuvchi"
+msgstr "Пользователь"
+
+msgid "Roli"
+msgstr "Роль"
+
+msgid "Oxirgi kirish"
+msgstr "Последний вход"
+
+msgid "Manzil"
+msgstr "Адрес"
+
+
+msgid "Mavjud emas"
+msgstr "Не доступно"
+
+msgid "Manzil topilmadi"
+msgstr "Адрес не найден"
+
+msgid "Voy!"
+msgstr "Ого!"
+
+msgid "Bu sahifa topilmadi"
+msgstr "Страница не найдена"
+
+msgid "Asosiy sahifaga qaytish"
+msgstr "Вернуться на главную страницу"
+
+msgid "gacha"
+msgstr "до"
+
+msgid "Batafsil"
+msgstr "Подробнее"
+
+msgid "dan"
+msgstr "от"
+
+# Uzbek to Russian translation
+msgid "Buyurtma berdi"
+msgstr "Заказ сделан"
+
+msgid "Buyurtma berilgan vaqti"
+msgstr "Время размещения заказа"
+
+msgid "Buyurtma holati"
+msgstr "Статус заказа"
+
+msgid "Qo'shimcha xabar"
+msgstr "Дополнительное сообщение"
+
+msgid "Qo'shimcha xabar yo'q!"
+msgstr "Дополнительных сообщений нет!"
+
+msgid "Buyurtma bekor qilindi"
+msgstr "Заказ отменен"
+
+msgid "Sababi"
+msgstr "Причина"
+
+msgid "Mahsulot kategoriyasi"
+msgstr "Категория товара"
+
+msgid "da buyurtma berilgan mahsulotlar soni"
+msgstr "количество товаров заказано в"
+
+msgid "Buyurtma"
+msgstr "Заказ"
+
+msgid "Buyurtma tayyorlandi"
+msgstr "Заказ подготовлен"
+
+msgid "Buyurtmani bekor qilish"
+msgstr "Отменить заказ"
+
+msgid "Buyurtma muvaffaqiyatli yuborildi!"
+msgstr "Заказ успешно отправлен!"
+
+msgid "Buyurtma bekor qilingan!"
+msgstr "Заказ отменен!"
+
+msgid "Noma'lum buyurtma holati!"
+msgstr "Неизвестное состояние заказа!"
+
+msgid "Buyurtmani tasdiqlash"
+msgstr "Подтвердить заказ"
+
+msgid "Parolingizni kiriting"
+msgstr "Введите ваш пароль"
+
+msgid "Parol..."
+msgstr "Пароль..."
+
+msgid "Orqaga"
+msgstr "Назад"
+
+
+msgid "Bekor qilish sababi"
+msgstr "Причина отмены"
+
+msgid "Bekor qilish sababini kiriting..."
+msgstr "Введите причину отмены..."
+
+msgid "Mahsulotlar"
+msgstr "Продукты"
+
+msgid "Soni"
+msgstr "Количество"
+
+msgid "Rostdan ham tizimni tark etmoqchimisiz?"
+msgstr "Вы действительно хотите выйти из системы?"

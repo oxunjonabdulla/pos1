@@ -216,42 +216,6 @@ def search_products(request):
     return JsonResponse({'products': product_list})
 
 
-# @login_required(login_url='login_page')
-# def check_section(request):
-#     if request.method == "POST":
-#         import json
-#         data = json.loads(request.body)
-#         target_section = data.get("section")
-#
-#         cart_items = CartItems.objects.filter(foydalanuvchi=request.user)
-#
-#         if cart_items.exists():
-#             current_section = cart_items.first().maxsulot.kategoriya.department.name
-#             if current_section != target_section:
-#                 if current_section == "Omborxona":
-#                     current_section = "Omborxona"
-#                 elif current_section == "Mexanika bo'limi":
-#                     current_section = "Mexanika bo'limi"
-#                 if target_section == "Warehouse":
-#                     target_section = "Omborxona"
-#                 elif target_section == "Mechanic":
-#                     target_section = "Mexanika bo'limi"
-#                 return JsonResponse({
-#                     "success": False,
-#                     "message": (
-#                         f"<span style='color: #007bff; font-weight: bold;'>{target_section}</span> "
-#                         "bo'limga o'tish uchun avval "
-#                         f"<span style='color: #dc3545; font-weight: bold;'>{current_section}</span> "
-#                         "savatidagi mahsulotlarni o'chiring yoki buyurtma bering."
-#                     )
-#                 }, status=400)
-#
-#         return JsonResponse({"success": True})
-#     return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi"}, status=405)
-
-
-
-
 @login_required(login_url='login_page')
 def check_section(request):
     if request.method == "POST":
@@ -293,8 +257,6 @@ def check_section(request):
     return JsonResponse({"success": False, "message": "Invalid request method"}, status=405)
 
 
-
-
 @login_required(login_url='login_page')
 def bad_request_view(request, exception=None):
     return render(request, 'user/error-404.html')
@@ -325,3 +287,31 @@ def users_page(request):
                       template_name='user/users.html',
                       context=user_ctx)
     return redirect('mechanic_page')
+
+
+
+from urllib.parse import urlparse
+from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.urls.base import resolve, reverse
+from django.urls.exceptions import Resolver404
+from django.utils import translation
+
+
+def set_language(request, language):
+    for lang, _ in settings.LANGUAGES:
+        translation.activate(lang)
+        try:
+            view = resolve(urlparse(request.META.get("HTTP_REFERER")).path)
+        except Resolver404:
+            view = None
+        if view:
+            break
+    if view:
+        translation.activate(language)
+        next_url = reverse(view.url_name, args=view.args, kwargs=view.kwargs)
+        response = HttpResponseRedirect(next_url)
+        response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language)
+    else:
+        response = HttpResponseRedirect("/")
+    return response

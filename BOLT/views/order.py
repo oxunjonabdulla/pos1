@@ -2,7 +2,6 @@ import json
 
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
-from django.db.models import Count
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -12,13 +11,8 @@ from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
 
-from product_app.models import Maxsulot, CartItems, Order, OrderItems, Kategoriya, Department
-from settings_app.models import SiteSettings, AdminParol
-from user_app.models import User
-
-
-
-
+from product_app.models import Maxsulot, CartItems, Order, OrderItems
+from settings_app.models import AdminParol
 
 
 @login_required(login_url="login_page")
@@ -99,17 +93,20 @@ def search_orders(request):
         except EmptyPage:
             paginated_orders = paginator.page(paginator.num_pages)
 
-        # Render only the table rows
-        html = render_to_string('user/partials/order_list.html', {
+        # Render the table and pagination HTML
+        html_table = render_to_string('user/partials/order_list.html', {
             'user_orders': paginated_orders,
             'query': query  # Pass query to template for pagination links
         }, request=request)
 
-        return JsonResponse({'html': html})
+        html_pagination = render_to_string('user/partials/pagination.html', {
+            'user_orders': paginated_orders,
+            'query': query
+        }, request=request)
+
+        return JsonResponse({'html_table': html_table, 'html_pagination': html_pagination})
 
     return JsonResponse({'error': "Noto'g'ri so'rov turi"}, status=400)
-
-
 
 @csrf_exempt
 def submit_order(request, pk):
@@ -133,11 +130,6 @@ def submit_order(request, pk):
         return JsonResponse({"success": False, "message": "Noto'g'ri parol!"})
 
     return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi."})
-
-
-
-
-
 
 
 @csrf_exempt

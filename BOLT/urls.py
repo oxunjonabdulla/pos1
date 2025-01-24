@@ -17,7 +17,7 @@ from BOLT.views.main import (
     dashboard_page,
     search_products,
     filter_products,
-    bad_request_view, users_page,
+    bad_request_view, users_page, set_language,
 )
 from BOLT.views.order import (
     search_orders,
@@ -43,6 +43,7 @@ urlpatterns = [
     path('mechanic/', mechanic_page, name='mechanic_page'),
     path('check-section/', check_section, name='check_section'),
 
+
     path('users-page/', users_page, name='users_page'),
 
     # Search and Filter
@@ -60,6 +61,7 @@ urlpatterns = [
     path('orders/', orders_page, name='orders_page'),
     path('order/', order_page, name='order_page'),
 
+
     # Cart Management
     path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
     path('update-cart-quantity/<int:cart_item_id>/', update_cart_quantity, name='update_cart_quantity'),
@@ -73,8 +75,15 @@ urlpatterns = [
 
     # Error Handling
     path('404/', bad_request_view, name='404'),
+
 ]
 
+urlpatterns += [
+
+    path('i18n/', include('django.conf.urls.i18n')),
+    path("set_language/<str:language>", set_language, name="set-language"),
+
+]
 # Static and Media Files
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

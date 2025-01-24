@@ -1,0 +1,31 @@
+body {
+    font-family: "Inter", sans-serif;
+    background-color: #f4f6f8;
+}
+
+nav#header {
+    background-color: #13698a;
+    color: #fff;
+}
+
+div#content {
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background-color: #f4f4f4;
+}

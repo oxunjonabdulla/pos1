@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 
 <html lang="en">
@@ -19,7 +20,7 @@
     <meta property="og:url" content="#"/>
     <meta property="og:site_name" content="Railway Poster"/>
     <link rel="canonical" href="pos-warehouse.html"/>
-    <link rel="shortcut icon" href="{% static  "assets2/logo-vagon (1).png" %}"/>
+    <link rel="shortcut icon" href="{% static  "assets2/images/logo-vagon (1).png" %}"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/><!--end::Fonts-->
@@ -134,7 +135,7 @@
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <a>
                     <img style="width: 220px; height: auto;" alt="Logo"
-                         src="{% static 'assets2/logo-vagon (1).png' %}"/>
+                         src="{% static 'assets2/images/logo-vagon (1).png' %}"/>
                 </a>
             </div>
             <!--end::Logo-->
@@ -171,7 +172,7 @@
             </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Xodimlar
+                                        {% trans "Xodimlar" %}
                                     </p>
                                 </div>
                             </a>
@@ -186,7 +187,7 @@
                                         </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Qo'llanma
+                                        {% trans "Qo'llanma" %}
                                     </p>
                                 </div>
                             </a>
@@ -201,7 +202,7 @@
                                 </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Chiqish
+                                        {% trans "Chiqish" %}
                                     </p>
                                 </div>
                             </a>
@@ -225,7 +226,7 @@
                     <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                         <a>
                             <img style="width: 100px; height: auto;" alt="Logo"
-                                 src="{% static 'assets2/logo-vagon (1).png' %}" class="h-auto"/>
+                                 src="{% static 'assets2/images/logo-vagon (1).png' %}" class="h-auto"/>
                         </a>
 
                     </div>
@@ -292,7 +293,8 @@
                                          style="background-image:url({% static "/assets2/media/misc/menu-header-bg.jpg" %})">
                                         <!--begin::Title-->
                                         <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
-                                            Bildirishnomalar <span class="fs-8 opacity-75 ps-3">{{ today_orders.count }} ta buyurtmalar</span>
+                                            {% trans "Bildirishnomalar" %} <span
+                                                class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
                                         </h3>
                                         <!--end::Title-->
                                     </div>
@@ -302,34 +304,34 @@
                                     <div class="scroll-y mh-325px my-5 px-8">
                                         <!--begin::Item-->
                                         {% for order in today_orders %}
-                                            <a href="{% url "order1-detail" pk=order.id %}">
-                                                <div class="d-flex flex-stack py-4">
-                                                    <!--begin::Section-->
-                                                    <div class="d-flex align-items-center me-2">
-                                                        <!--begin::Label-->
+                                        <a href="{% url "order1-detail" pk=order.id %}">
+                                            <div class="d-flex flex-stack py-4">
+                                                <!--begin::Section-->
+                                                <div class="d-flex align-items-center me-2">
+                                                    <!--begin::Label-->
 
-                                                        <span class="badge badge-light fs-8">#{{ order.id }}</span>
+                                                    <span class="badge badge-light fs-8">#{{ order.id }}</span>
 
-                                                        <!--end::Label-->
-                                                        <!--begin::Title-->
-                                                        <a
-                                                                class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Section-->
-
-                                                    <!--begin::Code-->
-                                                    {% if order.status == '1' %}
-                                                        <span class="w-70px badge badge-light-primary me-4">Buyurtma berildi</span>
-                                                    {% elif order.status == '2' %}
-                                                        <span class="w-70px badge badge-light-success me-4">Bajarildi</span>
-                                                    {% elif order.status == '3' %}
-                                                        <span class="w-70px badge badge-light-danger me-4">Bekor qilindi</span>
-                                                    {% endif %}
-                                                    <!--end::Code-->
-
+                                                    <!--end::Label-->
+                                                    <!--begin::Title-->
+                                                    <a
+                                                            class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
+                                                    <!--end::Title-->
                                                 </div>
-                                            </a>
+                                                <!--end::Section-->
+
+                                                <!--begin::Code-->
+                                                {% if order.status == '1' %}
+                                                    <span class="w-70px badge badge-light-primary me-4">{% trans "Buyurtma berildi" %}</span>
+                                                {% elif order.status == '2' %}
+                                                    <span class="w-70px badge badge-light-success me-4">{% trans "Bajarildi" %}</span>
+                                                {% elif order.status == '3' %}
+                                                    <span class="w-70px badge badge-light-danger me-4">{% trans "Bekor qilindi" %}</span>
+                                                {% endif %}
+                                                <!--end::Code-->
+
+                                            </div>
+                                        </a>
                                         {% endfor %}
                                         <!--end::Item-->
                                     </div>
@@ -403,60 +405,73 @@
                                 <!--end::Menu toggle-->
 
                                 <!--begin::Menu-->
-                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
-                                     data-kt-menu="true" data-kt-element="theme-mode-menu">
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-0">
-                                        <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                           data-kt-value="light">
+                            <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
+                                 data-kt-menu="true" data-kt-element="theme-mode-menu">
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3 my-0">
+                                    <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
+                                       data-kt-value="light">
                                     <span class="menu-icon" data-kt-element="icon">
                                         <i class="fas fa-sun fs-2"></i>
                                     </span>
-                                            <span class="menu-title">Tongi rejim</span>
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
+                                        <span class="menu-title">{% trans "Tongi rejim" %}</span>
+                                    </a>
+                                </div>
+                                <!--end::Menu item-->
 
-                                    <!--begin::Menu item-->
-                                    <div class="menu-item px-3 my-0">
-                                        <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
-                                           data-kt-value="dark">
+                                <!--begin::Menu item-->
+                                <div class="menu-item px-3 my-0">
+                                    <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
+                                       data-kt-value="dark">
                                     <span class="menu-icon" data-kt-element="icon">
                                         <i class="fas fa-moon fs-2"></i>
                                     </span>
-                                            <span class="menu-title">Tungi rejim</span>
-                                        </a>
-                                    </div>
-                                    <!--end::Menu item-->
+                                        <span class="menu-title">{% trans "Tungi rejim" %}</span>
+                                    </a>
                                 </div>
+                                <!--end::Menu item-->
+
+
+                            </div>
                                 <!--end::Menu-->
 
                             </div>
 
                             <!-- begin::Language settings -->
-                            <div class="dropdown">
-                                <a class="btn btn-icon btn-custom btn-active-color-primary dropdown-toggle" href="#"
-                                   id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img class="rounded-1" src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
-                                         alt="" style="width: 24px;">
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="languageDropdown">
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <img class="rounded-1 me-2"
-                                                 src="{% static 'assets2/media/flags/uzbekistan.svg' %}" alt=""
-                                                 style="width: 20px;"> Uzbek
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item d-flex align-items-center" href="#">
-                                            <img class="rounded-1 me-2"
-                                                 src="{% static 'assets2/media/flags/russia.svg' %}" alt=""
-                                                 style="width: 20px;"> Russian
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
+                        <div class="dropdown">
+
+                            <a class="btn btn-icon btn-custom btn-active-color-primary dropdown-toggle" href="#"
+                               id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                {% with current_language=request.LANGUAGE_CODE %}
+                                    {% if current_language == "uz" %}
+                                        <img class="rounded-1" src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
+                                             alt="" style="width: 24px;">
+                                    {% elif current_language == "ru" %}
+                                        <img class="rounded-1" src="{% static 'assets2/media/flags/russia.svg' %}"
+                                             alt="" style="width: 24px;">
+                                    {% endif %}
+                                {% endwith %}
+
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="{% url "set-language" 'uz' %}">
+                                        <img class="rounded-1 me-2"
+                                             src="{% static 'assets2/media/flags/uzbekistan.svg' %}" alt=""
+                                             style="width: 20px;"> {% trans "O'zbek tili" %}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="{% url "set-language" "ru" %}">
+                                        <img class="rounded-1 me-2"
+                                             src="{% static 'assets2/media/flags/russia.svg' %}" alt=""
+                                             style="width: 20px;"> {% trans "Rus tili" %}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                             <!-- end::Language settings -->
 
                             <!-- end::Theme mode-->
@@ -499,14 +514,14 @@
                                             <!--begin::Badge-->
                                             <span class="badge badge-light-warning fs-base">
 
-                                            ta
+                                            {% trans "ta" %}
                                         </span>
                                             <!--end::Badge-->
                                         </div>
                                         <!--end::Info-->
 
                                         <!--begin::Subtitle-->
-                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">Kutishdagi buyurtmalar</span>
+                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">{% trans "Kutishdagi buyurtmalar" %}</span>
                                         <!--end::Subtitle-->
                                     </div>
                                     <!--end::Title-->
@@ -517,7 +532,7 @@
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
                                     <!--begin::Chart-->
                                     <div class="d-flex flex-center me-5 pt-2">
-                                        <img src="{% static "assets2/test.png" %}" alt="" style="width: 90px">
+                                        <img src="{% static "assets2/images/test.png" %}" alt="" style="width: 90px">
                                     </div>
                                     <!--end::Chart-->
 
@@ -540,14 +555,14 @@
 
                                             <!--begin::Badge-->
                                             <span class="badge badge-light-danger fs-base">
-                                        ta
+                                        {% trans "ta" %}
                                     </span>
                                             <!--end::Badge-->
                                         </div>
                                         <!--end::Info-->
 
                                         <!--begin::Subtitle-->
-                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">Bekor qilinganlar</span>
+                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">{% trans "Bekor qilinganlar" %}</span>
                                         <!--end::Subtitle-->
                                     </div>
                                     <!--end::Title-->
@@ -557,7 +572,8 @@
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
                                     <!--begin::Chart-->
                                     <div class="d-flex flex-center me-5 pt-2">
-                                        <img src="{% static "assets2/cancel-order.png" %}" alt="" style="width: 90px">
+                                        <img src="{% static "assets2/images/cancel-order.png" %}" alt=""
+                                             style="width: 90px">
                                     </div>
                                     <!--end::Chart-->
 
@@ -584,14 +600,14 @@
 
                                             <!--begin::Badge-->
                                             <span class="badge badge-light-success fs-base">
-                                        ta
+                                        {% trans "ta" %}
                                     </span>
                                             <!--end::Badge-->
                                         </div>
                                         <!--end::Info-->
 
                                         <!--begin::Subtitle-->
-                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">Bajarilgan buyurtmalar</span>
+                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">{% trans "Bajarilgan buyurtmalar" %}</span>
                                         <!--end::Subtitle-->
                                     </div>
                                     <!--end::Title-->
@@ -601,7 +617,8 @@
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
                                     <!--begin::Chart-->
                                     <div class="d-flex flex-center me-5 pt-2">
-                                        <img src="{% static "assets2/manifest.png" %}" alt="" style="width: 90px">
+                                        <img src="{% static "assets2/images/manifest.png" %}" alt=""
+                                             style="width: 90px">
                                     </div>
                                     <!--end::Chart-->
 
@@ -626,14 +643,14 @@
 
                                             <!--begin::Badge-->
                                             <span class="badge badge-light-primary fs-base">
-                                        ta
+                                        {% trans "ta" %}
                                     </span>
                                             <!--end::Badge-->
                                         </div>
                                         <!--end::Info-->
 
                                         <!--begin::Subtitle-->
-                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">Barcha buyurtmalar</span>
+                                        <span class="text-gray-500 pt-1 fw-semibold fs-6">{% trans "Barcha buyurtmalar" %}</span>
                                         <!--end::Subtitle-->
                                     </div>
                                     <!--end::Title-->
@@ -644,7 +661,8 @@
                                 <div class="card-body pt-2 pb-4 d-flex align-items-center">
                                     <!--begin::Chart-->
                                     <div class="d-flex flex-center me-5 pt-2">
-                                        <img src="{% static "assets2/completed-task.png" %}" alt="" style="width: 90px">
+                                        <img src="{% static "assets2/images/completed-task.png" %}" alt=""
+                                             style="width: 90px">
                                     </div>
                                     <!--end::Chart-->
 
@@ -669,40 +687,42 @@
                                 <!--begin::Card header-->
                                 <div class="card-header align-items-center py-5 gap-2 gap-md-5">
                                     <!--begin::Card title-->
-                                    <div class="card-title">
+                                    <div class="card-title w-100 d-flex flex-column flex-md-row justify-content-between align-items-center">
+
                                         <!--begin::Search-->
                                         <div class="d-flex align-items-center position-relative my-1">
                                             <i class="fas fa-search fs-3 position-absolute ms-4"></i>
+
                                             <input type="text"
                                                    data-kt-ecommerce-order-filter="search"
-                                                   class="form-control form-control-solid w-250px ps-12"
-                                                   placeholder="Qidiruv ..." style="background-color: #e1dfdf;"/>
+                                                   class="form-control form-control-solid w-100 w-md-250px ps-12"
+                                                   placeholder="{% trans "Qidiruv ..." %}" style="background-color: #e1dfdf;"/>
                                         </div>
                                         <!--end::Search-->
+
+                                        <!--begin::Order Status Badge-->
+                                        <div class="d-flex flex-wrap align-items-center gap-3 mt-3 mt-md-0 w-100 justify-content-md-end justify-content-center">
+                                            <div class="badge badge-light-primary border border-primary shadow-sm px-4 py-4 text-center"
+                                                 style="min-width: 222px;">
+                                                <i class="fas fa-clipboard-list me-2"></i>
+                                               {% trans "Buyurtma berilganlar soni" %}: <strong>{{ orders_1|length }}</strong>     {% trans "ta" %}
+                                            </div>
+                                            <div class="badge badge-light-success border border-success shadow-sm px-4 py-4 text-center"
+                                                 style="min-width: 222px;">
+                                                <i class="fas fa-check-circle me-2"></i>
+                                                {% trans "Yuborilgan buyurtmalar soni" %}: <strong>{{ orders_2|length }}</strong>     {% trans "ta" %}
+                                            </div>
+                                            <div class="badge badge-light-danger border border-danger shadow-sm px-4 py-4 text-center"
+                                                 style="min-width: 222px;">
+                                                <i class="fas fa-times-circle me-2"></i>
+                                                {% trans "Bekor qilingan buyurtmalar soni" %}: <strong>{{ orders_3|length }}</strong>
+                                                    {% trans "ta" %}
+                                            </div>
+                                        </div>
+                                        <!--end::Order Status Badge-->
+
                                     </div>
                                     <!--end::Card title-->
-
-                                    <!--begin::Card toolbar-->
-                                    <div class="card-toolbar flex-row-fluid justify-content-end gap-5">
-                                        <!--begin::Add product-->
-                                        <div class="w-100" style="max-width: 220px;">
-                                            <!--begin::Select2-->
-                                            <select class="form-select form-select-solid" data-control="select2"
-                                                    data-hide-search="true" data-placeholder="Buyurtma holati"
-                                                    data-kt-ecommerce-order-filter="status">
-                                                <option></option>
-                                                <option value="all">Hammasi</option>
-                                                <option value="Pending">Buyurtma berildi {{ orders_1|length }} ta
-                                                </option>
-                                                <option value="Delivered">Bajarildi {{ orders_2|length }} ta</option>
-                                                <option value="Cancelled">Bekor qilindi {{ orders_3|length }} ta
-                                                </option>
-                                            </select>
-                                            <!--end::Select2-->
-                                        </div>
-                                        <!--end::Add product-->
-                                    </div>
-                                    <!--end::Card toolbar-->
                                 </div>
                                 <!--end::Card header-->
 
@@ -722,13 +742,13 @@
                                                                value="1"/>
                                                     </div>
                                                 </th>
-                                                <th class="min-w-100px">Buyurtma ID</th>
-                                                <th class="min-w-175px">Buyurtmachi</th>
-                                                <th class="text-end min-w-70px">Holati</th>
-                                                <th class="text-end min-w-100px">Jami</th>
-                                                <th class="text-end min-w-100px">Qo'shilgan sana</th>
-                                                <th class="text-end min-w-100px">O'zgartirilgan sana</th>
-                                                <th class="text-end min-w-100px">Amallar</th>
+                                                <th class="min-w-100px">{% trans "Buyurtma ID" %}</th>
+                                                <th class="min-w-175px">{% trans "Buyurtmachi" %}</th>
+                                                <th class="text-end min-w-70px">{% trans  "Holati" %}</th>
+                                                <th class="text-end min-w-100px">{% trans "Jami" %}</th>
+                                                <th class="text-end min-w-100px">{% trans "Qo'shilgan sana" %}</th>
+                                                <th class="text-end min-w-100px">{% trans "O'zgartirilgan sana" %}</th>
+                                                <th class="text-end min-w-100px">{% trans "Amallar" %}</th>
                                             </tr>
                                             </thead>
                                             <tbody class="fw-semibold text-gray-600" id="order-table-body">
@@ -742,65 +762,13 @@
                                     <div class="d-flex justify-content-between align-items-center mt-4">
                                         <div>
                                             <p class="mb-0">
-                                                Ko‘rsatilmoqda: {{ user_orders.start_index }}
-                                                dan {{ user_orders.end_index }} gacha,
-                                                jami: {{ user_orders.paginator.count }} buyurtma
+                                                {% trans "Ko‘rsatilmoqda" %}: {{ user_orders.start_index }}
+                                                {% trans "dan" %} {{ user_orders.end_index }} {% trans "gacha" %},
+                                                {% trans "jami" %}: {{ user_orders.paginator.count }} {% trans "buyurtma" %}
                                             </p>
                                         </div>
                                         <nav>
-                                            <ul class="pagination pagination-sm justify-content-center">
-                                                {% if user_orders.has_previous %}
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="?q={{ query }}&page=1"
-                                                           aria-label="First">
-                                                            <i class="fas fa-angle-double-left"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="page-item">
-                                                        <a class="page-link"
-                                                           href="?q={{ query }}&page={{ user_orders.previous_page_number }}"
-                                                           aria-label="Previous">
-                                                            <i class="fas fa-angle-left"></i>
-                                                        </a>
-                                                    </li>
-                                                {% else %}
-                                                    <li class="page-item disabled"><span class="page-link"><i
-                                                            class="fas fa-angle-double-left"></i></span></li>
-                                                    <li class="page-item disabled"><span class="page-link"><i
-                                                            class="fas fa-angle-left"></i></span></li>
-                                                {% endif %}
-                                                {% for page_num in user_orders.paginator.page_range %}
-                                                    {% if page_num == user_orders.number %}
-                                                        <li class="page-item active"><span
-                                                                class="page-link">{{ page_num }}</span></li>
-                                                    {% elif page_num >= user_orders.number|add:-2 and page_num <= user_orders.number|add:2 %}
-                                                        <li class="page-item"><a class="page-link"
-                                                                                 href="?q={{ query }}&page={{ page_num }}">{{ page_num }}</a>
-                                                        </li>
-                                                    {% endif %}
-                                                {% endfor %}
-                                                {% if user_orders.has_next %}
-                                                    <li class="page-item">
-                                                        <a class="page-link"
-                                                           href="?q={{ query }}&page={{ user_orders.next_page_number }}"
-                                                           aria-label="Next">
-                                                            <i class="fas fa-angle-right"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li class="page-item">
-                                                        <a class="page-link"
-                                                           href="?q={{ query }}&page={{ user_orders.paginator.num_pages }}"
-                                                           aria-label="Last">
-                                                            <i class="fas fa-angle-double-right"></i>
-                                                        </a>
-                                                    </li>
-                                                {% else %}
-                                                    <li class="page-item disabled"><span class="page-link"><i
-                                                            class="fas fa-angle-right"></i></span></li>
-                                                    <li class="page-item disabled"><span class="page-link"><i
-                                                            class="fas fa-angle-double-right"></i></span></li>
-                                                {% endif %}
-                                            </ul>
+                                            {% include "user/partials/pagination.html" %}
                                         </nav>
                                     </div>
                                 </div>
@@ -818,27 +786,27 @@
                 <!--end::Content-->
 
                 <!-- begin::Footer-->
-                <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
-                    <!--begin::Container-->
-                    <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
-                        <!--begin::Copyright-->
-                        <div class="text-gray-900 order-2 order-md-1">
-                            <span class="text-gray-500 fw-semibold me-1">Muallif : </span>
-                            <a href="https://t.me/oxunjonabdulla" target="_blank"
-                               class="text-muted text-hover-primary fw-semibold me-2 fs-6">Oxunjon</a>
-                        </div>
-                        <!--end::Copyright-->
-
-                        <!--begin::Menu-->
-                        <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
-                            <li class="menu-item"><a href="#"
-                                                     class="menu-link px-2">Railway Poster</a></li>
-                        </ul>
-                        <!--end::Menu-->
-                    </div>
-                    <!--end::Container-->
+        <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
+            <!--begin::Container-->
+            <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
+                <!-- begin::Copyright-->
+                <div class="text-gray-900 order-2 order-md-1">
+                    <span class="text-gray-500 fw-semibold me-1">{% trans "Muallif" %} : </span>
+                    <a href="https://t.me/oxunjonabdulla/" target="_blank"
+                       class="text-muted text-hover-primary fw-semibold me-2 fs-6">{% trans "Oxunjon Abdullayev" %}</a>
                 </div>
-                <!--end::Footer-->
+                <!-- end::Copyright-->
+
+                <!--begin::Menu-->
+                <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+                    <li class="menu-item"><a href="#"
+                                             class="menu-link px-2">Railway Poster</a></li>
+                </ul>
+                <!--end::Menu-->
+            </div>
+            <!--end::Container-->
+        </div>
+        <!--end::Footer-->
 
             </div>
             <!--end::Wrapper-->
@@ -856,86 +824,24 @@
 
     <!--begin::Javascript-->
     <script>
-        var hostUrl = "{% static "assets2/index.html" %}";        </script>
+        var hostUrl = "{% static "assets2/images/index.html" %}";        </script>
 
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <script src="{% static "assets2/plugins/global/plugins.bundle.js" %}"></script>
     <script src="{% static "assets2/js/scripts.bundle.js" %}"></script>
     <!--end::Global Javascript Bundle-->
 
-    <!--begin::Vendors Javascript(used for this page only)-->
-    <script src="{% static "assets2/plugins/custom/datatables/datatables.bundle.js" %}"></script>
-    <script src="{% static "assets2/plugins/custom/vis-timeline/vis-timeline.bundle.js" %}"></script>
-    <!--end::Vendors Javascript-->
 
     <!--begin::Custom Javascript(used for this page only)-->
     <script src="{% static "assets2/js/widgets.bundle.js" %}"></script>
     <script src="{% static "assets2/js/custom/widgets.js" %}"></script>
-    <script src="{% static "assets2/js/custom/apps/chat/chat.js" %}"></script>
-    <script src="{% static "assets2/js/custom/utilities/modals/upgrade-plan.js" %}"></script>
-    <script src="{% static "assets2/js/custom/utilities/modals/create-app.js" %}"></script>
-    <script src="{% static "assets2/js/custom/utilities/modals/users-search.js" %}"></script>
+    <script src="{% static 'assets2/js/config.js' %}"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-
-    <script>
-        function showConfirmationModal(message, onConfirm) {
-            const modal = document.createElement("div");
-            modal.className = "modal fade";
-            modal.tabIndex = "-1";
-            modal.role = "dialog";
-            modal.innerHTML = `
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tasdiqlash</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>${message}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yo'q</button>
-                        <button type="button" class="btn btn-danger" id="confirm-clear-cart">Ha</button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-            document.body.appendChild(modal);
-            const bsModal = new bootstrap.Modal(modal);
-
-            // Attach event listener for confirm button
-            modal.querySelector("#confirm-clear-cart").addEventListener("click", function () {
-                bsModal.hide();
-                modal.remove();
-
-                if (onConfirm) onConfirm(); // Call the confirm callback
-            });
-
-            // Show the modal
-            bsModal.show();
-
-            // Remove modal from DOM on close
-            modal.addEventListener("hidden.bs.modal", function () {
-                modal.remove();
-            });
-        }
-
-        function logoutConfirm(event) {
-            event.preventDefault(); // Prevent the default anchor behavior
-
-            showConfirmationModal("Rostdan ham tizimni tark etmoqchimisiz?", function () {
-                console.log("Ok");
-                window.location.href = '/auth/logout/';
-            });
-        }
-    </script>
-
 
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 </div>
-</div>
+
 </body>
 <!-- end::Body-->
 </html>

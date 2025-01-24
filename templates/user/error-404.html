@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 
 <html lang="en" >
@@ -18,7 +19,7 @@
     <meta property="og:url" content="https://keenthemes.com/metronic"/>
     <meta property="og:site_name" content="Railway Poster"/>
     <link rel="canonical" href="department/pos-warehouse.html"/>
-    <link rel="shortcut icon" href="{% static  "assets2/logo-vagon (1).png" %}"/>
+    <link rel="shortcut icon" href="{% static  "assets2/images/logo-vagon (1).png" %}"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/><!--end::Fonts-->
@@ -130,13 +131,13 @@
                 
     <!--begin::Title-->
     <h1 class="fw-bolder fs-2hx text-gray-900 mb-4">
-       Voy!
+       {% trans "Voy!" %}
     </h1>
     <!--end::Title--> 
     
     <!--begin::Text-->
     <div class="fw-semibold fs-6 text-gray-500 mb-7">
-        Bu sahifa topilmadi
+        {% translate 'Bu sahifa topilmadi' %}
     </div>
     <!--end::Text--> 
 
@@ -149,7 +150,7 @@
     
     <!--begin::Link-->
     <div class="mb-0">
-        <a href="{% url 'mechanic_page' %}" class="btn btn-sm btn-primary">Asosiy sahifaga qaytish</a>
+        <a href="{% url 'mechanic_page' %}" class="btn btn-sm btn-primary">{% trans "Asosiy sahifaga qaytish" %}</a>
     </div>    
     <!--end::Link-->
 
@@ -167,7 +168,7 @@
         
         <!--begin::Javascript-->
         <script>
-            var hostUrl = "{% static "assets2/index.html" %}";        </script>
+            var hostUrl = "{% static "assets2/images/index.html" %}";        </script>
 
                     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
                             <script src="{% static "assets2/plugins/global/plugins.bundle.js" %}"></script>

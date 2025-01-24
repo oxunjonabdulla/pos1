@@ -21,6 +21,12 @@ class Kategoriya(models.Model):
     def __str__(self):
         return self.nomi
 
+    class Meta:
+        ordering = ['nomi']
+        verbose_name = "Kategoriya"
+        verbose_name_plural = "Kategoriyalar"
+
+
 class Maxsulot(models.Model):
     kategoriya = models.ForeignKey(Kategoriya, on_delete=models.CASCADE, null=True, blank=True)
     nomi = models.CharField(max_length=455)

@@ -1,5 +1,4 @@
-
-
+{% load i18n %}
 {% for order in user_orders %}
     <!-- Begin Order Row -->
     <tr>
@@ -51,17 +50,17 @@
         <!-- Order Status -->
         <td class="text-end pe-0" data-order="{{ order.status }}">
             {% if order.status == '1' %}
-                <div class="badge badge-light-primary border border-primary shadow-sm">Buyurtma berildi</div>
+                <div class="badge badge-light-primary border border-primary shadow-sm">{% trans "Buyurtma berildi" %}</div>
             {% elif order.status == '2' %}
-                <div class="badge badge-light-success border border-success shadow-sm">Bajarildi</div>
+                <div class="badge badge-light-success border border-success shadow-sm">{% trans "Bajarildi" %}</div>
             {% elif order.status == '3' %}
-                <div class="badge badge-light-danger border border-danger shadow-sm">Bekor qilindi</div>
+                <div class="badge badge-light-danger border border-danger shadow-sm">{% trans "Bekor qilindi" %}</div>
             {% endif %}
         </td>
 
         <!-- Jami -->
         <td class="text-end pe-0">
-            <span class="fw-bold text-primary border-bottom border-warning pb-1">{{ order.jami_maxsulot }} ta</span>
+            <span class="fw-bold text-primary border-bottom border-warning pb-1">{{ order.jami_maxsulot }} {% trans "ta" %}</span>
         </td>
 
         <!-- Created At -->
@@ -81,17 +80,17 @@
             {% if request.user.is_superuser %}
                 <a href="{% url 'order1-detail' pk=order.id %}"
                    class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm">
-                    Batafsil
+                    {% trans "Batafsil" %}
                 </a>
             {% elif request.user.is_staff %}
                 <a href="{% url 'user_order_details' pk=order.id %}"
                    class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm">
-                    Batafsil
+                    {% trans "Batafsil" %}
+
                 </a>
             {% endif %}
         </td>
     </tr>
-
     <!-- End Order Row -->
 {% endfor %}
 
@@ -99,27 +98,43 @@
     document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.querySelector('[data-kt-ecommerce-order-filter="search"]');
         const tableBody = document.querySelector('#order-table-body');
+        const paginationContainer = document.querySelector('.pagination');
 
-        searchInput.addEventListener('input', function () {
-            const query = searchInput.value;
-
-            fetch(`/search-orders/?q=${encodeURIComponent(query)}`, {
+        function fetchOrders(query, page = 1) {
+            fetch(`/search-orders/?q=${encodeURIComponent(query)}&page=${page}`, {
                 headers: {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             })
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
+                .then(response => response.json())
                 .then(data => {
-                    if (data.html) {
-                        tableBody.innerHTML = data.html;
-                    } else if (data.error) {
-                        console.error('Error:', data.error);
+                    if (data.html_table) {
+                        tableBody.innerHTML = data.html_table;
+                    }
+                    if (data.html_pagination) {
+                        paginationContainer.innerHTML = data.html_pagination;
                     }
                 })
                 .catch(error => console.error('Error:', error));
+        }
+
+        // Trigger search on input change
+        searchInput.addEventListener('input', function () {
+            const query = searchInput.value.trim();
+            fetchOrders(query);
+        });
+
+        // Handle pagination clicks
+        paginationContainer.addEventListener('click', function (event) {
+            if (event.target.tagName === 'A') {
+                const page = new URLSearchParams(event.target.search).get('page');
+                const query = searchInput.value.trim();
+                fetchOrders(query, page);
+                event.preventDefault();
+            }
         });
     });
+
 </script>
+
+

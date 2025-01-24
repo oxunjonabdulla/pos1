@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 
 <html lang="en">
@@ -19,7 +20,7 @@
     <meta property="og:url" content="https://keenthemes.com/metronic"/>
     <meta property="og:site_name" content="Railway Poster"/>
     <link rel="canonical" href="../department/pos-warehouse.html"/>
-    <link rel="shortcut icon" href="{% static  "assets2/logo-vagon (1).png" %}"/>
+    <link rel="shortcut icon" href="{% static  "assets2/images/logo-vagon (1).png" %}"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/><!--end::Fonts-->
@@ -140,7 +141,7 @@
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <a href="{% url "mechanic_page" %}">
                     <img style="width: 220px; height: auto;" alt="Logo"
-                         src="{% static 'assets2/logo-vagon (1).png' %}"/>
+                         src="{% static 'assets2/images/logo-vagon (1).png' %}"/>
                 </a>
             </div>
             <!--end::Logo-->
@@ -165,71 +166,79 @@
                             data-kt-menu="true"
                             style="gap: 10px;"> <!-- Add gap between sections -->
 
-                        <div id="departments-container" class="d-flex flex-wrap justify-content-center"
-                             style="gap: 15px;">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div id="departments-container" class="d-flex flex-wrap justify-content-center"
+                                 style="gap: 15px;">
 
-                            <!-- Mechanic Section -->
-                            <a href="{% url 'mechanic_page' %}" class="menu-item-link section-link"
-                               data-section="Mechanic">
-                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 110px; width: 110px;">
-                                    <div class="menu-link menu-center">
+                                <!-- Mechanic Section -->
+                                <a href="{% url 'mechanic_page' %}" class="menu-item-link section-link"
+                                   data-section="Mechanic">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
                                     <span class="menu-icon me-0">
                                         <i class="fas fa-tools" style="font-size: 3.5rem; color: #007bff;"></i>
                                     </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Mexanika" %}</p>
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Mexanika</p>
-                                </div>
-                            </a>
+                                </a>
 
-                            <!-- Warehouse Section -->
-                            <a href="{% url 'warehouse_page' %}" class="menu-item-link section-link"
-                               data-section="Warehouse">
-                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 110px; width: 110px;">
-                                    <div class="menu-link menu-center">
+                                <!-- Warehouse Section -->
+                                <a href="{% url 'warehouse_page' %}" class="menu-item-link section-link"
+                                   data-section="Warehouse">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
                                     <span class="menu-icon me-0">
                                         <i class="fas fa-warehouse" style="font-size: 3.5rem; color: #28a745;"></i>
                                     </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Omborxona" %}</p>
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Omborxona</p>
-                                </div>
-                            </a>
+                                </a>
 
 
-                            <!-- Order Page Section -->
-                            <a href="{% url 'orders_page' %}" class="menu-item-link"
-                               style="text-decoration: none; color: inherit;">
-                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 110px; width: 110px;">
-                                    <div class="menu-link menu-center">
+                                <!-- Order Page Section -->
+                                <a href="{% url 'orders_page' %}" class="menu-item-link"
+                                   style="text-decoration: none; color: inherit;">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
                                     <span class="menu-icon me-0">
                                         <!-- Changed icon to 'fa-shopping-cart' for the order page -->
                                         <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #ffc107;"></i>
                                     </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Buyurtmalar" %}</p>
+                                        <!-- Changed text to "Buyurtmalar" (Orders) -->
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Buyurtmalar</p> <!-- Changed text to "Buyurtmalar" (Orders) -->
-                                </div>
-                            </a>
+                                </a>
 
-                            <!-- Logout Section -->
-                            <a href="/auth/logout/" class="menu-item-link" onclick="logoutConfirm(event)">
-                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 110px; width: 110px;">
-                                    <div class="menu-link menu-center">
+                                <!-- Logout Section -->
+                                <a href="/auth/logout/" class="menu-item-link" onclick="logoutConfirm(event)">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
                                 <span class="menu-icon me-0">
                                     <i class="fas fa-sign-out-alt" style="font-size: 3.5rem; color: #dc3545;"></i>
                                 </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Chiqish" %}
+                                        </p>
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Chiqish
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
+                                </a>
+                            </div>
+                        </form>
 
                     </div>
                 </div>
@@ -251,7 +260,7 @@
                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                     <a href="{% url "mechanic_page" %}">
                         <img style="width: 100px; height: auto;" alt="Logo"
-                             src="{% static 'assets2/logo-vagon (1).png' %}" class="h-auto"/>
+                             src="{% static 'assets2/images/logo-vagon (1).png' %}" class="h-auto"/>
                     </a>
 
                 </div>
@@ -312,13 +321,21 @@
                             <!-- begin::Notification menu -->
                             <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
                                  data-kt-menu="true" id="kt_menu_notifications">
+                                <!--begin::Heading-->
                                 <div class="d-flex flex-column bgi-no-repeat rounded-top"
                                      style="background-image:url({% static "/assets2/media/misc/menu-header-bg.jpg" %})">
+                                    <!--begin::Title-->
                                     <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
-                                        Bildirishnomalar <span class="fs-8 opacity-75 ps-3">{{ today_orders.count }} ta buyurtmalar</span>
+                                        {% trans "Bildirishnomalar" %} <span
+                                            class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
                                     </h3>
+                                    <!--end::Title-->
                                 </div>
+                                <!--end::Heading-->
+
+                                <!--begin::Content-->
                                 <div class="scroll-y mh-325px my-5 px-8">
+                                    <!--begin::Item-->
                                     {% for order in today_orders %}
                                         <a href="{% url "user_order_details" order.id %}">
                                             <div class="d-flex flex-stack py-4">
@@ -336,25 +353,31 @@
 
                                                 <!--begin::Code-->
                                                 {% if order.status == '1' %}
-                                                    <span class="w-70px badge badge-light-primary me-4">Buyurtma berildi</span>
+                                                    <span class="w-70px badge badge-light-primary me-4">{% trans "Buyurtma berildi" %}</span>
                                                 {% elif order.status == '2' %}
-                                                    <span class="w-70px badge badge-light-success me-4">Bajarildi</span>
+                                                    <span class="w-70px badge badge-light-success me-4">{% trans "Bajarildi" %}</span>
                                                 {% elif order.status == '3' %}
-                                                    <span class="w-70px badge badge-light-danger me-4">Bekor qilindi</span>
+                                                    <span class="w-70px badge badge-light-danger me-4">{% trans "Bekor qilindi" %}</span>
                                                 {% endif %}
                                                 <!--end::Code-->
 
                                             </div>
                                         </a>
                                     {% endfor %}
-
+                                    <!--end::Item-->
                                 </div>
+                                <!--end::Content-->
+
+                                <!--begin::View more-->
                                 <div class="py-3 text-center border-top">
                                     <a href="{% url "orders_page" %}"
                                        class="btn btn-color-gray-600 btn-active-color-primary">
-                                        Hammasini ko'rish <i class="fas fa-arrow-right fs-5"></i>
+                                        {% trans "Barchasini ko'rish" %}
+                                        <i class="fas fa-arrow-right fs-5"></i>
+
                                     </a>
                                 </div>
+                                <!--end::View more-->
                             </div>
                         </div>
                         <!-- end::Notification -->
@@ -406,7 +429,7 @@
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-5">
                                     <a href="{% url "tutorial_page" %}" class="menu-link px-5">
-                                        Foydalanish bo'yicha qo'llanma
+                                        {% trans "Foydalanish bo'yicha qo'llanma" %}
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -439,7 +462,7 @@
                                     <span class="menu-icon" data-kt-element="icon">
                                         <i class="fas fa-sun fs-2"></i>
                                     </span>
-                                        <span class="menu-title">Tongi rejim</span>
+                                        <span class="menu-title">{% trans "Tongi rejim" %}</span>
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -451,34 +474,48 @@
                                     <span class="menu-icon" data-kt-element="icon">
                                         <i class="fas fa-moon fs-2"></i>
                                     </span>
-                                        <span class="menu-title">Tungi rejim</span>
+                                        <span class="menu-title">{% trans "Tungi rejim" %}</span>
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
+
+
                             </div>
                             <!--end::Menu-->
                         </div>
 
                         <!-- begin::Language settings -->
                         <div class="dropdown">
+
                             <a class="btn btn-icon btn-custom btn-active-color-primary dropdown-toggle" href="#"
                                id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="rounded-1" src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
-                                     alt="" style="width: 24px;">
+                                {% with current_language=request.LANGUAGE_CODE %}
+                                    {% if current_language == "uz" %}
+                                        <img class="rounded-1"
+                                             src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
+                                             alt="" style="width: 24px;">
+                                    {% elif current_language == "ru" %}
+                                        <img class="rounded-1" src="{% static 'assets2/media/flags/russia.svg' %}"
+                                             alt="" style="width: 24px;">
+                                    {% endif %}
+                                {% endwith %}
+
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="{% url "set-language" 'uz' %}">
                                         <img class="rounded-1 me-2"
                                              src="{% static 'assets2/media/flags/uzbekistan.svg' %}" alt=""
-                                             style="width: 20px;"> Uzbek
+                                             style="width: 20px;"> {% trans "O'zbek tili" %}
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="{% url "set-language" "ru" %}">
                                         <img class="rounded-1 me-2"
                                              src="{% static 'assets2/media/flags/russia.svg' %}" alt=""
-                                             style="width: 20px;"> Russian
+                                             style="width: 20px;"> {% trans "Rus tili" %}
                                     </a>
                                 </li>
                             </ul>
@@ -506,7 +543,7 @@
                     <!--begin::Card header-->
                     <div class="card-header">
                         <div class="card-title">
-                            <h2>Buyurtma</h2>
+                            <h2>{% trans "Buyurtma" %}</h2>
                         </div>
                     </div>
                     <!--end::Card header-->
@@ -520,25 +557,25 @@
 
                                     <td class="text-muted">
                                         <div class="d-flex align-items-center">
-                                            Buyurtma ID : #00{{ order.id }}
+                                            {% trans "Buyurtma ID" %} : #00{{ order.id }}
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            Buyurtma berdi : {{ order.foydalanuvchi.username }}
+                                            {% trans "Buyurtma berdi" %} : {{ order.foydalanuvchi.username }}
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            Buyurtma berilgan vaqti : {{ order.created_at }}
+                                            {% trans "Buyurtma berilgan vaqti" %} : {{ order.created_at }}
                                         </div>
                                         <div class="d-flex align-items-center">
-                                            Buyurtma holati :
+                                            {% trans "Buyurtma holati" %} :
                                             {% if order.status == '1' %}
-                                                <div class="badge badge-light-primary">Buyurtma berildi</div>
+                                                <div class="badge badge-light-primary">{% trans "Buyurtma berildi" %}</div>
                                             {% elif order.status == '2' %}
                                                 <!--begin::Badges-->
-                                                <div class="badge badge-light-success">Bajarildi</div>
+                                                <div class="badge badge-light-success">{% trans "Bajarildi" %}</div>
                                                 <!--end::Badges-->
                                             {% elif order.status == '3' %}
                                                 <!--begin::Badges-->
-                                                <div class="badge badge-light-danger">Bekor qilindi</div>
+                                                <div class="badge badge-light-danger">{% trans "Bekor qilindi" %}</div>
 
                                                 <!--end::Badges-->
                                             {% endif %}
@@ -560,7 +597,7 @@
                     <!--begin::Card header-->
                     <div class="card-header">
                         <div class="card-title">
-                            <h2>Qo'shimcha xabar</h2>
+                            <h2>{% trans "Qo'shimcha xabar" %}</h2>
                         </div>
                     </div>
                     <!--end::Card header-->
@@ -576,7 +613,7 @@
                                             {% if order.qoshimcha_matn %}
                                                 {{ order.qoshimcha_matn }}
                                             {% else %}
-                                                Qo'shimcha xabar yo'q!
+                                                {% trans "Qo'shimcha xabar yo'q!" %}
                                             {% endif %}
                                         </div>
                                     </td>
@@ -597,7 +634,7 @@
                         <!--begin::Card header-->
                         <div class="card-header">
                             <div class="card-title">
-                                <h2 style="color: #db2333;">Buyurtma bekor qilindi</h2>
+                                <h2 style="color: #db2333;">{% trans "Buyurtma bekor qilindi" %}</h2>
                             </div>
                         </div>
                         <!--end::Card header-->
@@ -611,7 +648,7 @@
                                     <tr>
                                         <td class="text-muted">
                                             <div class="d-flex align-items-center">
-                                                Sababi :
+                                                {% trans "Sababi" %} :
                                                 <span style="
                                                 background-color: #f8d7da;
                                                 color: #db2333;
@@ -642,11 +679,11 @@
                     <table class="table align-middle table-row-dashed fs-6 gy-5 mb-0">
                         <thead>
                         <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                            <th class="min-w-175px">Mahsulotlar</th>
-                            <th class="min-w-100px text-end">O'lchami</th>
+                            <th class="min-w-175px">{% trans "Mahsulotlar" %}</th>
+                            <th class="min-w-100px text-end">{% trans "O'lchami" %}</th>
                             <th class="min-w-70px text-end"></th>
-                            <th class="min-w-100px text-end">Soni</th>
-                            <th class="min-w-100px text-end">Mahsulot kategoriyasi</th>
+                            <th class="min-w-100px text-end">{% trans "Soni" %}</th>
+                            <th class="min-w-100px text-end">{% trans "Mahsulot kategoriyasi" %}</th>
 
                         </tr>
                         </thead>
@@ -687,10 +724,10 @@
                         {% endfor %}
                         <tr>
                             <td colspan="4" class="fs-3 text-gray-900 text-end">
-                                {{ order.created_at }} da buyurtma berilgan mahsulotlar soni
+                                {{ order.created_at }} {% trans "da buyurtma berilgan mahsulotlar soni" %}
                             </td>
                             <td class="text-gray-900 fs-3 fw-bolder text-end">
-                                {{ order.maxsulotlar.count }} ta
+                                {{ order.maxsulotlar.count }} {% trans "ta" %}
                             </td>
                         </tr>
 
@@ -708,13 +745,13 @@
         <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
             <!--begin::Container-->
             <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
-                <!--begin::Copyright-->
+                <!-- begin::Copyright-->
                 <div class="text-gray-900 order-2 order-md-1">
-                    <span class="text-gray-500 fw-semibold me-1">Muallif : </span>
+                    <span class="text-gray-500 fw-semibold me-1">{% trans "Muallif" %} : </span>
                     <a href="https://t.me/oxunjonabdulla/" target="_blank"
-                       class="text-muted text-hover-primary fw-semibold me-2 fs-6">Oxunjon</a>
+                       class="text-muted text-hover-primary fw-semibold me-2 fs-6">{% trans "Oxunjon Abdullayev" %}</a>
                 </div>
-                <!--end::Copyright-->
+                <!-- end::Copyright-->
 
                 <!--begin::Menu-->
                 <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
@@ -741,7 +778,7 @@
 
 <!--begin::Javascript-->
 <script>
-    var hostUrl = "{% static  "assets2/index.html" %}";        </script>
+    var hostUrl = "{% static  "assets2/images/index.html" %}";        </script>
 
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 <script src="{% static  "assets2/plugins/global/plugins.bundle.js" %}"></script>
@@ -755,144 +792,12 @@
 <script src="{% static  "assets2/js/custom/pages/general/pos.js" %}"></script>
 <script src="{% static  "assets2/js/widgets.bundle.js" %}"></script>
 <script src="{% static  "assets2/js/custom/widgets.js" %}"></script>
-<script src="{% static  "assets2/js/custom/apps/chat/chat.js" %}"></script>
-<script src="{% static  "assets2/js/custom/utilities/modals/upgrade-plan.js" %}"></script>
-<script src="{% static  "assets2/js/custom/utilities/modals/create-app.js" %}"></script>
-<script src="{% static  "assets2/js/custom/utilities/modals/users-search.js" %}"></script>
+
+{# import from config.js #}
+<script src="{% static 'assets2/js/config.js' %}"></script>
+{# import from config.js #}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
-<script>
-    function showConfirmationModal(message, onConfirm) {
-        const modal = document.createElement("div");
-        modal.className = "modal fade";
-        modal.tabIndex = "-1";
-        modal.role = "dialog";
-        modal.innerHTML = `
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tasdiqlash</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>${message}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yo'q</button>
-                        <button type="button" class="btn btn-danger" id="confirm-clear-cart">Ha</button>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        document.body.appendChild(modal);
-        const bsModal = new bootstrap.Modal(modal);
-
-        // Attach event listener for confirm button
-        modal.querySelector("#confirm-clear-cart").addEventListener("click", function () {
-            bsModal.hide();
-            modal.remove();
-
-            if (onConfirm) onConfirm(); // Call the confirm callback
-        });
-
-        // Show the modal
-        bsModal.show();
-
-        // Remove modal from DOM on close
-        modal.addEventListener("hidden.bs.modal", function () {
-            modal.remove();
-        });
-    }
-
-    function logoutConfirm(event) {
-        event.preventDefault(); // Prevent the default anchor behavior
-
-        showConfirmationModal("Rostdan ham tizimni tark etmoqchimisiz?", function () {
-            console.log("Ok");
-            window.location.href = '/auth/logout/';
-        });
-    }
-</script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.querySelectorAll(".section-link").forEach(link => {
-            link.addEventListener("click", function (e) {
-                e.preventDefault(); // Prevent navigation
-
-                const sectionUrl = this.getAttribute("href");
-                const sectionName = this.getAttribute("data-section");
-
-                // AJAX request to check cart section
-                fetch(`/check-section/`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": "{{ csrf_token }}"
-                    },
-                    body: JSON.stringify({section: sectionName})
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Navigate to the section
-                            window.location.href = sectionUrl;
-                        } else {
-                            // Show confirmation modal
-                            showConfirmationModal(data.message, sectionUrl);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                        alert("An error occurred. Please try again.");
-                    });
-            });
-        });
-
-        function showConfirmationModal(message, sectionUrl) {
-            const modalHtml = `
-            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tasdiqlash</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>${message}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
-                            <button type="button" class="btn btn-primary" id="confirm-action">Davom etish</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-
-            // Append modal to the body
-            document.body.insertAdjacentHTML("beforeend", modalHtml);
-            const modal = new bootstrap.Modal(document.getElementById("confirmationModal"));
-
-            // Confirm button event
-            document.getElementById("confirm-action").addEventListener("click", function () {
-                modal.hide();
-                document.getElementById("confirmationModal").remove();
-                window.location.href = sectionUrl;
-            });
-
-            // Show the modal
-            modal.show();
-
-            // Clean up modal after closing
-            document.getElementById("confirmationModal").addEventListener("hidden.bs.modal", function () {
-                document.getElementById("confirmationModal").remove();
-            });
-        }
-    });
-
-</script>
 
 <!-- end::Javascript-->
 </body>

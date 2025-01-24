@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <!DOCTYPE html>
 
 <html lang="en">
@@ -19,7 +20,7 @@
     <meta property="og:url" content="https://keenthemes.com/metronic"/>
     <meta property="og:site_name" content="Railway Poster"/>
     <link rel="canonical" href="../department/pos-warehouse.html"/>
-    <link rel="shortcut icon" href="{% static  "assets2/logo-vagon (1).png" %}"/>
+    <link rel="shortcut icon" href="{% static  "assets2/images/logo-vagon (1).png" %}"/>
 
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/><!--end::Fonts-->
@@ -136,7 +137,7 @@
             <div class="aside-logo flex-column-auto" id="kt_aside_logo">
                 <a href="{% url "dashboard1" %}">
                     <img style="width: 220px; height: auto;" alt="Logo"
-                         src="{% static 'assets2/logo-vagon (1).png' %}"/>
+                         src="{% static 'assets2/images/logo-vagon (1).png' %}"/>
                 </a>
             </div>
             <!--end::Logo-->
@@ -173,7 +174,7 @@
                                 </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Dashboard
+                                        {% trans "Boshqaruv paneli" %}
                                     </p>
                                 </div>
                             </a>
@@ -187,7 +188,7 @@
                                 </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Xodimlar
+                                        {% trans "Xodimlar" %}
                                     </p>
                                 </div>
                             </a>
@@ -201,7 +202,7 @@
                                         </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Qo'llanma
+                                        {% trans "Qo'llanma" %}
                                     </p>
                                 </div>
                             </a>
@@ -216,7 +217,7 @@
                                 </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        Chiqish
+                                        {% trans "Chiqish" %}
                                     </p>
                                 </div>
                             </a>
@@ -247,7 +248,7 @@
                 <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
                     <a href="{% url "dashboard1" %}">
                         <img style="width: 100px; height: auto;" alt="Logo"
-                             src="{% static 'assets2/logo-vagon (1).png' %}" class="h-auto"/>
+                             src="{% static 'assets2/images/logo-vagon (1).png' %}" class="h-auto"/>
                     </a>
 
                 </div>
@@ -315,7 +316,8 @@
                                      style="background-image:url({% static "/assets2/media/misc/menu-header-bg.jpg" %})">
                                     <!--begin::Title-->
                                     <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
-                                        Bildirishnomalar <span class="fs-8 opacity-75 ps-3">{{ today_orders.count }} ta buyurtmalar</span>
+                                        {% trans "Bildirishnomalar" %} <span
+                                            class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
                                     </h3>
                                     <!--end::Title-->
                                 </div>
@@ -343,11 +345,11 @@
 
                                                 <!--begin::Code-->
                                                 {% if order.status == '1' %}
-                                                    <span class="w-70px badge badge-light-primary me-4">Buyurtma berildi</span>
+                                                    <span class="w-70px badge badge-light-primary me-4">{% trans "Buyurtma berildi" %}</span>
                                                 {% elif order.status == '2' %}
-                                                    <span class="w-70px badge badge-light-success me-4">Bajarildi</span>
+                                                    <span class="w-70px badge badge-light-success me-4">{% trans "Bajarildi" %}</span>
                                                 {% elif order.status == '3' %}
-                                                    <span class="w-70px badge badge-light-danger me-4">Bekor qilindi</span>
+                                                    <span class="w-70px badge badge-light-danger me-4">{% trans "Bekor qilindi" %}</span>
                                                 {% endif %}
                                                 <!--end::Code-->
 
@@ -427,6 +429,7 @@
                             <!--end::Menu toggle-->
 
                             <!--begin::Menu-->
+
                             <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
                                  data-kt-menu="true" data-kt-element="theme-mode-menu">
                                 <!--begin::Menu item-->
@@ -436,7 +439,7 @@
                                     <span class="menu-icon" data-kt-element="icon">
                                         <i class="fas fa-sun fs-2"></i>
                                     </span>
-                                        <span class="menu-title">Tongi rejim</span>
+                                        <span class="menu-title">{% trans "Tongi rejim" %}</span>
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
@@ -448,35 +451,49 @@
                                     <span class="menu-icon" data-kt-element="icon">
                                         <i class="fas fa-moon fs-2"></i>
                                     </span>
-                                        <span class="menu-title">Tungi rejim</span>
+                                        <span class="menu-title">{% trans "Tungi rejim" %}</span>
                                     </a>
                                 </div>
                                 <!--end::Menu item-->
+
+
                             </div>
+
 
                             <!--end::Menu-->
                         </div>
 
                         <!-- begin::Language settings -->
                         <div class="dropdown">
+
                             <a class="btn btn-icon btn-custom btn-active-color-primary dropdown-toggle" href="#"
                                id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <img class="rounded-1" src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
-                                     alt="" style="width: 24px;">
+                                {% with current_language=request.LANGUAGE_CODE %}
+                                    {% if current_language == "uz" %}
+                                        <img class="rounded-1" src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
+                                             alt="" style="width: 24px;">
+                                    {% elif current_language == "ru" %}
+                                        <img class="rounded-1" src="{% static 'assets2/media/flags/russia.svg' %}"
+                                             alt="" style="width: 24px;">
+                                    {% endif %}
+                                {% endwith %}
+
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="languageDropdown">
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="{% url "set-language" 'uz' %}">
                                         <img class="rounded-1 me-2"
                                              src="{% static 'assets2/media/flags/uzbekistan.svg' %}" alt=""
-                                             style="width: 20px;"> Uzbek
+                                             style="width: 20px;"> {% trans "O'zbek tili" %}
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
+                                    <a class="dropdown-item d-flex align-items-center"
+                                       href="{% url "set-language" "ru" %}">
                                         <img class="rounded-1 me-2"
                                              src="{% static 'assets2/media/flags/russia.svg' %}" alt=""
-                                             style="width: 20px;"> Russian
+                                             style="width: 20px;"> {% trans "Rus tili" %}
                                     </a>
                                 </li>
                             </ul>
@@ -512,8 +529,7 @@
                             <!--begin::Content-->
                             <div class="d-flex flex-stack mb-5">
                                 <!--begin::Title-->
-                                <h2 class="text-gray-900 text-center w-100">PLATFORMANI ISHLATISH BO‘YICHA VIDEO
-                                    QO‘LLANMA!</h2>
+                                    <h2 class="text-gray-900 text-center w-100">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h2>
                                 <!--end::Title-->
                             </div>
                             <!--end::Content-->
@@ -526,25 +542,25 @@
                             <div class="card-xl-stretch" style="width: 100%; position: relative;">
                                 <!--begin::Image-->
                                 <a class="d-block bgi-no-repeat bgi-size-cover bgi-position-center card-rounded position-relative"
-                                   style="background-image:url('{% static "assets2/media/stock/600x400/img-73.jpg" %}'); background-size: cover; background-position: center; height: 400px; border-radius: 10px;"
+                                   style="background-image:url('{% static "assets2/media/misc/tutor.png" %}'); background-size: cover; background-position: center; height: 400px; border-radius: 10px;"
                                    data-bs-toggle="modal"
                                    data-bs-target="#videoModal">
-                                    <img src="{% static "assets2/media/svg/misc/video-play.svg" %}"
+                                    <img src="{% static "assets2/media/misc/video-play.png" %}"
                                          class="position-absolute top-50 start-50 translate-middle"
                                          alt="Play Video"
-                                         style="width: 120px; height: 120px;"/>
+                                         style="width: 80px; height: 80px;"/>
                                 </a>
                                 <!--end::Image-->
                             </div>
                             <!--end::Feature post-->
                             <br><br>
                             <h2 class="text-gray-900 text-center w-100">
-                                Qo'shimcha savollar uchun telegram orqali murojat qiling.
+                                {% trans "Qo'shimcha savollar uchun telegram orqali murojat qiling." %}
                             </h2>
                             <div class="text-center mt-3">
                                 <a href="https://t.me/oxunjonabdulla" target="_blank" class="btn"
                                    style="background-color: #0088cc; color: white;">
-                                    <i class="fab fa-telegram-plane"></i> Bog'lanish
+                                    <i class="fab fa-telegram-plane"></i> {% trans "Bog'lanish" %}
                                 </a>
                             </div>
                             <!-- Modal -->
@@ -555,8 +571,7 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="videoModalLabel">PLATFORMANI ISHLATISH BO‘YICHA
-                                                VIDEO QO‘LLANMA!</h5>
+                                            <h5 class="modal-title" id="videoModalLabel">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
@@ -594,13 +609,13 @@
         <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
             <!--begin::Container-->
             <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
-                <!--begin::Copyright-->
+                <!-- begin::Copyright-->
                 <div class="text-gray-900 order-2 order-md-1">
-                    <span class="text-gray-500 fw-semibold me-1">Muallif : </span>
+                    <span class="text-gray-500 fw-semibold me-1">{% trans "Muallif" %} : </span>
                     <a href="https://t.me/oxunjonabdulla/" target="_blank"
-                       class="text-muted text-hover-primary fw-semibold me-2 fs-6">Oxunjon</a>
+                       class="text-muted text-hover-primary fw-semibold me-2 fs-6">{% trans "Oxunjon Abdullayev" %}</a>
                 </div>
-                <!--end::Copyright-->
+                <!-- end::Copyright-->
 
                 <!--begin::Menu-->
                 <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
@@ -628,7 +643,7 @@
 
 <!--begin::Javascript-->
 <script>
-    var hostUrl = "{% static  "assets2/index.html" %}";        </script>
+    var hostUrl = "{% static  "assets2/images/index.html" %}";        </script>
 
 <!--begin::Global Javascript Bundle(mandatory for all pages)-->
 <script src="{% static  "assets2/plugins/global/plugins.bundle.js" %}"></script>
@@ -651,157 +666,10 @@
 <script src="{% static  "assets2/js/custom/pages/general/pos.js" %}"></script>
 <script src="{% static  "assets2/js/widgets.bundle.js" %}"></script>
 <script src="{% static  "assets2/js/custom/widgets.js" %}"></script>
-<script src="{% static  "assets2/js/custom/apps/chat/chat.js" %}"></script>
-<script src="{% static  "assets2/js/custom/utilities/modals/upgrade-plan.js" %}"></script>
-<script src="{% static  "assets2/js/custom/utilities/modals/create-app.js" %}"></script>
-<script src="{% static  "assets2/js/custom/utilities/modals/users-search.js" %}"></script>
+<script src="{% static 'assets2/js/config.js' %}"></script>
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-<script>
-    function showConfirmationModal(message, onConfirm) {
-        const modal = document.createElement("div");
-        modal.className = "modal fade";
-        modal.tabIndex = "-1";
-        modal.role = "dialog";
-        modal.innerHTML = `
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Tasdiqlash</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>${message}</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yo'q</button>
-                        <button type="button" class="btn btn-danger" id="confirm-clear-cart">Ha</button>
-                    </div>
-                </div>
-            </div>
-        `;
 
-        document.body.appendChild(modal);
-        const bsModal = new bootstrap.Modal(modal);
-
-        // Attach event listener for confirm button
-        modal.querySelector("#confirm-clear-cart").addEventListener("click", function () {
-            bsModal.hide();
-            modal.remove();
-
-            if (onConfirm) onConfirm(); // Call the confirm callback
-        });
-
-        // Show the modal
-        bsModal.show();
-
-        // Remove modal from DOM on close
-        modal.addEventListener("hidden.bs.modal", function () {
-            modal.remove();
-        });
-    }
-
-    function logoutConfirm(event) {
-        event.preventDefault(); // Prevent the default anchor behavior
-
-        showConfirmationModal("Rostdan ham tizimni tark etmoqchimisiz?", function () {
-            console.log("Ok");
-            window.location.href = '/auth/logout/';
-        });
-    }
-</script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Attach click event to all section links
-        document.querySelectorAll(".section-link").forEach(link => {
-            link.addEventListener("click", function (e) {
-                e.preventDefault(); // Prevent default navigation
-
-                const sectionUrl = this.getAttribute("href");
-                const sectionName = this.getAttribute("data-section");
-
-                // Send AJAX request to check cart section
-                fetch(`/check-section/`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRFToken": "{{ csrf_token }}"
-                    },
-                    body: JSON.stringify({section: sectionName})
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Navigate to the section
-                            window.location.href = sectionUrl;
-                        } else {
-                            // Show confirmation modal with section URL
-                            showConfirmationModal(data.message, sectionUrl);
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                        alert("An error occurred. Please try again.");
-                    });
-            });
-        });
-
-        // Function to show a confirmation modal
-        function showConfirmationModal(message, sectionUrl) {
-            console.log(sectionUrl);
-            const modal = document.createElement("div");
-            modal.className = "modal fade";
-            modal.tabIndex = "-1";
-            modal.role = "dialog";
-            // Determine button text based on section URL
-            let buttonText;
-            if (sectionUrl === "/mechanic/") {
-                buttonText = "Omborxona bo'limiga o'tish";
-            } else if (sectionUrl === "/warehouse/") {
-                buttonText = "Mexanika bo'limiga o'tish";
-            } else {
-                buttonText = "Davom etish"; // Default button text
-            }
-            modal.innerHTML = `
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tasdiqlash</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>${message}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
-
-                            <button type="button" class="btn btn-primary" id="confirm-action">${buttonText}</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.body.appendChild(modal);
-            const bsModal = new bootstrap.Modal(modal);
-
-            // Attach event listener for confirm button
-            modal.querySelector("#confirm-action").addEventListener("click", function () {
-                bsModal.hide();
-                modal.remove();
-
-                // Navigate to the section URL after confirmation
-                window.location.href = sectionUrl;
-            });
-
-            // Show the modal
-            bsModal.show();
-
-            // Remove modal from DOM on close
-            modal.addEventListener("hidden.bs.modal", function () {
-                modal.remove();
-            });
-        }
-    });
-</script>
 
 <!--end::Javascript-->
 </body>
