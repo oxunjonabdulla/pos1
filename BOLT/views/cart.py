@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
-
+from django.utils.translation import gettext as _  # Import for translation
 from product_app.models import Maxsulot, CartItems
 
 
@@ -34,7 +34,7 @@ def update_cart_quantity(request, cart_item_id):
             new_quantity = data.get("new_quantity")
 
             if new_quantity is None:
-                return JsonResponse({"success": False, "message": "Yaroqsiz ma’lumotlar"})
+                return JsonResponse({"success": False, "message": _("Yaroqsiz ma’lumotlar")})
 
             # Fetch the cart item
             cart_item = CartItems.objects.get(id=cart_item_id, foydalanuvchi=request.user)
@@ -42,14 +42,14 @@ def update_cart_quantity(request, cart_item_id):
             cart_item.save()
 
             return JsonResponse(
-                {"success": True, "message": "Soni muvaffaqiyatli yangilandi", "new_quantity": cart_item.soni})
+                {"success": True, "message": _("Soni muvaffaqiyatli yangilandi"), "new_quantity": cart_item.soni})
         except CartItems.DoesNotExist:
-            return JsonResponse({"success": False, "message": "Mahsulot savatda mavjud emas"})
+            return JsonResponse({"success": False, "message": _("Mahsulot savatda mavjud emas")})
         except json.JSONDecodeError:
-            return JsonResponse({"success": False, "message": "Yaroqsiz ma’lumotlar"})
+            return JsonResponse({"success": False, "message": _("Yaroqsiz ma’lumotlar")})
         except Exception as e:
             return JsonResponse({"success": False, "message": f"Xatolik: {str(e)}"})
-    return JsonResponse({"success": False, "message": "Noto'g'ri so'rov usuli."})
+    return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")})
 
 
 @login_required(login_url='login_page')
@@ -69,7 +69,7 @@ def add_to_cart(request, product_id):
             )
 
             if not created:
-                return JsonResponse({"success": False, "message": "Mahsulot savatda mavjud!"})
+                return JsonResponse({"success": False, "message": _("Mahsulot savatda mavjud!")})
 
             # Set the quantity and save
             cart_item.soni = quantity
@@ -80,13 +80,13 @@ def add_to_cart(request, product_id):
 
             return JsonResponse({
                 "success": True,
-                "message": "Mahsulot savatga qo'shildi!",
+                "message": _("Mahsulot savatga qo'shildi!"),
                 "cart_items_count": cart_count,
             })
         except Exception as e:
             return JsonResponse({"success": False, "message": f"Xatolik yuz berdi: {str(e)}"})
 
-    return JsonResponse({"success": False, "message": "Noto'g'ri so'rov usuli."})
+    return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")})
 
 
 # Update cart
@@ -97,8 +97,8 @@ def remove_cart_item(request, item_id):
     if request.method == "POST":
         cart_item = get_object_or_404(CartItems, id=item_id)
         cart_item.delete()
-        return JsonResponse({"success": True, "message": "Muvaffaqiyatli o'chirildi!"})
-    return JsonResponse({"success": False, "message": "Xatolik yuz berdi."})
+        return JsonResponse({"success": True, "message": _("Muvaffaqiyatli o'chirildi!")})
+    return JsonResponse({"success": False, "message": _("Xatolik yuz berdi.")})
 
 
 # Remove all cart
@@ -107,5 +107,5 @@ def remove_all_cart(request):
     if request.method == "POST":
         CartItems.objects.filter(foydalanuvchi=request.user).delete()
 
-        return JsonResponse({"success": True, "message": "Savatcha muvaffaqiyatli tozalandi!"})
-    return JsonResponse({"success": False, "message": "Xatolik yuz berdi."})
+        return JsonResponse({"success": True, "message": _("Savatcha muvaffaqiyatli tozalandi!")})
+    return JsonResponse({"success": False, "message": _("Xatolik yuz berdi.")})

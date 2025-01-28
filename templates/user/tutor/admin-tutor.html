@@ -529,7 +529,7 @@
                             <!--begin::Content-->
                             <div class="d-flex flex-stack mb-5">
                                 <!--begin::Title-->
-                                    <h2 class="text-gray-900 text-center w-100">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h2>
+                                <h2 class="text-gray-900 text-center w-100">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h2>
                                 <!--end::Title-->
                             </div>
                             <!--end::Content-->
@@ -542,7 +542,7 @@
                             <div class="card-xl-stretch" style="width: 100%; position: relative;">
                                 <!--begin::Image-->
                                 <a class="d-block bgi-no-repeat bgi-size-cover bgi-position-center card-rounded position-relative"
-                                   style="background-image:url('{% static "assets2/media/misc/tutor.png" %}'); background-size: cover; background-position: center; height: 400px; border-radius: 10px;"
+                                   style="background-image:url('{% static "assets2/media/misc/tutor.jpg" %}'); background-size: cover; background-position: center; height: 400px; border-radius: 10px;"
                                    data-bs-toggle="modal"
                                    data-bs-target="#videoModal">
                                     <img src="{% static "assets2/media/misc/video-play.png" %}"
@@ -571,23 +571,25 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="videoModalLabel">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h5>
+                                            <h5 class="modal-title"
+                                                id="videoModalLabel">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="ratio ratio-16x9">
-                                                <iframe id="videoFrame"
-                                                        src="https://www.youtube.com/embed/btornGtLwIo"
-                                                        title="YouTube video"
-                                                        allowfullscreen
-                                                        frameborder="0"></iframe>
-
+                                                <iframe id="videoFrame" width="560" height="315"
+                                                        src="https://www.youtube.com/embed/qo5hm1N96Tk?si=3WzGhrdBMqq5_jsO"
+                                                        title="YouTube video player" frameborder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                        referrerpolicy="strict-origin-when-cross-origin"
+                                                        allowfullscreen></iframe>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <!--end::Modal-->
                         </div>
                         <!--end::Section-->

@@ -55,25 +55,26 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
+        // Import the gettext function
         const modalHtml = `
-            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tasdiqlash</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p>${message}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
-                            <button type="button" class="btn btn-primary" id="confirm-action">Davom etish</button>
-                        </div>
-                    </div>
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">${gettext("Tasdiqlash")}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>${message}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${gettext("Yopish")}</button>
+                    <button type="button" class="btn btn-primary" id="confirm-action">${gettext("Davom etish")}</button>
                 </div>
             </div>
-        `;
+        </div>
+    </div>
+`;
 
         // Append modal HTML to body
         document.body.insertAdjacentHTML("beforeend", modalHtml);
@@ -100,30 +101,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Logout function with confirmation
 
+// Logout function with confirmation
+
+
 function showConfirmationModal(message, onConfirm) {
     const modal = document.createElement("div");
     modal.className = "modal fade";
     modal.tabIndex = "-1";
     modal.role = "dialog";
-
-    // Use gettext to translate the text
     modal.innerHTML = `
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">${gettext("Tasdiqlash")}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>${message}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${gettext("Yo'q")}</button>
-                    <button type="button" class="btn btn-danger" id="confirm-clear-cart">${gettext("Ha")}</button>
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tasdiqlash</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>${message}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yo'q</button>
+                        <button type="button" class="btn btn-danger" id="confirm-clear-cart">Ha</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    `;
+        `;
 
     document.body.appendChild(modal);
     const bsModal = new bootstrap.Modal(modal);
@@ -148,12 +150,14 @@ function showConfirmationModal(message, onConfirm) {
 function logoutConfirm(event) {
     event.preventDefault(); // Prevent the default anchor behavior
 
-    // Use gettext for the confirmation message
-    showConfirmationModal(gettext("Rostdan ham tizimni tark etmoqchimisiz?"), function () {
+    showConfirmationModal("Rostdan ham tizimni tark etmoqchimisiz?", function () {
         console.log("Ok");
         window.location.href = '/auth/logout/';
     });
 }
+
+// --------- Logout function with confirmation
+
 
 // --------- Logout function with confirmation
 

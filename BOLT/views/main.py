@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils import timezone
-
+from django.utils.translation import gettext as _  # Import for translation
 from product_app.models import Maxsulot, CartItems, Order, Kategoriya, Department
 from user_app.models import User
 
@@ -52,7 +52,6 @@ def dashboard_page(request):
             'today_orders_2': today_orders_2,
             'users': users,
         }
-
         return render(request, 'user/department/dashboard.html', admin_ctx)
 
     elif request.user.is_staff:
@@ -183,7 +182,7 @@ def filter_products(request):
         # Return products and their details as JSON
         return JsonResponse({'products': product_list}, status=200)
 
-    return JsonResponse({"error": "No category ID provided"}, status=400)
+    return JsonResponse({"error": _("Hech qanday kategoriya identifikatori berilmagan")}, status=400)
 
 
 @login_required(login_url="login_page")
@@ -215,7 +214,6 @@ def search_products(request):
 
     return JsonResponse({'products': product_list})
 
-
 @login_required(login_url='login_page')
 def check_section(request):
     if request.method == "POST":
@@ -245,17 +243,19 @@ def check_section(request):
             if current_section_en != target_section:
                 return JsonResponse({
                     "success": False,
-                    "message": (
-                        f"<span style='color: #007bff; font-weight: bold;'>{target_section_uz}</span> "
+                    "message": _(
+                        "<span style='color: #007bff; font-weight: bold;'>%(target_section)s</span> "
                         "bo'limga o'tish uchun avval "
-                        f"<span style='color: #dc3545; font-weight: bold;'>{current_section}</span> "
+                        "<span style='color: #dc3545; font-weight: bold;'>%(current_section)s</span> "
                         "savatidagi mahsulotlarni o'chiring yoki buyurtma bering."
-                    )
+                    ) % {
+                                   "target_section": target_section_uz,
+                                   "current_section": current_section,
+                               }
                 }, status=400)
 
         return JsonResponse({"success": True})
-    return JsonResponse({"success": False, "message": "Invalid request method"}, status=405)
-
+    return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli")}, status=405)
 
 @login_required(login_url='login_page')
 def bad_request_view(request, exception=None):

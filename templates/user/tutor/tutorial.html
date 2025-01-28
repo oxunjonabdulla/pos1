@@ -213,7 +213,8 @@
                                         </div>
                                         <p class="mt-2 text-center text-dark"
                                            style="font-size: 0.9rem; font-weight: 500;">
-                                            {% trans "Buyurtmalar" %}</p> <!-- Changed text to "Buyurtmalar" (Orders) -->
+                                            {% trans "Buyurtmalar" %}</p>
+                                        <!-- Changed text to "Buyurtmalar" (Orders) -->
                                     </div>
                                 </a>
 
@@ -326,7 +327,8 @@
                                      style="background-image:url({% static "/assets2/media/misc/menu-header-bg.jpg" %})">
                                     <!--begin::Title-->
                                     <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
-                                        {% trans "Bildirishnomalar" %} <span class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
+                                        {% trans "Bildirishnomalar" %} <span
+                                            class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
                                     </h3>
                                     <!--end::Title-->
                                 </div>
@@ -565,7 +567,7 @@
                             <div class="card-xl-stretch" style="width: 100%; position: relative;">
                                 <!--begin::Image-->
                                 <a class="d-block bgi-no-repeat bgi-size-cover bgi-position-center card-rounded position-relative"
-                                   style="background-image:url('{% static "assets2/media/misc/tutor.png" %}'); background-size: cover; background-position: center; height: 400px; border-radius: 10px;"
+                                   style="background-image:url('{% static "assets2/media/misc/tutor.jpg" %}'); background-size: cover; background-position: center; height: 400px; border-radius: 10px;"
                                    data-bs-toggle="modal"
                                    data-bs-target="#videoModal">
                                     <img src="{% static "assets2/media/misc/video-play.png" %}"
@@ -594,23 +596,26 @@
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="videoModalLabel">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h5>
+                                            <h5 class="modal-title"
+                                                id="videoModalLabel">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="ratio ratio-16x9">
-                                                <iframe id="videoFrame"
-                                                        src="https://www.youtube.com/embed/btornGtLwIo"
-                                                        title="YouTube video"
-                                                        allowfullscreen
-                                                        frameborder="0"></iframe>
-
+                                                <iframe id="videoFrame" width="560" height="315"
+                                                        src="https://www.youtube.com/embed/qo5hm1N96Tk?si=3WzGhrdBMqq5_jsO"
+                                                        title="YouTube video player" frameborder="0"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                        referrerpolicy="strict-origin-when-cross-origin"
+                                                        allowfullscreen></iframe>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+
                             <!--end::Modal-->
                         </div>
                         <!--end::Section-->
@@ -677,12 +682,15 @@
 <script src="{% static  "assets2/plugins/custom/datatables/datatables.bundle.js" %}"></script>
 <!-- end::Vendors Javascript-->
 <script>
-    const videoModal = document.getElementById('videoModal');
-    const videoFrame = document.getElementById('videoFrame');
+    document.addEventListener("DOMContentLoaded", function () {
+        const videoModal = document.getElementById("videoModal");
+        const videoFrame = document.getElementById("videoFrame");
 
-    videoModal.addEventListener('hidden.bs.modal', () => {
-        // Reset the iframe's src to stop the video
-        videoFrame.src = videoFrame.src;
+        // Add event listener for when the modal is hidden
+        videoModal.addEventListener("hidden.bs.modal", function () {
+            // Reset the iframe src to stop the video
+            videoFrame.src = videoFrame.src;
+        });
     });
 </script>
 <!-- begin::Custom Javascript(used for this page only)-->

@@ -359,3 +359,66 @@ msgstr "Количество"
 
 msgid "Rostdan ham tizimni tark etmoqchimisiz?"
 msgstr "Вы действительно хотите выйти из системы?"
+
+
+msgid "Yaroqsiz ma’lumotlar"
+msgstr "Недействительные данные"
+
+msgid "Soni muvaffaqiyatli yangilandi"
+msgstr "Количество успешно обновлено"
+
+msgid "Mahsulot savatda mavjud emas"
+msgstr "Продукт отсутствует в корзине"
+
+msgid "Noto'g'ri so'rov usuli."
+msgstr "Неправильный метод запроса."
+
+msgid "Mahsulot savatda mavjud!"
+msgstr "Продукт уже есть в корзине!"
+
+msgid "Mahsulot savatga qo'shildi!"
+msgstr "Продукт добавлен в корзину!"
+
+msgid "Muvaffaqiyatli o'chirildi!"
+msgstr "Успешно удалено!"
+
+msgid "Savatcha muvaffaqiyatli tozalandi!"
+msgstr "Корзина успешно очищена!"
+
+msgid "Hech qanday kategoriya identifikatori berilmagan"
+msgstr "Не указан идентификатор категории"
+
+msgid "Noto'g'ri parol!"
+msgstr "Неверный пароль!"
+
+msgid "Parol talab qilinadi!"
+msgstr "Требуется пароль!"
+
+msgid "Bekor qilish sababi talab qilinadi!"
+msgstr "Требуется причина отмены!"
+
+msgid "Bo'lim tanlanmadi."
+msgstr "Раздел не выбран."
+
+msgid "Buyurtma muvaffaqiyatli jo'natildi"
+msgstr "Заказ успешно отправлен."
+
+msgid "Savatda mahsulot mavjud emas."
+msgstr "Продукты отсутствуют в корзине."
+
+msgid "Ruxsat berilmagan."
+msgstr "Разрешение не предоставлено."
+
+msgid "Ma'lumot mavjud emas"
+msgstr "Информация недоступна"
+
+
+msgid "<span style='color: #007bff; font-weight: bold;'>%(target_section)s</span> bo'limga o'tish uchun avval <span style='color: #dc3545; font-weight: bold;'>%(current_section)s</span> savatidagi mahsulotlarni o'chiring yoki buyurtma bering."
+msgstr "<span style='color: #007bff; font-weight: bold;'>%(target_section)s</span> для перехода в раздел сначала <span style='color: #dc3545; font-weight: bold;'>%(current_section)s</span> удалите товары из корзины или оформите заказ."
+
+msgid "Yopish"
+msgstr "Закрыть"
+
+msgid "Davom etish"
+msgstr "Продолжить"
+

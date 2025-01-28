@@ -534,13 +534,13 @@
                 {% elif order.status == '2' %}
                     <!-- Buyurtma bajarilgan: Muvaffaqiyatli xabar -->
                     <div class="alert alert-success d-flex align-items-center" role="alert">
-                        <i class="fa-solid fa-check-circle me-2"></i>
+                        <i class="fas fa-check-circle me-2"></i>
                         <span class="fw-bold fs-16px">{% trans "Buyurtma muvaffaqiyatli yuborildi!" %}</span>
                     </div>
                 {% elif order.status == '3' %}
                     <!-- Buyurtma bekor qilingan: Sababini ko'rsatish -->
                     <div class="alert alert-danger d-flex align-items-start" role="alert">
-                        <i class="fa-solid fa-triangle-exclamation me-2"></i>
+                        <i class="fas fa-exclamation-triangle me-2"></i>
                         <div>
                             <span class="fw-bold fs-16px">{% trans "Buyurtma bekor qilingan!" %}</span><br>
                             <span class="fs-14px">{% trans "Sababi" %}: {{ order.bekor_qilish_sababi }}</span>
@@ -568,12 +568,14 @@
                             <form id="submitOrderForm" data-order-pk="{{ order.id }}"> <!-- Add pk to form dataset -->
                                 {% csrf_token %}
                                 <div class="mb-3">
-                                    <label for="submitOrderPassword" class="form-label">{% trans "Parolingizni kiriting" %}</label>
+                                    <label for="submitOrderPassword"
+                                           class="form-label">{% trans "Parolingizni kiriting" %}</label>
                                     <input type="password" class="form-control" id="submitOrderPassword" name="password"
                                            required placeholder="{% trans "Parol..." %}">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Orqaga" %}
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">{% trans "Orqaga" %}
                                     </button>
                                     <button type="submit" class="btn btn-success">{% trans "Tasdiqlash" %}</button>
                                 </div>
@@ -599,18 +601,21 @@
                             <form id="cancelOrderForm" data-order-pk="{{ order.id }}"> <!-- Add pk to form dataset -->
                                 {% csrf_token %}
                                 <div class="mb-3">
-                                    <label for="cancelOrderPassword" class="form-label">{% trans "Parolingizni kiriting" %}</label>
+                                    <label for="cancelOrderPassword"
+                                           class="form-label">{% trans "Parolingizni kiriting" %}</label>
                                     <input type="password" class="form-control" id="cancelOrderPassword" name="password"
                                            required placeholder="{% trans "Parol..." %}">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="cancelOrderReason" class="form-label">{% trans "Bekor qilish sababi" %}</label>
+                                    <label for="cancelOrderReason"
+                                           class="form-label">{% trans "Bekor qilish sababi" %}</label>
                                     <textarea class="form-control" id="cancelOrderReason" name="reason" required
                                               rows="3"
                                               placeholder="{% trans "Bekor qilish sababini kiriting..." %}"></textarea>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Orqaga" %}
+                                    <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">{% trans "Orqaga" %}
                                     </button>
                                     <button type="submit" class="btn btn-danger">{% trans "Tasdiqlash" %}</button>
                                 </div>

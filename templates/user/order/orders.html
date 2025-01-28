@@ -614,19 +614,19 @@
                                          style="min-width: 222px;">
                                         <i class="fas fa-clipboard-list me-2"></i>
                                         {% trans "Buyurtma berilganlar soni" %}:
-                                        <strong>{{ orders_1|length }}</strong> {% trans "ta" %}
+                                        <strong>{{ orders_1_count }}</strong> {% trans "ta" %}
                                     </div>
                                     <div class="badge badge-light-success border border-success shadow-sm px-4 py-4 text-center"
                                          style="min-width: 222px;">
                                         <i class="fas fa-check-circle me-2"></i>
                                         {% trans "Yuborilgan buyurtmalar soni" %}:
-                                        <strong>{{ orders_2|length }}</strong> {% trans "ta" %}
+                                        <strong>{{ orders_2_count }}</strong> {% trans "ta" %}
                                     </div>
                                     <div class="badge badge-light-danger border border-danger shadow-sm px-4 py-4 text-center"
                                          style="min-width: 222px;">
                                         <i class="fas fa-times-circle me-2"></i>
                                         {% trans "Bekor qilingan buyurtmalar soni" %}:
-                                        <strong>{{ orders_3|length }}</strong>
+                                        <strong>{{ orders_3_count }}</strong>
                                         {% trans "ta" %}
                                     </div>
                                 </div>
@@ -756,7 +756,7 @@
             searching: false, // Disable search if not needed
             ordering: false, // Disable column sorting
             language: {
-                emptyTable: "Ma'lumot mavjud emas" // Customize "no data" message
+                emptyTable: {% trans "Ma'lumot mavjud emas"  %}// Customize "no data" message
             }
         });
     });
@@ -769,6 +769,7 @@
 <script src="{% static "assets2/js/custom/widgets.js" %}"></script>
 
 {# import from config.js #}
+
 <script src="{% static 'assets2/js/config.js' %}"></script>
 {# import from config.js #}
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">

@@ -10,9 +10,9 @@ from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.views.decorators.csrf import csrf_exempt
-
+from django.utils.translation import gettext as _  # Import for translation
 from product_app.models import Maxsulot, CartItems, Order, OrderItems
-from settings_app.models import AdminParol
+from settings_app.models import AdminParol, SectionChoices
 
 
 @login_required(login_url="login_page")
@@ -106,60 +106,92 @@ def search_orders(request):
 
         return JsonResponse({'html_table': html_table, 'html_pagination': html_pagination})
 
-    return JsonResponse({'error': "Noto'g'ri so'rov turi"}, status=400)
+    return JsonResponse({'error': _("Noto'g'ri so'rov usuli.")}, status=400)
 
 @csrf_exempt
 def submit_order(request, pk):
-    order = get_object_or_404(Order, id=pk)
-    if request.method == "POST":
-        data = json.loads(request.body)
-        password = data.get("password")
+    if request.user.is_superuser:
+        # Determine the section based on the username
+        if request.user.username == "sklad":
+            section = SectionChoices.WAREHOUSE
+        else:
+            section = SectionChoices.MECHANICS
 
-        # Check if password is not None and is a valid integer
-        try:
-            password = int(password)  # Try to convert the password to an integer
-        except (TypeError, ValueError):  # Catch invalid type or value errors
-            return JsonResponse({"success": False, "message": "Noto'g'ri parol!"})
+        # Get the order object
+        order = get_object_or_404(Order, id=pk)
 
-        parol = AdminParol.objects.last()
-        if parol and password == int(parol.parol):
-            order.status = '2'
-            order.save()
-            return JsonResponse({"success": True})
+        if request.method == "POST":
+            try:
+                data = json.loads(request.body)
+                password = data.get("password")
 
-        return JsonResponse({"success": False, "message": "Noto'g'ri parol!"})
+                # Validate the password as an integer
+                try:
+                    password = int(password)
+                except (TypeError, ValueError):
+                    return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")})
 
-    return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi."})
+                # Retrieve the latest password for the specified section
+                parol = AdminParol.objects.filter(section=section).last()
 
+                if parol and password == int(parol.parol):
+                    order.status = '2'  # Update the status to 'Bajarildi'
+                    order.save()
+                    return JsonResponse({"success": True})
+                else:
+                    return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")})
+
+            except json.JSONDecodeError:
+                return JsonResponse({"success": False, "message": _("Ma'lumotni qayta ishlashda xatolik yuz berdi.")})
+
+        return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")})
+
+    return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")})
 
 @csrf_exempt
 def cancel_order(request, pk):
-    order = get_object_or_404(Order, id=pk)
-    if request.method == "POST":
-        data = json.loads(request.body)
-        password = data.get("password")
-        reason = data.get("reason")
+    if request.user.is_superuser:
+        # Determine the section based on the username
+        if request.user.username == "sklad":
+            section = SectionChoices.WAREHOUSE
+        else:
+            section = SectionChoices.MECHANICS
 
-        # Check if password is provided and valid
-        if not password:
-            return JsonResponse({"success": False, "message": "Parol talab qilinadi!"})
+        # Get the order object
+        order = get_object_or_404(Order, id=pk)
 
-        try:
-            password = int(password)  # Try to convert the password to an integer
-        except (TypeError, ValueError):  # Catch invalid type or value errors
-            return JsonResponse({"success": False, "message": "Noto'g'ri parol!"})
+        if request.method == "POST":
+            try:
+                data = json.loads(request.body)
+                password = data.get("password")
+                reason = data.get("reason")
 
-        parol = AdminParol.objects.last()
-        if parol and password == int(parol.parol):  # Validate password
-            if reason:
-                order.status = '3'  # Mark order as canceled
-                order.bekor_qilish_sababi = reason  # Save cancellation reason
-                order.save()
-                return JsonResponse({"success": True})
-            return JsonResponse({"success": False, "message": "Bekor qilish sababi talab qilinadi!"})
-        return JsonResponse({"success": False, "message": "Noto'g'ri parol!"})
+                # Validate the password as an integer
+                try:
+                    password = int(password)
+                except (TypeError, ValueError):
+                    return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")})
 
-    return JsonResponse({"success": False, "message": "Noto'g'ri so'rov turi."})
+                # Retrieve the latest password for the specified section
+                parol = AdminParol.objects.filter(section=section).last()
+
+                if parol and password == int(parol.parol):  # Validate password
+                    if reason:  # Ensure a cancellation reason is provided
+                        order.status = '3'  # Mark order as canceled
+                        order.bekor_qilish_sababi = reason  # Save cancellation reason
+                        order.save()
+                        return JsonResponse({"success": True})
+                    else:
+                        return JsonResponse({"success": False, "message": _("Bekor qilish sababi talab qilinadi!")})
+                else:
+                    return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")})
+
+            except json.JSONDecodeError:
+                return JsonResponse({"success": False, "message": _("Xatolik yuz berdi.")})
+
+        return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")})
+
+    return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")})
 
 
 @login_required(login_url='login_page')
@@ -255,12 +287,11 @@ def order_page(request):
             data = json.loads(request.body)
             additional_text = data.get('additionalText', '').strip()
             to_field = data.get('toField', None)  # Retrieve the 'To' field from the POST data
-
             if not to_field:
-                return JsonResponse({'success': False, 'message': "Bo'lim tanlanmadi."}, status=400)
-            if to_field == "Mexanika bo'limi":
+                return JsonResponse({'success': False, 'message': _("Bo'lim tanlanmadi.")}, status=400)
+            if to_field == "Mexanika bo'limi" or to_field == "Механический отдел":
                 to_field = "1"
-            elif to_field == "Omborxona":
+            elif to_field == "Omborxona" or to_field == "Склад":
                 to_field = "2"
             if cart_items.exists():
                 # Create the order instance
@@ -286,10 +317,10 @@ def order_page(request):
                 order_instance.jami_maxsulot = total_quantity
                 order_instance.save()
 
-                return JsonResponse({'success': True, 'message': "Buyurtma muvaffaqiyatli jo'natildi"}, status=200)
+                return JsonResponse({'success': True, 'message': _("Buyurtma muvaffaqiyatli jo'natildi")}, status=200)
 
-            return JsonResponse({'success': False, 'message': "Savatda mahsulot mavjud emas."}, status=400)
+            return JsonResponse({'success': False, 'message': _("Savatda mahsulot mavjud emas.")}, status=400)
         except json.JSONDecodeError:
-            return JsonResponse({'success': False, 'message': "Noto'g'ri so'rov yuborildi."}, status=400)
+            return JsonResponse({'success': False, 'message': _("Noto'g'ri so'rov usuli.")}, status=400)
 
     return render(request, 'user/department/pos-mechanic.html', user_ctx)

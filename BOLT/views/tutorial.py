@@ -1,19 +1,10 @@
-import json
-
 from django.contrib.auth.decorators import login_required
-from django.db.models import Count
 from django.db.models import Q
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
 
-from product_app.models import Maxsulot, CartItems, Order, OrderItems, Kategoriya, Department
-from settings_app.models import SiteSettings, AdminParol
-from user_app.models import User
+from product_app.models import Order
 
 
 @login_required(login_url="login_page")
