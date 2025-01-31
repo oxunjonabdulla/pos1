@@ -1,5 +1,104 @@
 // Check section availability
 
+// document.addEventListener("DOMContentLoaded", function () {
+//     // Ensure CSRF token is available
+//     const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]') ?
+//         document.querySelector('[name="csrfmiddlewaretoken"]').value : null;
+//
+//     if (!csrfToken) {
+//         console.error("CSRF token is missing!");
+//         return;
+//     }
+//
+//     document.querySelectorAll(".section-link").forEach(link => {
+//         link.addEventListener("click", function (e) {
+//             e.preventDefault(); // Prevent navigation
+//
+//             const sectionUrl = this.getAttribute("href");
+//             const sectionName = this.getAttribute("data-section");
+//
+//             if (!sectionUrl || !sectionName) {
+//                 console.error("Missing section URL or name");
+//                 return;
+//             }
+//
+//             // AJAX request to check cart section
+//             fetch(`/check-section/`, {
+//                 method: "POST",
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                     "X-CSRFToken": csrfToken
+//                 },
+//                 body: JSON.stringify({section: sectionName})
+//             })
+//                 .then(response => response.json())
+//                 .then(data => {
+//                     if (data.success) {
+//                         // Navigate to the section if successful
+//                         window.location.href = sectionUrl;
+//                     } else {
+//                         // Show confirmation modal if failed
+//                         showConfirmationModal(data.message, sectionUrl);
+//                     }
+//                 })
+//                 .catch(error => {
+//                     console.error("Error:", error);
+//                     alert("An error occurred. Please try again.");
+//                 });
+//         });
+//     });
+//
+//     // Function to show the confirmation modal
+//     function showConfirmationModal(message, sectionUrl) {
+//         if (document.getElementById("confirmationModal")) {
+//             // Avoid adding multiple modals if one already exists
+//             return;
+//         }
+//
+//         // Import the gettext function
+//         const modalHtml = `
+//     <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+//         <div class="modal-dialog" role="document">
+//             <div class="modal-content">
+//                 <div class="modal-header">
+//                     <h5 class="modal-title">Tasdiqlash</h5>
+//                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+//                 </div>
+//                 <div class="modal-body">
+//                     <p>${message}</p>
+//                 </div>
+//                 <div class="modal-footer">
+//                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+//                     <button type="button" class="btn btn-primary" id="confirm-action">Davom etish</button>
+//                 </div>
+//             </div>
+//         </div>
+//     </div>
+// `;
+//
+//         // Append modal HTML to body
+//         document.body.insertAdjacentHTML("beforeend", modalHtml);
+//         const modal = new bootstrap.Modal(document.getElementById("confirmationModal"));
+//
+//         // Event for the "Confirm" button
+//         document.getElementById("confirm-action").addEventListener("click", function () {
+//             modal.hide();
+//             document.getElementById("confirmationModal").remove();
+//             window.location.href = sectionUrl; // Redirect after confirmation
+//         });
+//
+//         // Show the modal
+//         modal.show();
+//
+//         // Clean up modal after closing
+//         document.getElementById("confirmationModal").addEventListener("hidden.bs.modal", function () {
+//             document.getElementById("confirmationModal").remove();
+//         });
+//     }
+// });
+
+
+
 document.addEventListener("DOMContentLoaded", function () {
     // Ensure CSRF token is available
     const csrfToken = document.querySelector('[name="csrfmiddlewaretoken"]') ?
@@ -22,7 +121,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // AJAX request to check cart section
+             // AJAX request to check cart section
             fetch(`/check-section/`, {
                 method: "POST",
                 headers: {
@@ -55,26 +154,25 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        // Import the gettext function
         const modalHtml = `
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">${gettext("Tasdiqlash")}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <p>${message}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">${gettext("Yopish")}</button>
-                    <button type="button" class="btn btn-primary" id="confirm-action">${gettext("Davom etish")}</button>
+            <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Tasdiqlash</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p>${message}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Yopish</button>
+                            <button type="button" class="btn btn-primary" id="confirm-action">Davom etish</button>
+                        </div>
+                        </div>
                 </div>
             </div>
-        </div>
-    </div>
-`;
+        `;
 
         // Append modal HTML to body
         document.body.insertAdjacentHTML("beforeend", modalHtml);
@@ -89,13 +187,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Show the modal
         modal.show();
-
-        // Clean up modal after closing
+  // Clean up modal after closing
         document.getElementById("confirmationModal").addEventListener("hidden.bs.modal", function () {
             document.getElementById("confirmationModal").remove();
         });
     }
 });
+
 
 //  --------- Check section availability
 

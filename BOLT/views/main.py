@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import gettext as _  # Import for translation
+
 from product_app.models import Maxsulot, CartItems, Order, Kategoriya, Department
 from user_app.models import User
 
@@ -175,7 +176,8 @@ def filter_products(request):
                 "id": product.id,
                 "name": product.nomi,
                 "image": product.rasm.url,
-                "category": product.kategoriya.nomi,
+                'razmer': product.razmer,
+
             }
             for product in products
         ]
@@ -208,11 +210,12 @@ def search_products(request):
             'id': product.id,
             'nomi': product.nomi,
             'rasm': product.rasm.url if product.rasm else '',
-            'kategoriya': product.kategoriya.nomi,
+            'razmer': product.razmer,
         } for product in products
     ]
 
     return JsonResponse({'products': product_list})
+
 
 @login_required(login_url='login_page')
 def check_section(request):
@@ -257,6 +260,7 @@ def check_section(request):
         return JsonResponse({"success": True})
     return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli")}, status=405)
 
+
 @login_required(login_url='login_page')
 def bad_request_view(request, exception=None):
     return render(request, 'user/error-404.html')
@@ -287,7 +291,6 @@ def users_page(request):
                       template_name='user/users.html',
                       context=user_ctx)
     return redirect('mechanic_page')
-
 
 
 from urllib.parse import urlparse

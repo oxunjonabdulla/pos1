@@ -181,7 +181,8 @@ JAZZMIN_SETTINGS = {
     "topmenu_links": [
         {"name": "Dashboard", "url": "admin:index", "permissions": ["auth.view_user"]},
         {"name": "Documentation", "url": "https://docs.djangoproject.com/", "new_window": True},
-        {"name": "Support", "url": "mailto:support@railway.com"},
+        # please write for the following row my telegram url. @oxunjonabdulla
+        {"name": "Support", "url": "https://t.me/oxunjonabdulla", "new_window": True},
     ],
 
 

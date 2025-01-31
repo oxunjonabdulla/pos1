@@ -422,3 +422,5 @@ msgstr "Закрыть"
 msgid "Davom etish"
 msgstr "Продолжить"
 
+msgid "Mahsulot topilmadi"
+msgstr "Продукт не найден"

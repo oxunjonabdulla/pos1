@@ -16,7 +16,8 @@ class Department(models.Model):
 class Kategoriya(models.Model):
     nomi = models.CharField(max_length=255)
     image = models.ImageField(upload_to='kategoriya', null=True, blank=True)
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True)  # Link to Department
+    department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True, blank=True,
+                                   verbose_name="Bo'lim")  # Link to Department
 
     def __str__(self):
         return self.nomi
@@ -34,7 +35,6 @@ class Maxsulot(models.Model):
     foydalanuvchi = models.ForeignKey(User, on_delete=models.CASCADE)
     razmer = models.CharField(max_length=255)
     qoshimcha = models.TextField(null=True, blank=True)
-    ball = models.BigIntegerField(default=1)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)  # New field
 
 
@@ -42,7 +42,6 @@ class Maxsulot(models.Model):
         return self.nomi
 
     class Meta:
-        ordering = ['-ball']
         verbose_name_plural = "Maxsulotlar"
 
 

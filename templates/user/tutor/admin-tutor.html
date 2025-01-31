@@ -565,30 +565,27 @@
                             </div>
                             <!-- Modal -->
 
-
-                            <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel"
-                                 aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title"
-                                                id="videoModalLabel">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="ratio ratio-16x9">
-                                                <iframe id="videoFrame" width="560" height="315"
-                                                        src="https://www.youtube.com/embed/qo5hm1N96Tk?si=3WzGhrdBMqq5_jsO"
-                                                        title="YouTube video player" frameborder="0"
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                        referrerpolicy="strict-origin-when-cross-origin"
-                                                        allowfullscreen></iframe>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="videoModalLabel">{% trans "PLATFORMANI ISHLATISH BO‘YICHA VIDEO QO‘LLANMA!" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="ratio ratio-16x9">
+                    <!-- Added id="videoFrame" to the iframe -->
+                    <iframe id="videoFrame" width="560" height="315"
+                            src="https://www.youtube.com/embed/8icngvpzJJw?si=3zs2tyCQLpIxrx94"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
                             <!--end::Modal-->
                         </div>
@@ -656,12 +653,15 @@
 <script src="{% static  "assets2/plugins/custom/datatables/datatables.bundle.js" %}"></script>
 <!-- end::Vendors Javascript-->
 <script>
-    const videoModal = document.getElementById('videoModal');
-    const videoFrame = document.getElementById('videoFrame');
+    document.addEventListener("DOMContentLoaded", function () {
+        const videoModal = document.getElementById("videoModal");
+        const videoFrame = document.getElementById("videoFrame");
 
-    videoModal.addEventListener('hidden.bs.modal', () => {
-        // Reset the iframe's src to stop the video
-        videoFrame.src = videoFrame.src;
+        // Add event listener for when the modal is hidden
+        videoModal.addEventListener("hidden.bs.modal", function () {
+            // Reset the iframe src to stop the video
+            videoFrame.src = videoFrame.src;
+        });
     });
 </script>
 <!-- begin::Custom Javascript(used for this page only)-->

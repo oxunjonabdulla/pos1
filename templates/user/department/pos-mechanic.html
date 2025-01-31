@@ -630,7 +630,7 @@
                                                         <div class="mb-2">
                                                             <div class="text-center">
                                                                 <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">{{ product.nomi }}</span>
-                                                                <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: {{ product.kategoriya.nomi }}</span>
+                                                                <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: {{ product.razmer }}</span>
                                                             </div>
                                                         </div>
                                                         <div class="position-relative d-flex justify-content-center align-items-center mb-4">
@@ -976,7 +976,7 @@
                                             <div class="mb-2">
                                                 <div class="text-center">
                                                     <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">${product.name}</span>
-                                                    <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: ${product.category}</span>
+                                                    <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: ${product.razmer}</span>
                                                 </div>
                                             </div>
                                             <div class="position-relative d-flex justify-content-center align-items-center mb-4">
@@ -1074,7 +1074,7 @@
                 // Clear and update the products container
                 productsContainer.innerHTML = "";
                 if (data.products.length === 0) {
-                    productsContainer.innerHTML = '<p class="text-center mt-4">Mahsulot topilmadi</p>';
+                    productsContainer.innerHTML = '<p class="text-center mt-4">{% trans "Mahsulot topilmadi" %}</p>';
                 } else if (query === "") {
                     // Clear the products container and reset to the default state
                     productsContainer.innerHTML = "";
@@ -1091,7 +1091,7 @@
                             <img src="${product.rasm}" class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                             <div class="mb-2">
                                 <span class="fw-bold text-gray-800 text-hover-primary fs-3">${product.nomi}</span>
-                                <span class="text-gray-500 fw-semibold d-block fs-6">O'lchami: ${product.kategoriya}</span>
+                                <span class="text-gray-500 fw-semibold d-block fs-6">{% trans "O'lchami" %}: ${product.razmer}</span>
                             </div>
                             <div class="position-relative d-flex justify-content-center align-items-center mb-4">
                                 <button type="button" class="btn btn-icon btn-sm btn-light btn-icon-gray-500 decrease-quantity" data-product-id="${product.id}">

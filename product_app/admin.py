@@ -48,12 +48,11 @@ class KategoriyaAdmin(BaseModelAdmin, TranslationAdmin):
 @admin.register(Maxsulot)
 class MaxsulotAdmin(BaseModelAdmin, TranslationAdmin):
     resource_class = MaxsulotResource
-    list_display = ['id', 'nomi', 'kategoriya', 'department', 'foydalanuvchi', 'razmer', 'ball']
-    search_fields = ['nomi', 'foydalanuvchi__username', 'kategoriya__nomi', 'department__name']
-    list_filter = ['kategoriya', 'department', 'foydalanuvchi']
-    fieldsets = (
-        (None, {'fields': ('nomi', 'rasm', 'kategoriya', 'department', 'foydalanuvchi', 'razmer', 'qoshimcha', 'ball')}),
-    )
+    list_display = ['id', 'nomi', 'kategoriya', 'foydalanuvchi', 'razmer']
+    search_fields = ['nomi', 'foydalanuvchi__username', 'kategoriya__nomi']
+    list_filter = ['kategoriya', 'foydalanuvchi']
+    fields = ('nomi', 'rasm', 'kategoriya', 'foydalanuvchi', 'razmer', 'qoshimcha')
+    autocomplete_fields = ['department']
 
     class Media:
         js = (
@@ -106,13 +105,13 @@ class OrderAdmin(BaseModelAdmin):
         template_path = os.path.join(BASE_DIR, "static", "buyurtmalar1.xlsx")
 
         if not os.path.exists(template_path):
-            messages.error(request, f"Template not found: {template_path}")
+            messages.error(request, f"Shablon topilmadi: {template_path}")
             return
 
         filtered_queryset = queryset.filter(status='2')  # Example filter for status '2'
 
         if not filtered_queryset.exists():
-            messages.warning(request, "No matching orders found.")
+            messages.warning(request, "Buyurtmalar topilmadi.")
             return
 
         resource = self.resource_class()
@@ -129,7 +128,7 @@ class OrderAdmin(BaseModelAdmin):
             response['Content-Disposition'] = f'attachment; filename="{filename}"'
             return response
         except Exception as e:
-            messages.error(request, f"Error exporting orders: {str(e)}")
+            messages.error(request, f"buyurtmalarni yuklashda xatolik: {str(e)}")
 
-    export_orders_with_template.short_description = "Export Delivered Orders"
+    export_orders_with_template.short_description = "Yetkazib berilgan buyurtmalarni yuklash"
     actions = ['export_orders_with_template']
