@@ -81,6 +81,16 @@
             padding: 0 10px; /* Optional: Adjust padding */
             margin-bottom: 10px; /* Space below the logo */
         }
+
+        .product-name {
+            display: block;
+            max-width: 20ch; /* Limits each line to approximately 20 characters */
+            word-wrap: break-word; /* Ensures words break if they exceed max-width */
+            overflow-wrap: break-word; /* Similar to word-wrap, ensuring text wraps properly */
+            white-space: normal; /* Allows text to wrap to the next line */
+        }
+
+
     </style>
 </head>
 <!--end::Head-->
@@ -213,7 +223,8 @@
                                         </div>
                                         <p class="mt-2 text-center text-dark"
                                            style="font-size: 0.9rem; font-weight: 500;">
-                                            {% trans "Buyurtmalar" %}</p> <!-- Changed text to "Buyurtmalar" (Orders) -->
+                                            {% trans "Buyurtmalar" %}</p>
+                                        <!-- Changed text to "Buyurtmalar" (Orders) -->
                                     </div>
                                 </a>
 
@@ -362,7 +373,8 @@
                                      style="background-image:url({% static "/assets2/media/misc/menu-header-bg.jpg" %})">
                                     <!--begin::Title-->
                                     <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
-                                        {% trans "Bildirishnomalar" %} <span class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
+                                        {% trans "Bildirishnomalar" %} <span
+                                            class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
                                     </h3>
                                     <!--end::Title-->
                                 </div>
@@ -629,7 +641,10 @@
                                                              class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                                                         <div class="mb-2">
                                                             <div class="text-center">
-                                                                <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">{{ product.nomi }}</span>
+                                                            <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1 product-name">
+                                                                {{ product.nomi }}
+                                                            </span>
+
                                                                 <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: {{ product.razmer }}</span>
                                                             </div>
                                                         </div>
@@ -756,7 +771,8 @@
 
                                         <span class="d-block mb-2"
                                               data-kt-pos-element="discount">{{ request.user.username|upper }}</span>
-                                        <span class="d-block mb-9" data-kt-pos-element="tax">{% trans "Mexanika bo'limi" %}</span>
+                                        <span class="d-block mb-9"
+                                              data-kt-pos-element="tax">{% trans "Mexanika bo'limi" %}</span>
                                         {% if cart_items|length > 0 %}
                                             <span class="d-block fs-2qx lh-1" id="cart-items-count"
                                                   data-kt-pos-element="grant-total">
@@ -809,7 +825,8 @@
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                             {% trans "Bekor qilish" %}
                                         </button>
-                                        <button type="button" id="confirm-order" class="btn btn-primary">{% trans "Tasdiqlash" %}
+                                        <button type="button" id="confirm-order"
+                                                class="btn btn-primary">{% trans "Tasdiqlash" %}
                                         </button>
                                     </div>
                                 </div>

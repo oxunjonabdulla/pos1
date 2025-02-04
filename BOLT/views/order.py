@@ -18,34 +18,65 @@ from settings_app.models import AdminParol, SectionChoices
 @login_required(login_url="login_page")
 def orders_page(request):
     if request.user.is_superuser:
-        return redirect("dashboard1")
-    order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
-    user_orders = Order.objects.filter(foydalanuvchi=request.user)
-    today = timezone.now().date()
-    today_orders = Order.objects.filter(created_at__date=today, foydalanuvchi=request.user)
-    # Add pagination
-    paginator = Paginator(user_orders, 10)  # Show 10 orders per page
-    page_number = request.GET.get('page', 1)
-    try:
-        paginated_orders = paginator.page(page_number)
-    except PageNotAnInteger:
-        paginated_orders = paginator.page(1)
-    except EmptyPage:
-        paginated_orders = paginator.page(paginator.num_pages)
+        if request.user.username == "sklad":
+            orders = Order.objects.filter(kimga="2")
+        else:
+            orders = Order.objects.filter(Q(kimga="1") | Q(kimga=None))
+        order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
+        today = timezone.now().date()
+        today_orders = Order.objects.filter(created_at__date=today, foydalanuvchi=request.user)
+        # Add pagination
+        paginator = Paginator(orders, 10)  # Show 10 orders per page
+        page_number = request.GET.get('page', 1)
+        try:
+            paginated_orders = paginator.page(page_number)
+        except PageNotAnInteger:
+            paginated_orders = paginator.page(1)
+        except EmptyPage:
+            paginated_orders = paginator.page(paginator.num_pages)
 
-    orders_1_count = user_orders.filter(status='1').count()
-    orders_2_count = user_orders.filter(status='2').count()
-    orders_3_count = user_orders.filter(status='3').count()
+        orders_1_count = orders.filter(status='1').count()
+        orders_2_count = orders.filter(status='2').count()
+        orders_3_count = orders.filter(status='3').count()
 
-    user_ctx = {
-        "order_id": order_id,
-        "user_orders": paginated_orders,  # Use paginated orders here
-        "orders_1_count": orders_1_count,
-        "orders_2_count": orders_2_count,
-        "orders_3_count": orders_3_count,
-        "today_orders": today_orders.filter(status__in=['2', '3']),
-    }
-    return render(request, 'user/order/orders.html', user_ctx)
+        user_ctx = {
+            "order_id": order_id,
+            "user_orders": paginated_orders,  # Use paginated orders here
+            "orders_1_count": orders_1_count,
+            "orders_2_count": orders_2_count,
+            "orders_3_count": orders_3_count,
+            "today_orders": today_orders.filter(status__in=['2', '3']),
+        }
+        return render(request, 'user/order/orders.html', user_ctx)
+
+    elif request.user.is_staff:
+            order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
+            user_orders = Order.objects.filter(foydalanuvchi=request.user)
+            today = timezone.now().date()
+            today_orders = Order.objects.filter(created_at__date=today, foydalanuvchi=request.user)
+            # Add pagination
+            paginator = Paginator(user_orders, 10)  # Show 10 orders per page
+            page_number = request.GET.get('page', 1)
+            try:
+                paginated_orders = paginator.page(page_number)
+            except PageNotAnInteger:
+                paginated_orders = paginator.page(1)
+            except EmptyPage:
+                paginated_orders = paginator.page(paginator.num_pages)
+
+            orders_1_count = user_orders.filter(status='1').count()
+            orders_2_count = user_orders.filter(status='2').count()
+            orders_3_count = user_orders.filter(status='3').count()
+
+            user_ctx = {
+                "order_id": order_id,
+                "user_orders": paginated_orders,  # Use paginated orders here
+                "orders_1_count": orders_1_count,
+                "orders_2_count": orders_2_count,
+                "orders_3_count": orders_3_count,
+                "today_orders": today_orders.filter(status__in=['2', '3']),
+            }
+            return render(request, 'user/order/orders.html', user_ctx)
 
 
 @login_required(login_url='login_page')

@@ -165,20 +165,32 @@
                         <div id="departments-container" class="d-flex flex-wrap justify-content-center"
                              style="gap: 15px;">
 
-                            <a href="{% url 'dashboard1' %}" class="menu-item-link">
+                              <a href="{% url 'dashboard1' %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                      style="height: 110px; width: 110px;">
                                     <div class="menu-link menu-center">
-                                <span class="menu-icon me-0">
-<i class="fas fa-home" style="font-size: 3.5rem; color: #007bff;"></i>
-                                </span>
+            <span class="menu-icon me-0">
+                <i class="fas fa-home" style="font-size: 3.5rem; color: #6f42c1;"></i>
+            </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
                                         {% trans "Boshqaruv paneli" %}
                                     </p>
                                 </div>
                             </a>
-
+                             <a href="{% url 'orders_page' %}" class="menu-item-link">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+                <span class="menu-icon me-0">
+                    <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #007bff;"></i>
+                </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        {% trans "Buyurtmalar" %}
+                                    </p>
+                                </div>
+                            </a>
                             <a href="{% url "users_page" %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                      style="height: 110px; width: 110px;">

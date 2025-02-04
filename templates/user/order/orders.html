@@ -83,8 +83,9 @@
             margin-bottom: 10px; /* Space below the logo */
         }
 
+        /* Prevent text wrapping and allow horizontal scrolling */
         .table td {
-            white-space: nowrap; /* Prevent text wrapping */
+            white-space: nowrap;
             text-overflow: ellipsis;
             overflow: hidden;
         }
@@ -93,26 +94,32 @@
             max-width: 100px;
         }
 
+        /* Ensure the table is scrollable horizontally on smaller screens */
         @media (max-width: 768px) {
-            .pagination {
-                font-size: 12px;
+            .table-responsive {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
             }
 
             .table td {
                 font-size: 14px;
                 padding: 8px;
             }
-        }
 
-        .pagination .page-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-        }
+            .pagination {
+                font-size: 12px;
+            }
 
-        .pagination .page-link i {
-            font-size: 1rem;
+            .pagination .page-link {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0.5rem;
+            }
+
+            .pagination .page-link i {
+                font-size: 1rem;
+            }
         }
 
         @media (max-width: 768px) {
@@ -213,58 +220,65 @@
                             data-kt-menu="true"
                             style="gap: 10px;"> <!-- Add gap between sections -->
 
-                        <form method="post">
-                            {% csrf_token %}
+                        {% if request.user.is_superuser %}
                             <div id="departments-container" class="d-flex flex-wrap justify-content-center"
                                  style="gap: 15px;">
 
-                                <!-- Mechanic Section -->
-                                <a href="{% url 'mechanic_page' %}" class="menu-item-link section-link"
-                                   data-section="Mechanic">
+                                <a href="{% url 'dashboard1' %}" class="menu-item-link">
                                     <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                          style="height: 110px; width: 110px;">
                                         <div class="menu-link menu-center">
-                                    <span class="menu-icon me-0">
-                                        <i class="fas fa-tools" style="font-size: 3.5rem; color: #007bff;"></i>
-                                    </span>
+            <span class="menu-icon me-0">
+                <i class="fas fa-home" style="font-size: 3.5rem; color: #6f42c1;"></i>
+            </span>
                                         </div>
                                         <p class="mt-2 text-center text-dark"
                                            style="font-size: 0.9rem; font-weight: 500;">
-                                            {% trans "Mexanika" %}</p>
+                                            {% trans "Boshqaruv paneli" %}
+                                        </p>
+                                    </div>
+                                </a>
+                                <a href="{% url 'orders_page' %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                <span class="menu-icon me-0">
+                    <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #007bff;"></i>
+                </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Buyurtmalar" %}
+                                        </p>
+                                    </div>
+                                </a>
+                                <a href="{% url "users_page" %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                <span class="menu-icon me-0">
+                                    <i class="fas fa-users" style="font-size: 3.5rem; color: #FFC107;"></i>
+                                </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Xodimlar" %}
+                                        </p>
                                     </div>
                                 </a>
 
-                                <!-- Warehouse Section -->
-                                <a href="{% url 'warehouse_page' %}" class="menu-item-link section-link"
-                                   data-section="Warehouse">
+                                <a href="{% url "admin_tutor" %}" class="menu-item-link">
                                     <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                          style="height: 110px; width: 110px;">
                                         <div class="menu-link menu-center">
-                                    <span class="menu-icon me-0">
-                                        <i class="fas fa-warehouse" style="font-size: 3.5rem; color: #28a745;"></i>
-                                    </span>
+                                        <span class="menu-icon me-0">
+                                            <i class="fas fa-book" style="font-size: 3.5rem; color: #28a745;"></i>
+                                        </span>
                                         </div>
                                         <p class="mt-2 text-center text-dark"
                                            style="font-size: 0.9rem; font-weight: 500;">
-                                            {% trans "Omborxona" %}</p>
-                                    </div>
-                                </a>
-
-
-                                <!-- Order Page Section -->
-                                <a href="{% url 'orders_page' %}" class="menu-item-link"
-                                   style="text-decoration: none; color: inherit;">
-                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                         style="height: 110px; width: 110px;">
-                                        <div class="menu-link menu-center">
-                                    <span class="menu-icon me-0">
-                                        <!-- Changed icon to 'fa-shopping-cart' for the order page -->
-                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #ffc107;"></i>
-                                    </span>
-                                        </div>
-                                        <p class="mt-2 text-center text-dark"
-                                           style="font-size: 0.9rem; font-weight: 500;">
-                                            {% trans "Buyurtmalar" %}</p> <!-- Changed text to "Buyurtmalar" (Orders) -->
+                                            {% trans "Qo'llanma" %}
+                                        </p>
                                     </div>
                                 </a>
 
@@ -284,7 +298,82 @@
                                     </div>
                                 </a>
                             </div>
-                        </form>
+
+                        {% else %}
+                            <form method="post">
+                                {% csrf_token %}
+                                <div id="departments-container" class="d-flex flex-wrap justify-content-center"
+                                     style="gap: 15px;">
+
+                                    <!-- Mechanic Section -->
+                                    <a href="{% url 'mechanic_page' %}" class="menu-item-link section-link"
+                                       data-section="Mechanic">
+                                        <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                             style="height: 110px; width: 110px;">
+                                            <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-tools" style="font-size: 3.5rem; color: #007bff;"></i>
+                                    </span>
+                                            </div>
+                                            <p class="mt-2 text-center text-dark"
+                                               style="font-size: 0.9rem; font-weight: 500;">
+                                                {% trans "Mexanika" %}</p>
+                                        </div>
+                                    </a>
+
+                                    <!-- Warehouse Section -->
+                                    <a href="{% url 'warehouse_page' %}" class="menu-item-link section-link"
+                                       data-section="Warehouse">
+                                        <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                             style="height: 110px; width: 110px;">
+                                            <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-warehouse" style="font-size: 3.5rem; color: #28a745;"></i>
+                                    </span>
+                                            </div>
+                                            <p class="mt-2 text-center text-dark"
+                                               style="font-size: 0.9rem; font-weight: 500;">
+                                                {% trans "Omborxona" %}</p>
+                                        </div>
+                                    </a>
+
+
+                                    <!-- Order Page Section -->
+                                    <a href="{% url 'orders_page' %}" class="menu-item-link"
+                                       style="text-decoration: none; color: inherit;">
+                                        <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                             style="height: 110px; width: 110px;">
+                                            <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <!-- Changed icon to 'fa-shopping-cart' for the order page -->
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #ffc107;"></i>
+                                    </span>
+                                            </div>
+                                            <p class="mt-2 text-center text-dark"
+                                               style="font-size: 0.9rem; font-weight: 500;">
+                                                {% trans "Buyurtmalar" %}</p>
+                                            <!-- Changed text to "Buyurtmalar" (Orders) -->
+                                        </div>
+                                    </a>
+
+                                    <!-- Logout Section -->
+                                    <a href="/auth/logout/" class="menu-item-link" onclick="logoutConfirm(event)">
+                                        <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                             style="height: 110px; width: 110px;">
+                                            <div class="menu-link menu-center">
+                                <span class="menu-icon me-0">
+                                    <i class="fas fa-sign-out-alt" style="font-size: 3.5rem; color: #dc3545;"></i>
+                                </span>
+                                            </div>
+                                            <p class="mt-2 text-center text-dark"
+                                               style="font-size: 0.9rem; font-weight: 500;">
+                                                {% trans "Chiqish" %}
+                                            </p>
+                                        </div>
+                                    </a>
+                                </div>
+                            </form>
+                        {% endif %}
 
                     </div>
                 </div>
@@ -640,32 +729,37 @@
 
 
                         <!--begin::Card body-->
+
+                        <!-- Begin Card body -->
                         <div class="card-body pt-0">
-                            <!--begin::Table-->
-                            <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_sales_table">
-                                <thead>
-                                <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
-                                    <th class="text-start w-10px pe-2">
-                                        <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
-                                            <input class="form-check-input" type="checkbox" data-kt-check="true"
-                                                   data-kt-check-target="#kt_ecommerce_sales_table .form-check-input"
-                                                   value="1"/>
-                                        </div>
-                                    </th>
-                                    <th class="min-w-100px">{% trans "Buyurtma ID" %}</th>
-                                    <th class="min-w-175px">{% trans "Buyurtmachi" %}</th>
-                                    <th class="text-end min-w-70px">{% trans "Holati" %}</th>
-                                    <th class="text-end min-w-100px">{% trans "Jami" %}</th>
-                                    <th class="text-end min-w-100px">{% trans "Qo'shilgan sana" %}</th>
-                                    <th class="text-end min-w-100px">{% trans "O'zgartirilgan sana" %}</th>
-                                    <th class="text-end min-w-100px">{% trans "Amallar" %}</th>
-                                </tr>
-                                </thead>
-                                <tbody class="fw-semibold text-gray-600" id="order-table-body">
-                                {% include "user/partials/order_list.html" %}
-                                </tbody>
-                            </table>
-                            <!--end::Table-->
+                            <!-- Begin Table -->
+                            <div class="table-responsive">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5"
+                                       id="kt_ecommerce_sales_table">
+                                    <thead>
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="text-start w-10px pe-2">
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid me-3">
+                                                <input class="form-check-input" type="checkbox" data-kt-check="true"
+                                                       data-kt-check-target="#kt_ecommerce_sales_table .form-check-input"
+                                                       value="1"/>
+                                            </div>
+                                        </th>
+                                        <th class="min-w-100px">{% trans "Buyurtma ID" %}</th>
+                                        <th class="min-w-175px">{% trans "Buyurtmachi" %}</th>
+                                        <th class="text-end min-w-70px">{% trans "Holati" %}</th>
+                                        <th class="text-end min-w-100px">{% trans "Jami" %}</th>
+                                        <th class="text-end min-w-100px">{% trans "Qo'shilgan sana" %}</th>
+                                        <th class="text-end min-w-100px">{% trans "O'zgartirilgan sana" %}</th>
+                                        <th class="text-end min-w-100px">{% trans "Amallar" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600" id="order-table-body">
+                                    {% include "user/partials/order_list.html" %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- End Table -->
 
                             <div class="d-flex justify-content-between align-items-center mt-4">
                                 <div>
@@ -680,6 +774,8 @@
                                 </nav>
                             </div>
                         </div>
+                        <!-- End Card body -->
+
 
                         <!--end::Card body-->
 

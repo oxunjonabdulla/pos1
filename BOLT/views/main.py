@@ -23,7 +23,7 @@ def dashboard_page(request):
             orders = Order.objects.filter(Q(kimga="1") | Q(kimga=None))
 
         # Add pagination for orders
-        paginator = Paginator(orders, 10)  # Show 10 orders per page
+        paginator = Paginator(orders.filter(created_at__date=today, status='1'), 10)  # Show 10 orders per page
         page_number = request.GET.get('page', 1)
         try:
             paginated_orders = paginator.page(page_number)

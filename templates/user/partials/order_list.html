@@ -79,17 +79,23 @@
         <td class="text-end">
             {% if request.user.is_superuser %}
                 <a href="{% url 'order1-detail' pk=order.id %}"
-                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm">
+                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm"
+                   style="background-color: #1B84FF; color: white; transition: all 0.3s ease;"
+                   onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                   onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
                     {% trans "Batafsil" %}
                 </a>
             {% elif request.user.is_staff %}
-                <a href="{% url 'user_order_details' pk=order.id %}"
-                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm">
+                <a href="{% url 'order1-detail' pk=order.id %}"
+                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm"
+                   style="background-color: #1B84FF; color: white; transition: all 0.3s ease;"
+                   onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                   onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
                     {% trans "Batafsil" %}
-
                 </a>
             {% endif %}
         </td>
+
     </tr>
     <!-- End Order Row -->
 {% endfor %}
