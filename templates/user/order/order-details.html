@@ -81,6 +81,44 @@
             padding: 0 10px; /* Optional: Adjust padding */
             margin-bottom: 10px; /* Space below the logo */
         }
+
+
+        .progress-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            margin: 20px 0;
+            padding: 10px 0;
+        }
+
+        .step {
+            text-align: center;
+            width: 25%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step i {
+            font-size: 24px;
+            color: #ccc;
+            background: #fff;
+            padding: 10px;
+            border-radius: 50%;
+            border: 2px solid #ccc;
+        }
+
+        .step.completed i {
+            color: #28a745;
+            border-color: #28a745;
+        }
+
+        .step span {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #333;
+        }
     </style>
 </head>
 <!--end::Head-->
@@ -166,13 +204,13 @@
                         <div id="departments-container" class="d-flex flex-wrap justify-content-center"
                              style="gap: 15px;">
 
-                              <a href="{% url 'dashboard1' %}" class="menu-item-link">
+                            <a href="{% url 'dashboard1' %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                      style="height: 110px; width: 110px;">
                                     <div class="menu-link menu-center">
-            <span class="menu-icon me-0">
-                <i class="fas fa-home" style="font-size: 3.5rem; color: #6f42c1;"></i>
-            </span>
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-home" style="font-size: 3.5rem; color: #6f42c1;"></i>
+                                    </span>
                                     </div>
                                     <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
                                         {% trans "Boshqaruv paneli" %}
@@ -180,19 +218,75 @@
                                 </div>
                             </a>
 
-                            <a href="{% url 'orders_page' %}" class="menu-item-link">
-                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 110px; width: 110px;">
-                                    <div class="menu-link menu-center">
-                <span class="menu-icon me-0">
-                    <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #007bff;"></i>
-                </span>
+                            <!-- Warehouse Section -->
+                            {% if request.user.username != "sklad" %}
+                                <a href="{% url 'admin_warehouse_page' %}" class="menu-item-link section-link"
+                                   data-section="Warehouse">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                        <span class="menu-icon me-0">
+                                            <i class="fas fa-warehouse" style="font-size: 3.5rem; color: #fd7e14;"></i>
+                                        </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Omborxona" %}
+                                        </p>
                                     </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        {% trans "Buyurtmalar" %}
-                                    </p>
-                                </div>
-                            </a>
+                                </a>
+
+                            {% endif %}
+
+                           {% if request.user.username == "sklad" %}
+                                <a href="{% url 'orders_page' %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #007bff;"></i>
+                                    </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Buyurtmalar" %}
+                                        </p>
+                                    </div>
+                                </a>
+
+                            {% else %}
+                                <a href="{% url 'orders_page' %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #007bff;"></i>
+                                    </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Mexanika kelgan buyurtmalar" %}
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <a href="{% url 'warehouse_orders' %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #06d6a0;"></i>
+                                    </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Omborxona buyurtmalar" %}
+                                        </p>
+                                    </div>
+                                </a>
+
+                            {% endif %}
+
 
                             <a href="{% url "users_page" %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
@@ -519,6 +613,32 @@
 
         <div class="card card-flush py-4 flex-row-fluid overflow-hidden">
             <!--begin::Buttons-->
+
+            {% if order.status != "3" %}
+                <div class="progress-container d-flex align-items-center mb-4 position-relative">
+                    <div class="progress w-100 position-absolute" style="top: 20px; left: 0; height: 4px;">
+                        <div class="progress-bar bg-success" role="progressbar"
+                             style="width: {% if order.status == '1' %}25%{% elif order.status == '2' %}50%{% elif order.status == '4' %}100%{% else %}0%{% endif %};"
+                             aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                    <div class="step {% if order.status >= '1' %}completed{% endif %}">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>{% trans "Buyurtma berildi" %}</span>
+                    </div>
+
+                    <div class="step {% if order.status >= '2' %}completed{% endif %}">
+                        <i class="fas fa-truck"></i>
+                        <span>{% trans "Buyurtma tayyorlandi" %}</span>
+                    </div>
+
+                    <div class="step {% if order.status >= '4' %}completed{% endif %}">
+                        <i class="fas fa-check-circle"></i>
+                        <span>{% trans "Qabul qilindi" %}</span>
+                    </div>
+                </div>
+            {% endif %}
+
             {% if order.qoshimcha_matn %}
                 <div class="card-header">
                     <div class="card-title">
@@ -526,14 +646,13 @@
                             {% trans "Qo'shimcha xabar" %}
                             <span class="d-block"
                                   style="font-size: 1.3rem; font-weight: bold; font-style: italic; margin-top: 10px; line-height: 1.5; text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); color: #FF4136;">
-                            {{ order.qoshimcha_matn }}
-                        </span>
-
-
+                    {{ order.qoshimcha_matn }}
+                </span>
                         </h2>
                     </div>
                 </div>
             {% endif %}
+            <!-- Order Action Buttons -->
             <div class="d-flex justify-content-end mb-4">
                 {% if order.status == '1' %}
                     <!-- Buyurtma berilgan: Tasdiqlash va Bekor qilish tugmalari -->
@@ -559,6 +678,12 @@
                             <span class="fw-bold fs-16px">{% trans "Buyurtma bekor qilingan!" %}</span><br>
                             <span class="fs-14px">{% trans "Sababi" %}: {{ order.bekor_qilish_sababi }}</span>
                         </div>
+                    </div>
+                {% elif order.status == '4' %}
+                    <!-- Buyurtma bekor qilingan: Sababini ko'rsatish -->
+                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <span class="fw-bold fs-16px">{% trans "Buyurtma qabul qilindi!" %}</span>
                     </div>
                 {% else %}
                     <!-- Noma'lum holat: Ogohlantirish -->
@@ -770,7 +895,77 @@
 <script src="{% static  "assets2/js/config.js" %}"></script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
+<script>
+    // Submit Order Form Handler
+document.getElementById("submitOrderForm").addEventListener("submit", function (event) {
+    event.preventDefault();
 
+    const password = document.getElementById("submitOrderPassword").value;
+    const orderPk = document.getElementById("submitOrderForm").dataset.orderPk; // Fetch pk from form dataset
+
+    fetch(`/submit-order/${orderPk}/`, { // Append pk to the URL
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({password})
+    })
+        .then(response => response.json())
+        .then(data => {
+            const modal = bootstrap.Modal.getInstance(document.getElementById("submitOrderModal"));
+            modal.hide();
+
+            if (data.success) {
+                showAlert("Buyurtma muvaffaqiyatli tasdiqlandi!", "success");
+                setTimeout(() => location.reload(), 2000);
+            } else {
+                showAlert(data.message || "Xatolik yuz berdi!", "danger");
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            showAlert("Xatolik yuz berdi!", "danger");
+        });
+});
+
+
+// Cancel Order Form Handler
+document.getElementById("cancelOrderForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const password = document.getElementById("cancelOrderPassword").value;
+    const orderPk = document.getElementById("cancelOrderForm").dataset.orderPk; // Fetch pk from form dataset
+    const reason = document.getElementById("cancelOrderReason").value;
+
+    fetch(`/cancel-order/${orderPk}/`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({password, reason})
+    })
+        .then(response => response.json())
+        .then(data => {
+            const modalElement = document.getElementById("cancelOrderModal");
+            const modal = bootstrap.Modal.getInstance(modalElement);
+            modal.hide();
+
+            if (data.success) {
+                showAlert("Buyurtma bekor qilindi!", "success");
+                setTimeout(() => location.reload(), 2000);
+            } else {
+                showAlert(data.message || "Xatolik yuz berdi!", "danger");
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            showAlert("Xatolik yuz berdi!", "danger");
+        });
+});
+
+</script>
 <!-- end::Javascript-->
 </body>
 <!--end::Body-->

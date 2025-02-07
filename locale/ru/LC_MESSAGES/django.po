@@ -424,3 +424,45 @@ msgstr "Продолжить"
 
 msgid "Mahsulot topilmadi"
 msgstr "Продукт не найден"
+
+msgid "Buyurtma qabul qilindi!"
+msgstr "Заказ получен!"
+
+msgid "Yuborilgan"
+msgstr "Отправлено"
+
+msgid "Bekor qilingan"
+msgstr "Отменено"
+
+msgid "Qabul qilingan"
+msgstr "Принято"
+
+msgid "Qabul qilindi"
+msgstr "Принял"
+
+msgid "Iltimos, parolingizni kiriting!"
+msgstr "Пожалуйста, введите свой пароль!"
+
+msgid "Qabul qildim"
+msgstr "Принял"
+
+msgid "Buyurtmani qabul qilishni tasdiqlaysizmi?"
+msgstr "Вы хотите принять заказ?"
+
+
+msgid "Buyurtmani qabul qilish"
+msgstr "Принять заказ"
+
+msgid "Mexanika kelgan buyurtmalar"
+msgstr "Заказы, полученные механиками"
+
+
+msgid "Omborxona buyurtmalar"
+msgstr "Заказы на склад"
+
+
+
+
+
+
+

@@ -71,6 +71,7 @@ STATUS_CHOICES = (
     ('1', 'Buyurtma berildi'),
     ('2', 'Bajarildi'),
     ('3', 'Bekor qilindi'),
+    ('4', "Qabul qilindi"),
 )
 
 ADMIN_CHOICES = (
@@ -82,7 +83,7 @@ class Order(models.Model):
     maxsulotlar = models.ManyToManyField(OrderItems)
     foydalanuvchi = models.ForeignKey(User, on_delete=models.CASCADE)
     jami_maxsulot = models.BigIntegerField()
-    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='1')
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='1', null=True, blank=True)
     bekor_qilish_sababi = models.TextField(null=True, blank=True)
     qoshimcha_rasm = models.ImageField(upload_to='qoshimcha-rasmlar', null=True, blank=True)
     qoshimcha_matn = models.TextField(null=True, blank=True)

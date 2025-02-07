@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.db.models import Q
@@ -9,8 +10,9 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import gettext as _  # Import for translation
+from django.views.decorators.csrf import csrf_exempt
+
 from product_app.models import Maxsulot, CartItems, Order, OrderItems
 from settings_app.models import AdminParol, SectionChoices
 
@@ -24,7 +26,7 @@ def orders_page(request):
             orders = Order.objects.filter(Q(kimga="1") | Q(kimga=None))
         order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
         today = timezone.now().date()
-        today_orders = Order.objects.filter(created_at__date=today, foydalanuvchi=request.user)
+        today_orders = Order.objects.filter(created_at__date=today, status='1')
         # Add pagination
         paginator = Paginator(orders, 10)  # Show 10 orders per page
         page_number = request.GET.get('page', 1)
@@ -38,6 +40,7 @@ def orders_page(request):
         orders_1_count = orders.filter(status='1').count()
         orders_2_count = orders.filter(status='2').count()
         orders_3_count = orders.filter(status='3').count()
+        orders_4_count = orders.filter(status='4').count()
 
         user_ctx = {
             "order_id": order_id,
@@ -45,38 +48,41 @@ def orders_page(request):
             "orders_1_count": orders_1_count,
             "orders_2_count": orders_2_count,
             "orders_3_count": orders_3_count,
-            "today_orders": today_orders.filter(status__in=['2', '3']),
+            "orders_4_count": orders_4_count,
+            "today_orders": today_orders,
         }
         return render(request, 'user/order/orders.html', user_ctx)
 
     elif request.user.is_staff:
-            order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
-            user_orders = Order.objects.filter(foydalanuvchi=request.user)
-            today = timezone.now().date()
-            today_orders = Order.objects.filter(created_at__date=today, foydalanuvchi=request.user)
-            # Add pagination
-            paginator = Paginator(user_orders, 10)  # Show 10 orders per page
-            page_number = request.GET.get('page', 1)
-            try:
-                paginated_orders = paginator.page(page_number)
-            except PageNotAnInteger:
-                paginated_orders = paginator.page(1)
-            except EmptyPage:
-                paginated_orders = paginator.page(paginator.num_pages)
+        order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
+        user_orders = Order.objects.filter(foydalanuvchi=request.user)
+        today = timezone.now().date()
+        today_orders = Order.objects.filter(created_at__date=today, foydalanuvchi=request.user)
+        # Add pagination
+        paginator = Paginator(user_orders, 10)  # Show 10 orders per page
+        page_number = request.GET.get('page', 1)
+        try:
+            paginated_orders = paginator.page(page_number)
+        except PageNotAnInteger:
+            paginated_orders = paginator.page(1)
+        except EmptyPage:
+            paginated_orders = paginator.page(paginator.num_pages)
 
-            orders_1_count = user_orders.filter(status='1').count()
-            orders_2_count = user_orders.filter(status='2').count()
-            orders_3_count = user_orders.filter(status='3').count()
+        orders_1_count = user_orders.filter(status='1').count()
+        orders_2_count = user_orders.filter(status='2').count()
+        orders_3_count = user_orders.filter(status='3').count()
+        orders_4_count = user_orders.filter(status='4').count()
 
-            user_ctx = {
-                "order_id": order_id,
-                "user_orders": paginated_orders,  # Use paginated orders here
-                "orders_1_count": orders_1_count,
-                "orders_2_count": orders_2_count,
-                "orders_3_count": orders_3_count,
-                "today_orders": today_orders.filter(status__in=['2', '3']),
-            }
-            return render(request, 'user/order/orders.html', user_ctx)
+        user_ctx = {
+            "order_id": order_id,
+            "user_orders": paginated_orders,  # Use paginated orders here
+            "orders_1_count": orders_1_count,
+            "orders_2_count": orders_2_count,
+            "orders_3_count": orders_3_count,
+            "orders_4_count": orders_4_count,
+            "today_orders": today_orders.filter(status__in=['2', '3']),
+        }
+        return render(request, 'user/order/orders.html', user_ctx)
 
 
 @login_required(login_url='login_page')
@@ -90,6 +96,7 @@ def search_orders(request):
             'Buyurtma berildi': '1',
             'Bajarildi': '2',
             'Bekor qilindi': '3',
+            'Qabul qilindi': '4'
         }
 
         # Find matching status keys for partial matches
@@ -139,6 +146,32 @@ def search_orders(request):
 
     return JsonResponse({'error': _("Noto'g'ri so'rov usuli.")}, status=400)
 
+
+@csrf_exempt
+def approve_order(request, pk):
+    if request.user.is_authenticated:
+        order = get_object_or_404(Order, id=pk)
+
+        if request.method == "POST":
+            try:
+                data = json.loads(request.body)
+                password = data.get("password")
+
+                user = authenticate(username=request.user.username, password=password)
+                if user is None:
+                    return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")})
+
+                order.status = '4'  # "Qabul qilindi"
+                order.save()
+                return JsonResponse({"success": True, "message": _("Buyurtma qabul qilindi!")})
+            except Exception as e:
+                return JsonResponse({"success": False, "message": _("Xatolik yuz berdi!")})
+
+        return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")})
+
+    return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")})
+
+
 @csrf_exempt
 def submit_order(request, pk):
     if request.user.is_superuser:
@@ -178,6 +211,7 @@ def submit_order(request, pk):
         return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")})
 
     return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")})
+
 
 @csrf_exempt
 def cancel_order(request, pk):
@@ -277,6 +311,29 @@ def user_order_details(request, pk):
         return render(request, 'user/order/user-order-detail.html', user_ctx)
 
 
+@csrf_exempt
+def admin_order_details(request, pk):
+    today = timezone.now().date()
+    today_orders = Order.objects.filter(updated_at__date=today, foydalanuvchi=request.user)
+    if not request.user.is_superuser:
+        return redirect('mechanic_page')
+    if request.user.is_superuser and request.user.username != "sklad":
+        order = get_object_or_404(Order, id=pk)
+        cart_items = CartItems.objects.filter(foydalanuvchi=request.user)
+        cart_item_count = cart_items.count()
+        order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
+
+        user_ctx = {
+
+            'order_id': order_id,
+            'cart_items': cart_items,
+            'cart_item_count': cart_item_count,
+            'order': order,
+            'today_orders': today_orders.filter(status__in=['2', '3'])
+        }
+        return render(request, 'user/order/admin-order-detail.html', user_ctx)
+
+
 @login_required(login_url='login_page')
 def order_page(request):
     # Common data for both GET and POST requests
@@ -355,3 +412,47 @@ def order_page(request):
             return JsonResponse({'success': False, 'message': _("Noto'g'ri so'rov usuli.")}, status=400)
 
     return render(request, 'user/department/pos-mechanic.html', user_ctx)
+
+
+@login_required(login_url="login_page")
+def warehouse_orders(request):
+    if not request.user.is_superuser:
+        return redirect('mechanic_page')
+    elif request.user.is_superuser:
+        if request.user.username == "sklad":
+            return redirect('dashboard1')
+        else:
+            order_id = (Order.objects.first().id + 1) if Order.objects.first() else 1
+            user_orders = Order.objects.filter(foydalanuvchi=request.user)
+            today = timezone.now().date()
+            today_orders = Order.objects.filter(
+                updated_at__date=today,
+                foydalanuvchi=request.user
+            )
+            # Add pagination
+            paginator = Paginator(user_orders, 10)  # Show 10 orders per page
+            page_number = request.GET.get('page', 1)
+            try:
+                paginated_orders = paginator.page(page_number)
+            except PageNotAnInteger:
+                paginated_orders = paginator.page(1)
+            except EmptyPage:
+                paginated_orders = paginator.page(paginator.num_pages)
+
+            orders_1_count = user_orders.filter(status='1').count()
+            orders_2_count = user_orders.filter(status='2').count()
+            orders_3_count = user_orders.filter(status='3').count()
+            orders_4_count = user_orders.filter(status='4').count()
+
+            user_ctx = {
+                "order_id": order_id,
+                "user_orders": paginated_orders,  # Use paginated orders here
+                "orders_1_count": orders_1_count,
+                "orders_2_count": orders_2_count,
+                "orders_3_count": orders_3_count,
+                "orders_4_count": orders_4_count,
+                "today_orders": today_orders.filter(status__in=['2', '3']),
+            }
+            return render(request, 'user/order/admin-warehouse-orders.html', user_ctx)
+
+    return render(request, 'user/order/admin-warehouse-orders.html')

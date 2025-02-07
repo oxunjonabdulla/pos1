@@ -1,102 +1,235 @@
 {% load i18n %}
 {% for order in user_orders %}
     <!-- Begin Order Row -->
-    <tr>
-        <!-- Checkbox -->
-        <td class="text-start">
-            <div class="form-check form-check-sm form-check-custom form-check-solid">
-                <input class="form-check-input" type="checkbox" value="1"/>
-            </div>
-        </td>
+    {% if order.foydalanuvchi.is_superuser and order.foydalanuvchi.username != "sklad" %}
 
-        <!-- Order ID -->
-        <td class="text-start" data-kt-ecommerce-order-filter="order_id">
-            {% if request.user.is_superuser %}
-                <a href="{% url 'order1-detail' pk=order.id %}"
-                   class="text-gray-800 text-hover-primary fw-bold border-bottom border-primary pb-1">
-                    #{{ order.id }}
-                </a>
-            {% elif request.user.is_staff %}
-                <a href="{% url 'user_order_details' pk=order.id %}"
-                   class="text-gray-800 text-hover-primary fw-bold border-bottom border-secondary pb-1">
-                    #{{ order.id }}
-                </a>
-            {% endif %}
-        </td>
+        <tr style="background-color: #E8F0FE; border-bottom: 2px solid #B6C7E3;">
 
-        <!-- Buyurtmachi -->
-        <td>
-            <div class="d-flex align-items-center">
-                <!-- Avatar -->
-                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
-                    <a href="#">
-                        <div class="symbol-label">
-                            {% if order.foydalanuvchi.image %}
-                                <img src="{{ order.foydalanuvchi.image.url }}" alt="{{ order.foydalanuvchi.username }}"
-                                     class="w-100 rounded-circle border shadow-sm"/>
-                            {% endif %}
-                        </div>
-                    </a>
+            <!-- Checkbox -->
+            <td class="text-start border border-secondary">
+                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                    <input class="form-check-input" type="checkbox" value="1"/>
                 </div>
-                <!-- Username -->
-                <div class="ms-5">
+            </td>
+
+            <!-- Order ID -->
+            <td class="text-start border border-secondary" data-kt-ecommerce-order-filter="order_id">
+                {% if request.user.is_superuser %}
+                    {% if request.path == "/warehouse_orders/" %}
+                        <a href="{% url 'admin_order_details' pk=order.pk %}"
+                           class="text-gray-800 text-hover-primary fw-bold border-bottom border-primary pb-1">
+                            #{{ order.pk }}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'order1-detail' pk=order.pk %}"
+                           class="text-gray-800 text-hover-primary fw-bold border-bottom border-primary pb-1">
+                            #{{ order.pk }}
+                        </a>
+                    {% endif %}
+                {% elif request.user.is_staff %}
+                    <a href="{% url 'user_order_details' pk=order.pk %}"
+                       class="text-gray-800 text-hover-primary fw-bold border-bottom border-secondary pb-1">
+                        #{{ order.pk }}
+                    </a>
+                {% endif %}
+
+            </td>
+
+            <!-- Buyurtmachi -->
+            <td class="border border-secondary">
+                <div class="d-flex align-items-center">
+                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3 border border-info shadow-sm">
+                        <a href="#">
+                            <div class="symbol-label">
+                                {% if order.foydalanuvchi.image %}
+                                    <img src="{{ order.foydalanuvchi.image.url }}"
+                                         alt="{{ order.foydalanuvchi.username }}"
+                                         class="w-100 rounded-circle border shadow-sm"/>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    <div class="ms-5">
+                    <span class="text-gray-800 text-hover-primary fs-5 fw-bold border-bottom border-info pb-1">
+                        {{ order.foydalanuvchi.username }}
+                    </span>
+                    </div>
+                </div>
+            </td>
+
+            <!-- Order Status -->
+            <td class="text-end pe-0 border border-secondary" data-order="{{ order.status }}">
+                {% if order.status == '1' %}
+                    <div class="badge badge-light-primary border border-primary shadow-sm">{% trans "Buyurtma berildi" %}</div>
+                {% elif order.status == '2' %}
+                    <div class="badge badge-light-success border border-success shadow-sm">{% trans "Bajarildi" %}</div>
+                {% elif order.status == '3' %}
+                    <div class="badge badge-light-danger border border-danger shadow-sm">{% trans "Bekor qilindi" %}</div>
+                {% elif order.status == '4' %}
+                    <div class="badge badge-light-warning border border-warning shadow-sm">{% trans "Qabul qilindi" %}</div>
+                {% endif %}
+            </td>
+
+            <!-- Jami -->
+            <td class="text-end pe-0 border border-secondary">
+                <span class="fw-bold text-primary border-bottom border-warning pb-1">{{ order.jami_maxsulot }} {% trans "ta" %}</span>
+            </td>
+
+            <!-- Created At -->
+            <td class="text-end border border-secondary" data-order="{{ order.created_at }}">
+            <span class="fw-bold text-success border-bottom border-light pb-1">
+                {{ order.created_at|date:"d-m-y H:i" }}
+            </span>
+            </td>
+
+            <!-- Updated At -->
+            <td class="text-end border border-secondary" data-order="{{ order.updated_at }}">
+                <span class="fw-bold text-danger border-bottom border-dark pb-1">{{ order.updated_at|date:"d-m-y H:i" }}</span>
+            </td>
+
+            <!-- Actions -->
+            <td class="text-end border border-secondary">
+                {% if request.user.is_superuser %}
+                    {% if request.path == "/warehouse_orders/" %}
+                        <a href="{% url 'admin_order_details' pk=order.id %}"
+                           class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-primary"
+                           style="background-color: #1B84FF; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                           onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                           onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
+                            {% trans "Batafsil" %}
+                        </a>
+                    {% else %}
+                        <a href="{% url 'order1-detail' pk=order.id %}"
+                           class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-primary"
+                           style="background-color: #1B84FF; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                           onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                           onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
+                            {% trans "Batafsil" %}
+                        </a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'user_order_details' pk=order.id %}"
+                       class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-primary"
+                       style="background-color: #1B84FF; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                       onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                       onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
+                        {% trans "Batafsil" %}
+                    </a>
+                {% endif %}
+            </td>
+
+            </td>
+
+        </tr>
+
+
+    {% else %}
+        <tr>
+            <!-- Checkbox -->
+
+
+            <td class="text-start">
+                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                    <input class="form-check-input" type="checkbox" value="1"/>
+                </div>
+            </td>
+
+
+            <!-- Order ID -->
+            <td class="text-start" data-kt-ecommerce-order-filter="order_id">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'order1-detail' pk=order.id %}"
+                       class="text-gray-800 text-hover-primary fw-bold border-bottom border-primary pb-1">
+                        #{{ order.id }}
+                    </a>
+                {% elif request.user.is_staff %}
+                    <a href="{% url 'user_order_details' pk=order.id %}"
+                       class="text-gray-800 text-hover-primary fw-bold border-bottom border-secondary pb-1">
+                        #{{ order.id }}
+                    </a>
+                {% endif %}
+            </td>
+
+            <!-- Buyurtmachi -->
+            <td>
+                <div class="d-flex align-items-center">
+                    <!-- Avatar -->
+                    <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                        <a href="#">
+                            <div class="symbol-label">
+                                {% if order.foydalanuvchi.image %}
+                                    <img src="{{ order.foydalanuvchi.image.url }}"
+                                         alt="{{ order.foydalanuvchi.username }}"
+                                         class="w-100 rounded-circle border shadow-sm"/>
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Username -->
+                    <div class="ms-5">
                 <span class="text-gray-800 text-hover-primary fs-5 fw-bold border-bottom border-info pb-1">
                     {{ order.foydalanuvchi.username }}
                 </span>
+                    </div>
                 </div>
-            </div>
-        </td>
+            </td>
 
-        <!-- Order Status -->
-        <td class="text-end pe-0" data-order="{{ order.status }}">
-            {% if order.status == '1' %}
-                <div class="badge badge-light-primary border border-primary shadow-sm">{% trans "Buyurtma berildi" %}</div>
-            {% elif order.status == '2' %}
-                <div class="badge badge-light-success border border-success shadow-sm">{% trans "Bajarildi" %}</div>
-            {% elif order.status == '3' %}
-                <div class="badge badge-light-danger border border-danger shadow-sm">{% trans "Bekor qilindi" %}</div>
-            {% endif %}
-        </td>
+            <!-- Order Status -->
+            <td class="text-end pe-0" data-order="{{ order.status }}">
+                {% if order.status == '1' %}
+                    <div class="badge badge-light-primary border border-primary shadow-sm">{% trans "Buyurtma berildi" %}</div>
+                {% elif order.status == '2' %}
+                    <div class="badge badge-light-success border border-success shadow-sm">{% trans "Bajarildi" %}</div>
+                {% elif order.status == '3' %}
+                    <div class="badge badge-light-danger border border-danger shadow-sm">{% trans "Bekor qilindi" %}</div>
 
-        <!-- Jami -->
-        <td class="text-end pe-0">
-            <span class="fw-bold text-primary border-bottom border-warning pb-1">{{ order.jami_maxsulot }} {% trans "ta" %}</span>
-        </td>
+                {% elif order.status == '4' %}
+                    <div class="badge badge-light-warning border border-warning shadow-sm">{% trans "Qabul qilindi" %}</div>
 
-        <!-- Created At -->
-        <td class="text-end" data-order="{{ order.created_at }}">
+                {% endif %}
+            </td>
+
+            <!-- Jami -->
+            <td class="text-end pe-0">
+                <span class="fw-bold text-primary border-bottom border-warning pb-1">{{ order.jami_maxsulot }} {% trans "ta" %}</span>
+            </td>
+
+            <!-- Created At -->
+            <td class="text-end" data-order="{{ order.created_at }}">
         <span class="fw-bold text-success border-bottom border-light pb-1">
             {{ order.created_at|date:"d-m-y H:i" }}
         </span>
-        </td>
+            </td>
 
-        <!-- Updated At -->
-        <td class="text-end" data-order="{{ order.updated_at }}">
-            <span class="fw-bold text-danger border-bottom border-dark pb-1">{{ order.updated_at|date:"d-m-y H:i" }}</span>
-        </td>
+            <!-- Updated At -->
+            <td class="text-end" data-order="{{ order.updated_at }}">
+                <span class="fw-bold text-danger border-bottom border-dark pb-1">{{ order.updated_at|date:"d-m-y H:i" }}</span>
+            </td>
 
-        <!-- Actions -->
-        <td class="text-end">
-            {% if request.user.is_superuser %}
-                <a href="{% url 'order1-detail' pk=order.id %}"
-                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm"
-                   style="background-color: #1B84FF; color: white; transition: all 0.3s ease;"
-                   onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
-                   onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
-                    {% trans "Batafsil" %}
-                </a>
-            {% elif request.user.is_staff %}
-                <a href="{% url 'order1-detail' pk=order.id %}"
-                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm"
-                   style="background-color: #1B84FF; color: white; transition: all 0.3s ease;"
-                   onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
-                   onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
-                    {% trans "Batafsil" %}
-                </a>
-            {% endif %}
-        </td>
+            <!-- Actions -->
+            <td class="text-end">
+                {% if request.user.is_superuser %}
+                    <a href="{% url 'order1-detail' pk=order.id %}"
+                       class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm"
+                       style="background-color: #1B84FF; color: white; transition: all 0.3s ease;"
+                       onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                       onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
+                        {% trans "Batafsil" %}
+                    </a>
+                {% else %}
+                    <a href="{% url 'user_order_details' pk=order.id %}"
+                       class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm"
+                       style="background-color: #1B84FF; color: white; transition: all 0.3s ease;"
+                       onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                       onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
+                        {% trans "Batafsil" %}
+                    </a>
+                {% endif %}
+            </td>
 
-    </tr>
+        </tr>
+
+    {% endif %}
     <!-- End Order Row -->
 {% endfor %}
 

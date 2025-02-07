@@ -262,74 +262,45 @@ function logoutConfirm(event) {
 
 // Order handling
 
-// Submit Order Form Handler
-document.getElementById("submitOrderForm").addEventListener("submit", function (event) {
+document.getElementById("approveOrderForm").addEventListener("submit", function (event) {
     event.preventDefault();
 
-    const password = document.getElementById("submitOrderPassword").value;
-    const orderPk = document.getElementById("submitOrderForm").dataset.orderPk; // Fetch pk from form dataset
+    const orderPk = this.dataset.orderPk;
+    const password = document.getElementById("approveOrderPassword").value;
 
-    fetch(`/submit-order/${orderPk}/`, { // Append pk to the URL
+    if (!password) {
+        showAlert("Iltimos, parolingizni kiriting!", "warning");
+        return;
+    }
+
+    fetch(`/approve-order/${orderPk}/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
             "X-CSRFToken": "{{ csrf_token }}"
         },
-        body: JSON.stringify({password})
+        body: JSON.stringify({ password: password })
     })
-        .then(response => response.json())
-        .then(data => {
-            const modal = bootstrap.Modal.getInstance(document.getElementById("submitOrderModal"));
-            modal.hide();
+    .then(response => response.json())
+    .then(data => {
+        const modal = bootstrap.Modal.getInstance(document.getElementById("approveOrderModal"));
+        modal.hide();
 
-            if (data.success) {
-                showAlert("Buyurtma muvaffaqiyatli tasdiqlandi!", "success");
-                setTimeout(() => location.reload(), 2000);
-            } else {
-                showAlert(data.message || "Xatolik yuz berdi!", "danger");
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            showAlert("Xatolik yuz berdi!", "danger");
-        });
+        if (data.success) {
+            showAlert("Buyurtma qabul qilindi!", "success");
+            setTimeout(() => location.reload(), 2000);
+        } else {
+            showAlert(data.message || "Xatolik yuz berdi!", "danger");
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        showAlert("Xatolik yuz berdi!", "danger");
+    });
 });
 
 
-// Cancel Order Form Handler
-document.getElementById("cancelOrderForm").addEventListener("submit", function (event) {
-    event.preventDefault();
 
-    const password = document.getElementById("cancelOrderPassword").value;
-    const orderPk = document.getElementById("cancelOrderForm").dataset.orderPk; // Fetch pk from form dataset
-    const reason = document.getElementById("cancelOrderReason").value;
-
-    fetch(`/cancel-order/${orderPk}/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": "{{ csrf_token }}"
-        },
-        body: JSON.stringify({password, reason})
-    })
-        .then(response => response.json())
-        .then(data => {
-            const modalElement = document.getElementById("cancelOrderModal");
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            modal.hide();
-
-            if (data.success) {
-                showAlert("Buyurtma bekor qilindi!", "success");
-                setTimeout(() => location.reload(), 2000);
-            } else {
-                showAlert(data.message || "Xatolik yuz berdi!", "danger");
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            showAlert("Xatolik yuz berdi!", "danger");
-        });
-});
 
 // Attach pk to modal on open
 document.querySelectorAll('[data-bs-target="#cancelOrderModal"]').forEach(button => {

@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.shortcuts import render
 from django.utils import timezone
 from django.utils.translation import gettext as _  # Import for translation
-
+from django.shortcuts import render, redirect, get_object_or_404
 from product_app.models import Maxsulot, CartItems, Order, Kategoriya, Department
 from user_app.models import User
 
@@ -165,6 +165,60 @@ def mechanic_page(request):
     })
 
 
+@login_required(login_url="login_page")
+def admin_warehouse_page(request):
+    # Restrict access to superusers only
+    if not request.user.is_superuser or request.user.username == "sklad":
+        return redirect("dashboard1")
+    if request.user.is_superuser:
+        if request.user.username == "sklad":
+            orders = Order.objects.filter(kimga="2")
+        else:
+            orders = Order.objects.filter(Q(kimga="1") | Q(kimga=None))
+    # Get today's date
+    today = timezone.now().date()
+
+    # Fetch user's orders for today with specific statuses
+    today_orders = orders.filter(
+        created_at__date=today,
+        # foydalanuvchi=request.user,
+        status="1"
+    )
+
+    # Fetch all departments with the count of related categories
+    departments = Department.objects.annotate(category_count=Count('kategoriya'))
+
+    # Fetch cart items for the current user
+    cart_items = CartItems.objects.filter(foydalanuvchi=request.user)
+
+    # Get the warehouse department or return a 404 error if not found
+    warehouse_department = get_object_or_404(Department, name="Omborxona")
+
+    # Fetch categories related to the warehouse department with product counts
+    categories = Kategoriya.objects.filter(department=warehouse_department).annotate(
+        maxsulot_count=Count('maxsulot')
+    )
+
+    # Fetch products that belong to these categories
+    products = Maxsulot.objects.filter(kategoriya__in=categories).select_related("kategoriya")
+
+    # Fetch all users
+    users = User.objects.all()
+
+    # Render the template with context data
+    return render(request, "user/department/admin-warehouse.html", {
+        'departments': departments,
+        'products': products,
+        'cart_items': cart_items,
+        'cart_items_count': cart_items.count(),
+        'active_department': warehouse_department.id,
+        'categories': categories,
+        'search_url': 'warehouse_search_products',
+        'users': users,
+        'today_orders': today_orders,
+    })
+
+
 @login_required(login_url='login_page')
 def filter_products(request):
     category_id = request.GET.get('category_id')
@@ -185,6 +239,8 @@ def filter_products(request):
         return JsonResponse({'products': product_list}, status=200)
 
     return JsonResponse({"error": _("Hech qanday kategoriya identifikatori berilmagan")}, status=400)
+
+
 
 
 @login_required(login_url="login_page")

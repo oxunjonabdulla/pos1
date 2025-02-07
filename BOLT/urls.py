@@ -17,7 +17,7 @@ from BOLT.views.main import (
     dashboard_page,
     search_products,
     filter_products,
-    bad_request_view, users_page, set_language,
+    bad_request_view, users_page, set_language, admin_warehouse_page,
 )
 from BOLT.views.order import (
     search_orders,
@@ -25,7 +25,7 @@ from BOLT.views.order import (
     submit_order,
     cancel_order,
     user_order_details,
-    orders_page, order_page,
+    orders_page, order_page, approve_order, warehouse_orders, admin_order_details,
 )
 from BOLT.views.tutorial import user_tutorial_page, admin_tutorial_page
 
@@ -40,15 +40,17 @@ urlpatterns = [
     path('', dashboard_page, name='home_page'),  # Home page
     path('dashboard1/', dashboard_page, name='dashboard1'),
     path('warehouse/', warehouse_page, name='warehouse_page'),
+
+    path("admin_warehouse_page/", admin_warehouse_page, name="admin_warehouse_page"),
     path('mechanic/', mechanic_page, name='mechanic_page'),
     path('check-section/', check_section, name='check_section'),
-
 
     path('users-page/', users_page, name='users_page'),
 
     # Search and Filter
     path('warehouse/search-products/', search_products, name='warehouse_search_products'),
     path('mechanic/search-products/', search_products, name='mechanic_search_products'),
+
     path('search-products/', search_products, name='search_products'),
     path('filter-products/', filter_products, name='filter_products'),
     path('search-orders/', search_orders, name='search_orders'),
@@ -56,11 +58,14 @@ urlpatterns = [
     # Order Management
     path('order1-detail/<int:pk>/', order1_details, name='order1-detail'),
     path('submit-order/<int:pk>/', submit_order, name='submit_order'),
+    path('approve-order/<int:pk>/', approve_order, name='approve-order'),
     path('cancel-order/<int:pk>/', cancel_order, name='cancel_order'),
     path('user_order_detail/<int:pk>/', user_order_details, name='user_order_details'),
-    path('orders/', orders_page, name='orders_page'),
-    path('order/', order_page, name='order_page'),
 
+    path('admin_order_details/<int:pk>/', admin_order_details, name='admin_order_details'),
+    path('orders/', orders_page, name='orders_page'),
+    path('warehouse_orders/', warehouse_orders, name='warehouse_orders'),
+    path('order/', order_page, name='order_page'),
 
     # Cart Management
     path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
