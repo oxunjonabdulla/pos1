@@ -29,13 +29,16 @@ class Kategoriya(models.Model):
 
 
 class Maxsulot(models.Model):
-    kategoriya = models.ForeignKey(Kategoriya, on_delete=models.CASCADE, null=True, blank=True)
+    kategoriya = models.ForeignKey(Kategoriya, on_delete=models.CASCADE,
+                                   null=True, blank=True)
     nomi = models.CharField(max_length=455)
-    rasm = models.ImageField(upload_to='maxsulotlar')
+    rasm = models.ImageField(upload_to='maxsulotlar', blank=True, null=True)
     foydalanuvchi = models.ForeignKey(User, on_delete=models.CASCADE)
-    razmer = models.CharField(max_length=255)
+    razmer = models.CharField(max_length=255, null=True, blank=True)
     qoshimcha = models.TextField(null=True, blank=True)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)  # New field
+    count = models.IntegerField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
     def __str__(self):

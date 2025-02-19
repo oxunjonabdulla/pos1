@@ -171,47 +171,60 @@ def approve_order(request, pk):
 
     return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")})
 
-
 @csrf_exempt
+@login_required
 def submit_order(request, pk):
-    if request.user.is_superuser:
-        # Determine the section based on the username
-        if request.user.username == "sklad":
-            section = SectionChoices.WAREHOUSE
-        else:
-            section = SectionChoices.MECHANICS
+    if not request.user.is_superuser:
+        return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")}, status=403)
 
-        # Get the order object
-        order = get_object_or_404(Order, id=pk)
+    # Determine the section based on the admin's username
+    section = SectionChoices.WAREHOUSE if request.user.username == "sklad" else SectionChoices.MECHANICS
 
-        if request.method == "POST":
-            try:
-                data = json.loads(request.body)
-                password = data.get("password")
+    order = get_object_or_404(Order, id=pk)
 
-                # Validate the password as an integer
-                try:
-                    password = int(password)
-                except (TypeError, ValueError):
-                    return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")})
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            password = data.get("password")
 
-                # Retrieve the latest password for the specified section
-                parol = AdminParol.objects.filter(section=section).last()
+            # Validate password
+            if not password.isdigit():
+                return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")}, status=400)
 
-                if parol and password == int(parol.parol):
-                    order.status = '2'  # Update the status to 'Bajarildi'
-                    order.save()
-                    return JsonResponse({"success": True})
-                else:
-                    return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")})
+            password = int(password)
 
-            except json.JSONDecodeError:
-                return JsonResponse({"success": False, "message": _("Ma'lumotni qayta ishlashda xatolik yuz berdi.")})
+            # Retrieve the latest password for the section
+            parol = AdminParol.objects.filter(section=section).last()
+            if not parol or password != int(parol.parol):
+                return JsonResponse({"success": False, "message": _("Noto'g'ri parol!")}, status=400)
 
-        return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")})
+            # Check if stock is available for each product
+            order_items = order.maxsulotlar.all()
+            if request.user.username == "sklad":
+                for item in order_items:
+                    product = item.maxsulot
+                    if product.count < item.soni:
+                        return JsonResponse({
+                            "success": False,
+                            "message": _(f"{product.nomi} yetarli emas! Omborda {product.count} ta bor."),
+                        }, status=400)
 
-    return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")})
+                # Deduct stock
+                for item in order_items:
+                    product = item.maxsulot
+                    product.count -= item.soni
+                    product.save()
 
+            # Update order status
+            order.status = '2'  # Completed
+            order.save()
+
+            return JsonResponse({"success": True, "message": _("Buyurtma muvaffaqiyatli tasdiqlandi!")})
+
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "message": _("Ma'lumotni qayta ishlashda xatolik yuz berdi.")}, status=400)
+
+    return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")}, status=405)
 
 @csrf_exempt
 def cancel_order(request, pk):

@@ -81,6 +81,31 @@
             padding: 0 10px; /* Optional: Adjust padding */
             margin-bottom: 10px; /* Space below the logo */
         }
+        .product-name {
+            display: block;
+            max-width: 20ch; /* Limits each line to approximately 20 characters */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            text-align: center; /* Centers text horizontally */
+            margin: 0 auto; /* Ensures block-level centering */
+        }
+
+
+        #products-container > .d-flex {
+            display: flex; /* kichik ekranlar uchun, agar kerak bo'lsa */
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* 1280px va undan katta ekranlarda gridga o‘tish va 3 ustun bo‘lishini ta’minlash */
+        @media (min-width: 1280px) {
+            #products-container > .d-flex {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
     </style>
 </head>
 <!--end::Head-->
@@ -632,7 +657,7 @@
                                                              class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                                                         <div class="mb-2">
                                                             <div class="text-center">
-                                                                <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">{{ product.nomi }}</span>
+                                                                <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1 product-name">{{ product.nomi }}</span>
                                                                 <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: {{ product.razmer }}</span>
                                                             </div>
                                                         </div>
@@ -982,7 +1007,7 @@
                                             <img src="${product.image}" class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                                             <div class="mb-2">
                                                 <div class="text-center">
-                                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">${product.name}</span>
+                                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1 product-name">${product.name}</span>
                                                     <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: ${product.razmer}</span>
                                                 </div>
                                             </div>
@@ -1097,7 +1122,7 @@
                         <div class="card-body text-center">
                             <img src="${product.rasm}" class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                             <div class="mb-2">
-                                <span class="fw-bold text-gray-800 text-hover-primary fs-3">${product.nomi}</span>
+                                <span class="fw-bold text-gray-800 text-hover-primary fs-3 product-name">${product.nomi}</span>
                                 <span class="text-gray-500 fw-semibold d-block fs-6">{% trans "O'lchami" %}: ${product.razmer}</span>
                             </div>
                             <div class="position-relative d-flex justify-content-center align-items-center mb-4">

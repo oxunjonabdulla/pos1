@@ -1,0 +1,1030 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<!--begin::Head-->
+
+<!-- Mirrored from preview.keenthemes.com/metronic8/demo9/apps/ecommerce/sales/listing.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 04 Jan 2025 05:18:10 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8"/><!-- /Added by HTTrack -->
+<head>
+    <title>Railway Poster</title>
+    <meta charset="utf-8"/>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:type" content="article"/>
+    <meta property="og:title"
+          content="Railway Poster"/>
+    <meta property="og:url" content="https://keenthemes.com/metronic"/>
+    <meta property="og:site_name" content="Railway Poster"/>
+    <link rel="canonical" href="../department/pos-warehouse.html"/>
+    <link rel="shortcut icon" href="{% static  "assets2/images/logo-vagon (1).png" %}"/>
+
+    <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700"/><!--end::Fonts-->
+
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="{% static  "assets2/plugins/custom/datatables/datatables.bundle.css" %}" rel="stylesheet"
+          type="text/css"/>
+    <!--end::Vendor Stylesheets-->
+
+
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="{% static  "assets2/plugins/global/plugins.bundle.css" %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static  "assets2/css/style.bundle.css" %}" rel="stylesheet" type="text/css"/>
+    <!--end::Global Stylesheets Bundle-->
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-52YZ3XGZJ6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-52YZ3XGZJ6');
+    </script>
+    <script>
+        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking)
+        if (window.top != window.self) {
+            window.top.location.replace(window.self.location.href);
+        }
+    </script>
+
+    <style>
+
+        .theme-light-show {
+            display: inline;
+        }
+
+        .theme-dark-show {
+            display: none;
+        }
+
+        body.dark-mode .theme-light-show {
+            display: none;
+        }
+
+        body.dark-mode .theme-dark-show {
+            display: inline;
+        }
+
+        #kt_aside_logo {
+            position: relative; /* Ensure it stays within the flow */
+            z-index: 2; /* Bring it above scrollable areas if needed */
+            height: 80px; /* Set a fixed height */
+            padding: 0 10px; /* Optional: Adjust padding */
+            margin-bottom: 10px; /* Space below the logo */
+        }
+
+
+        /* Make table scrollable on small screens */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        /* Responsive adjustments for mobile devices */
+        @media (max-width: 768px) {
+            /* Ensure location column text wraps or truncates */
+            #kt_ecommerce_sales_table td:nth-child(4),
+            #kt_ecommerce_sales_table th:nth-child(4) {
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+
+    </style>
+</head>
+<!--end::Head-->
+
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-disabled">
+<!--begin::Theme mode setup on page load-->
+<script>
+    var defaultThemeMode = "light";
+    var themeMode;
+
+    if (document.documentElement) {
+        if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+            themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+        } else {
+            if (localStorage.getItem("data-bs-theme") !== null) {
+                themeMode = localStorage.getItem("data-bs-theme");
+            } else {
+                themeMode = defaultThemeMode;
+            }
+        }
+
+        if (themeMode === "system") {
+            themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+
+        document.documentElement.setAttribute("data-bs-theme", themeMode);
+    }
+</script>
+<!--end::Theme mode setup on page load-->
+
+<!--begin::Main-->
+<!--begin::Root-->
+<div class="d-flex flex-column">
+    <!--begin::Page-->
+    <div class="page d-flex flex-row flex-column-fluid">
+
+        <!--begin::Aside-->
+        <div
+                id="kt_aside"
+                class="aside"
+                data-kt-drawer="true"
+                data-kt-drawer-name="aside"
+                data-kt-drawer-activate="{default: true, lg: false}"
+                data-kt-drawer-overlay="true"
+                data-kt-drawer-width="auto"
+                data-kt-drawer-direction="start"
+                data-kt-drawer-toggle="#kt_aside_toggle"
+                style="padding-top: 15px; padding-bottom: 10px;"> <!-- Reduce top and bottom padding -->
+
+            <!--begin::Logo-->
+            <div class="aside-logo flex-column-auto" id="kt_aside_logo">
+                <a href="{% url "mechanic_page" %}">
+                    <img style="width: 220px; height: auto;" alt="Logo"
+                         src="{% static 'assets2/images/logo-vagon (1).png' %}"/>
+                </a>
+            </div>
+            <!--end::Logo-->
+
+            <!--begin::Nav-->
+            <div class="aside-menu flex-column-fluid py-0" id="kt_aside_menu"> <!-- Remove vertical padding -->
+                <!--begin::Aside menu-->
+                <div
+                        id="kt_aside_menu_wrapper"
+                        class="w-100 hover-scroll-y scroll-lg-ms d-flex"
+                        data-kt-scroll="true"
+                        data-kt-scroll-activate="{default: false, lg: true}"
+                        data-kt-scroll-height="auto"
+                        data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
+                        data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu"
+                        data-kt-scroll-offset="0"
+                        style="padding-top: 10px;"> <!-- Reduce scroll wrapper padding -->
+
+                    <div
+                            id="kt_aside_menu"
+                            class="menu menu-column menu-title-gray-600 menu-state-primary menu-state-icon-primary menu-state-bullet-primary menu-icon-gray-500 menu-arrow-gray-500 fw-semibold fs-6 my-auto"
+                            data-kt-menu="true"
+                            style="gap: 10px;"> <!-- Add gap between sections -->
+
+                        <div id="departments-container" class="d-flex flex-wrap justify-content-center"
+                             style="gap: 15px;">
+                            <a href="{% url 'dashboard1' %}" class="menu-item-link">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+            <span class="menu-icon me-0">
+                <i class="fas fa-home" style="font-size: 3.5rem; color: #6f42c1;"></i>
+            </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        {% trans "Boshqaruv paneli" %}
+                                    </p>
+                                </div>
+                            </a>
+                            <!-- Warehouse Section -->
+                            {% if request.user.username != "sklad" %}
+                                <a href="{% url 'admin_warehouse_page' %}" class="menu-item-link section-link"
+                                   data-section="Warehouse">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                        <span class="menu-icon me-0">
+                                            <i class="fas fa-warehouse" style="font-size: 3.5rem; color: #fd7e14;"></i>
+                                        </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Omborxona" %}
+                                        </p>
+                                    </div>
+                                </a>
+
+                            {% endif %}
+                            {% if request.user.username == "sklad" %}
+                                <a href="{% url 'orders_page' %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #007bff;"></i>
+                                    </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Buyurtmalar" %}
+                                        </p>
+                                    </div>
+                                </a>
+
+                            {% else %}
+                                <a href="{% url 'orders_page' %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #007bff;"></i>
+                                    </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Mexanika kelgan buyurtmalar" %}
+                                        </p>
+                                    </div>
+                                </a>
+
+                                <a href="{% url 'warehouse_orders' %}" class="menu-item-link">
+                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                         style="height: 110px; width: 110px;">
+                                        <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <i class="fas fa-shopping-cart" style="font-size: 3.5rem; color: #06d6a0;"></i>
+                                    </span>
+                                        </div>
+                                        <p class="mt-2 text-center text-dark"
+                                           style="font-size: 0.9rem; font-weight: 500;">
+                                            {% trans "Omborxona buyurtmalar" %}
+                                        </p>
+                                    </div>
+                                </a>
+
+                            {% endif %}
+
+
+                            <a href="{% url 'products_page' %}" class="menu-item-link">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+                                    <span class="menu-icon me-0">
+                                        <!-- Updated icon for products (e.g., a shopping basket or box) -->
+                                        <i class="fas fa-box" style="font-size: 3.5rem; color: #FFC107;"></i>
+                                    </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        {% trans "Mahsulotlar" %} <!-- "Products" in Uzbek or your desired language -->
+                                    </p>
+                                </div>
+                            </a>
+
+                            <a href="{% url "admin_tutor" %}" class="menu-item-link">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+                                        <span class="menu-icon me-0">
+                                            <i class="fas fa-book" style="font-size: 3.5rem; color: #28a745;"></i>
+                                        </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        {% trans "Qo'llanma" %}
+                                    </p>
+                                </div>
+                            </a>
+
+                            <!-- Logout Section -->
+                            <a href="/auth/logout/" class="menu-item-link" onclick="logoutConfirm(event)">
+                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                     style="height: 110px; width: 110px;">
+                                    <div class="menu-link menu-center">
+                                <span class="menu-icon me-0">
+                                    <i class="fas fa-sign-out-alt" style="font-size: 3.5rem; color: #dc3545;"></i>
+                                </span>
+                                    </div>
+                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
+                                        {% trans "Chiqish" %}
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--end::Aside menu-->
+        </div>
+        <!--end::Aside-->
+
+        <!--begin::Wrapper-->
+        <div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
+
+            <!--begin::Header tablet and mobile-->
+            <div class="header-mobile py-3">
+                <!--begin::Container-->
+                <div class="container d-flex flex-stack">
+                    <!--begin::Mobile logo-->
+                    <div class="d-flex align-items-center flex-grow-1 flex-lg-grow-0">
+                        <a href="{% url "mechanic_page" %}">
+                            <img style="width: 100px; height: auto;" alt="Logo"
+                                 src="{% static 'assets2/images/logo-vagon (1).png' %}" class="h-auto"/>
+                        </a>
+
+                    </div>
+                    <!--end::Mobile logo-->
+
+                    <!--begin::Aside toggle-->
+                    <button class="btn btn-icon btn-active-color-primary me-n4" id="kt_aside_toggle">
+                        <i class="fas fa-bars fs-2x"></i>
+                    </button>
+
+                    <!--end::Aside toggle-->
+                </div>
+                <!--end::Container-->
+            </div>
+            <!--end::Header tablet and mobile-->
+
+            <!--begin::Header-->
+            <div id="kt_header" class="header  py-6 py-lg-0" data-kt-sticky="true"
+                 data-kt-sticky-name="header"
+                 data-kt-sticky-offset="{lg: '300px'}">
+                <!--begin::Container-->
+
+                <div class="header-container  container-xxl ">
+
+                    <!--begin::Page title-->
+                    <div
+                            class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-20 py-3 py-lg-0 me-3">
+
+                        <!--begin::Heading-->
+                        <h1 class="d-flex flex-column text-gray-900 fw-bold my-1">
+                            <span class="text-white fs-1">Railway Poster</span>
+
+                        </h1>
+                        <!--end::Heading-->
+
+                    </div>
+                    <!--end::Page title--->
+                    <!--begin::Wrapper-->
+                    <div class="d-flex align-items-center flex-wrap">
+
+                        <!-- begin::Action -->
+                        <div class="d-flex align-items-center py-3 py-lg-0">
+
+                            <!-- begin::Notification -->
+                            <div class="me-3">
+                                <a href="#" class="btn btn-icon btn-custom btn-active-color-primary position-relative"
+                                   data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+                                   data-kt-menu-placement="bottom-end">
+                                    <!-- Font Awesome bell icon -->
+                                    <i class="fas fa-bell fs-1"></i>
+
+                                    <!-- Conditional Notification Dot -->
+                                    {% if today_orders.count > 0 %}
+                                        <span class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink"></span>
+                                    {% endif %}
+                                </a>
+
+                                <!-- begin::Notification menu -->
+                                <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px"
+                                     data-kt-menu="true" id="kt_menu_notifications">
+                                    <div class="d-flex flex-column bgi-no-repeat rounded-top"
+                                         style="background-image:url({% static "/assets2/media/misc/menu-header-bg.jpg" %})">
+                                        <h3 class="text-white fw-semibold px-9 mt-10 mb-6">
+                                            {% trans "Bildirishnomalar" %} <span
+                                                class="fs-8 opacity-75 ps-3">{{ today_orders.count }} {% trans "ta buyurtmalar" %}</span>
+                                        </h3>
+                                    </div>
+                                    <div class="scroll-y mh-325px my-5 px-8">
+                                        {% for order in today_orders %}
+                                            <a href="{% url "order1-detail" order.id %}">
+                                                <div class="d-flex flex-stack py-4">
+                                                    <!--begin::Section-->
+                                                    <div class="d-flex align-items-center me-2">
+                                                        <!--begin::Label-->
+                                                        <span class="badge badge-light fs-8">#{{ order.id }}</span>
+                                                        <!--end::Label-->
+                                                        <!--begin::Title-->
+                                                        <a
+                                                                class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
+                                                        <!--end::Title-->
+                                                    </div>
+                                                    <!--end::Section-->
+
+                                                    <!--begin::Code-->
+                                                    {% if order.status == '1' %}
+                                                        <span class="w-70px badge badge-light-primary me-4">{% trans "Buyurtma berildi" %}</span>
+                                                    {% elif order.status == '2' %}
+                                                        <span class="w-70px badge badge-light-success me-4">{% trans "Bajarildi" %}</span>
+                                                    {% elif order.status == '3' %}
+                                                        <span class="w-70px badge badge-light-danger me-4">{% trans "Bekor qilindi" %}</span>
+                                                    {% endif %}
+                                                    <!--end::Code-->
+
+                                                </div>
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end::Notification -->
+
+                            <!-- begin::User -->
+                            <div class="me-3">
+                                <a href="#" class="btn btn-icon btn-custom btn-active-color-primary"
+                                   data-kt-menu-trigger="click"
+                                   data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                    <i class="fas fa-user fs-1"></i>
+                                </a>
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px"
+                                     data-kt-menu="true">
+                                    <div class="menu-item px-3">
+                                        <div class="menu-content d-flex align-items-center px-3">
+                                            <div class="symbol symbol-50px me-5">
+                                                {% if request.user.image %}
+                                                    <img alt="Logo" src="{{ request.user.image.url }}"/>
+
+                                                {% endif %}
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <div class="fw-bold d-flex align-items-center fs-5">
+                                                    {{ request.user.username }}
+                                                    {% if request.user.role != None %}
+                                                        <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">{{ request.user.role }}</span>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- end::User -->
+
+                            <!-- begin::Theme mode -->
+                            <div class="d-flex align-items-center me-3">
+                                <a href="#" class="btn btn-icon btn-custom btn-active-color-primary"
+                                   data-kt-menu-trigger="{default:'click', lg: 'hover'}"
+                                   data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                                    <i class="fas fa-sun theme-light-show fs-1"></i>
+                                    <i class="fas fa-moon theme-dark-show fs-1"></i>
+                                </a>
+
+                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-title-gray-700 menu-icon-gray-500 menu-active-bg menu-state-color fw-semibold py-4 fs-base w-150px"
+                                     data-kt-menu="true" data-kt-element="theme-mode-menu">
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3 my-0">
+                                        <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
+                                           data-kt-value="light">
+                                    <span class="menu-icon" data-kt-element="icon">
+                                        <i class="fas fa-sun fs-2"></i>
+                                    </span>
+                                            <span class="menu-title">{% trans "Tongi rejim" %}</span>
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+
+                                    <!--begin::Menu item-->
+                                    <div class="menu-item px-3 my-0">
+                                        <a href="#" class="menu-link px-3 py-2" data-kt-element="mode"
+                                           data-kt-value="dark">
+                                    <span class="menu-icon" data-kt-element="icon">
+                                        <i class="fas fa-moon fs-2"></i>
+                                    </span>
+                                            <span class="menu-title">{% trans "Tungi rejim" %}</span>
+                                        </a>
+                                    </div>
+                                    <!--end::Menu item-->
+
+
+                                </div>
+
+                            </div>
+                            <!-- end::Theme mode -->
+
+                            <!-- begin::Language settings -->
+                            <div class="dropdown">
+
+                                <a class="btn btn-icon btn-custom btn-active-color-primary dropdown-toggle" href="#"
+                                   id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% with current_language=request.LANGUAGE_CODE %}
+                                        {% if current_language == "uz" %}
+                                            <img class="rounded-1"
+                                                 src="{% static 'assets2/media/flags/uzbekistan.svg' %}"
+                                                 alt="" style="width: 24px;">
+                                        {% elif current_language == "ru" %}
+                                            <img class="rounded-1" src="{% static 'assets2/media/flags/russia.svg' %}"
+                                                 alt="" style="width: 24px;">
+                                        {% endif %}
+                                    {% endwith %}
+
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="languageDropdown">
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center"
+                                           href="{% url "set-language" 'uz' %}">
+                                            <img class="rounded-1 me-2"
+                                                 src="{% static 'assets2/media/flags/uzbekistan.svg' %}" alt=""
+                                                 style="width: 20px;"> {% trans "O'zbek tili" %}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item d-flex align-items-center"
+                                           href="{% url "set-language" "ru" %}">
+                                            <img class="rounded-1 me-2"
+                                                 src="{% static 'assets2/media/flags/russia.svg' %}" alt=""
+                                                 style="width: 20px;"> {% trans "Rus tili" %}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- end::Language settings -->
+
+                        </div>
+                        <!-- end::Action -->
+
+
+                    </div>
+
+
+                    <!--end::Wrapper-->
+                </div>
+
+
+                <!-- end::Container-->
+
+                <div class="header-offset"></div>
+            </div>
+            <!--end::Header-->
+
+
+            <!-- begin::Content-->
+            <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+
+
+                <!--begin::Container-->
+                <div class=" container-xxl " id="kt_content_container">
+                    <!-- begin::Products-->
+                    <div class="card card-flush">
+
+                        <div class="card-header align-items-center py-5 gap-2 gap-md-5">
+                            <!--begin::Card title-->
+                            <div class="card-title d-flex justify-content-between w-100">
+                                <div class="card-header border-0 pt-6 w-75">
+                                    <h2 class="text-gray-900 w-100">{% trans "OMBORXONADA MAVJUD MAHSULOTLAR !" %}</h2>
+                                </div>
+                                <div class="text-end ms-auto w-25">
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                            data-bs-target="#kt_modal_add_product">
+                                        <i class="fas fa-plus"></i> {% trans "Mahsulot qo'shish" %}
+                                    </button>
+                                </div>
+                            </div>
+                            <!--end::Card title-->
+                        </div>
+
+
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <div class="table-responsive">
+                                <table class="table align-middle table-row-dashed fs-6 gy-5"
+                                       id="kt_ecommerce_sales_table">
+                                    <thead>
+                                    <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                                        <th class="min-w-125px">{% trans "Mahsulot" %}</th>
+                                        <th class="min-w-125px">{% trans "Kategoriyasi" %}</th>
+                                        <th class="min-w-125px">{% trans "O'lchami" %}</th>
+                                        <th class="min-w-125px">{% trans "Soni" %}</th>
+                                        <th class="min-w-125px text-end">{% trans "O'zgartirish" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="fw-semibold text-gray-600" id="order-table-body">
+                                    {% for product in products %}
+                                        <tr>
+                                            <td class="d-flex align-items-center">
+                                                <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                                                    <a>
+                                                        <div class="symbol-label">
+                                                            {% if product.rasm %}
+                                                                <img src="{{ product.rasm.url }}"
+                                                                     alt="{{ product.nomi }}"
+                                                                     class="w-100 rounded-circle border shadow-sm"/>
+                                                            {% endif %}
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div class="d-flex flex-column">
+                                                    <a class="text-gray-800 text-hover-primary mb-1 fs-5 fw-bold border-bottom border-info pb-1">
+                                                        {{ product.nomi }}
+                                                    </a>
+                                                </div>
+                                            </td>
+
+                                            <td class="text-start">
+        <span class="fw-bold text-primary border-bottom border-warning pb-1">
+            {{ product.kategoriya.nomi }}
+        </span>
+                                            </td>
+
+                                            <td class="text-start" data-order="{{ product.razmer }}">
+                                                <div class="badge badge-light fw-bold text-dark shadow-sm">{{ product.razmer }}</div>
+                                            </td>
+
+                                            <td class="text-start">
+                                                {% if product.count is not None %}
+                                                    <span class="text-muted fs-6">{{ product.count }}</span>
+                                                {% else %}
+                                                    <span class="text-muted fs-6">{% trans "Mavjud emas" %}</span>
+                                                {% endif %}
+                                            </td>
+
+                                            <td class="text-start text-end">
+                                                <a href="#"
+                                                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-primary"
+                                                   style="background-color: #1B84FF; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                                                   onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
+                                                   onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';"
+                                                   data-bs-toggle="modal" data-bs-target="#kt_modal_edit_product"
+                                                   onclick="setEditModalData({{ product.id }})">
+                                                    <i class="fas fa-pen"
+                                                       style="margin-right: 5px; color: white"></i> {% trans "O'zgartirish" %}
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+
+
+                                    </tbody>
+
+
+                                </table>
+                                <!-- Pagination Controls -->
+                                <div class="d-flex justify-content-center mt-4">
+                                    <ul class="pagination">
+                                        {% if products.has_previous %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?page=1">
+                                                    <i class="fas fa-angle-double-left"></i> <!-- First Page -->
+                                                </a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="?page={{ products.previous_page_number }}">
+                                                    <i class="fas fa-angle-left"></i> <!-- Previous Page -->
+                                                </a>
+                                            </li>
+                                        {% endif %}
+
+                                        <li class="page-item active">
+                                            <a class="page-link">{{ products.number }}
+                                                / {{ products.paginator.num_pages }}</a>
+                                        </li>
+
+                                        {% if products.has_next %}
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="?page={{ products.next_page_number }}">
+                                                    <i class="fas fa-angle-right"></i> <!-- Next Page -->
+                                                </a>
+                                            </li>
+                                            <li class="page-item">
+                                                <a class="page-link"
+                                                   href="?page={{ products.paginator.num_pages }}">
+                                                    <i class="fas fa-angle-double-right"></i> <!-- Last Page -->
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--end::Card body-->
+
+                    </div>
+                    <!--end::Products-->
+                </div>
+                <!-- end::Container-->
+
+
+            </div>
+            <!-- end::Content-->
+
+            <!-- begin::Footer-->
+            <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
+                <!--begin::Container-->
+                <div class=" container-fluid  d-flex flex-column flex-md-row flex-stack">
+                    <!-- begin::Copyright-->
+                    <div class="text-gray-900 order-2 order-md-1">
+                        <span class="text-gray-500 fw-semibold me-1">{% trans "Muallif" %} : </span>
+                        <a href="https://t.me/oxunjonabdulla/" target="_blank"
+                           class="text-muted text-hover-primary fw-semibold me-2 fs-6">{% trans "Oxunjon Abdullayev" %}</a>
+                    </div>
+                    <!-- end::Copyright-->
+
+                    <!--begin::Menu-->
+                    <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+                        <li class="menu-item"><a href="#"
+                                                 class="menu-link px-2">Railway Poster</a></li>
+                    </ul>
+                    <!--end::Menu-->
+                </div>
+                <!--end::Container-->
+            </div>
+            <!--end::Footer-->
+
+        </div>
+        <!--end::Wrapper-->
+    </div>
+    <!--end::Page-->
+</div>
+<!--end::Root-->
+
+
+<!-- end::Main-->
+
+<!-- Add Product Modal -->
+<div class="modal fade" id="kt_modal_add_product" tabindex="-1" aria-labelledby="kt_modal_add_product_label"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{% trans "Mahsulot Qo'shish" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="product-form" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="product-name" class="form-label">{% trans "Mahsulot Nomi" %}</label>
+                        <input type="text" class="form-control" id="product-name" name="nomi" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="product-category" class="form-label">{% trans "Kategoriya" %}</label>
+                        <select class="form-select" id="product-category" name="kategoriya" required>
+                            <option value="">{% trans "Kategoriya tanlang" %}</option>
+                            {% for category in categories %}
+                                <option value="{{ category.id }}">{{ category.nomi }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="product-size" class="form-label">{% trans "Razmer" %}</label>
+                        <input type="text" class="form-control" id="product-size" name="razmer" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="product-count" class="form-label">{% trans "Miqdori" %}</label>
+                        <input type="number" class="form-control" id="product-count" name="count" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="product-image" class="form-label">{% trans "Rasm" %}</label>
+                        <input type="file" class="form-control" id="product-image" name="rasm">
+                    </div>
+                </form>
+                <div id="product-message" class="alert d-none"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Yopish" %}</button>
+                <button type="submit" form="product-form" class="btn btn-success">{% trans "Saqlash" %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Product Modal -->
+<div class="modal fade" id="kt_modal_edit_product" tabindex="-1" aria-labelledby="kt_modal_edit_product_label"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="kt_modal_edit_product_label">{% trans "Mahsulotni O'zgartirish" %}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Edit Product Form -->
+                <form id="edit-product-form" enctype="multipart/form-data">
+                    <!-- Hidden Product ID -->
+                    <input type="hidden" id="product-id">
+
+                    <!-- Product Name, Category, Size, etc. -->
+                    <div class="mb-3 row">
+                        <label for="edit-product-name"
+                               class="col-sm-2 col-form-label">{% trans "Mahsulot Nomi" %}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="edit-product-name"
+                                   placeholder="{% trans 'Mahsulot nomini kiriting' %}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="edit-product-category"
+                               class="col-sm-2 col-form-label">{% trans "Kategoriya" %}</label>
+                        <div class="col-sm-10">
+                            <select class="form-select" id="edit-product-category">
+                                <option value="">{% trans "Kategoriya tanlang" %}</option>
+                                {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.nomi }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="edit-product-size" class="col-sm-2 col-form-label">{% trans "Razmer" %}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="edit-product-size"
+                                   placeholder="{% trans 'Razmerni kiriting' %}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="edit-product-count" class="col-sm-2 col-form-label">{% trans "Miqdori" %}</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="edit-product-count"
+                                   placeholder="{% trans 'Miqdorni kiriting' %}">
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="edit-product-image" class="col-sm-2 col-form-label">{% trans "Rasm" %}</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" id="edit-product-image">
+                            <img id="edit-product-image-preview" src="" alt="Mahsulot rasmi" class="img-thumbnail mt-2"
+                                 style="max-width: 150px; display: none;">
+                        </div>
+                    </div>
+                </form>
+
+                <div id="edit-product-message" class="alert d-none"></div>
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{% trans "Yopish" %}</button>
+                <button type="submit" form="edit-product-form" class="btn btn-success"
+                        onclick="saveProductChanges()">{% trans "Saqlash" %}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<button id="scrollTop" class="scrolltop" data-kt-scrolltop="true">
+    <i class="fas fa-chevron-circle-up"></i>
+</button>
+
+
+<!--begin::Javascript-->
+<script>
+    var hostUrl = "{% static "assets2/images/index.html" %}";        </script>
+
+<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+<script src="{% static "assets2/plugins/global/plugins.bundle.js" %}"></script>
+<script src="{% static "assets2/js/scripts.bundle.js" %}"></script>
+<!--end::Global Javascript Bundle-->
+
+
+<!-- begin::Custom Javascript(used for this page only)-->
+<script src="{% static "assets2/js/widgets.bundle.js" %}"></script>
+<script src="{% static "assets2/js/custom/widgets.js" %}"></script>
+
+
+<script src="{% static 'assets2/js/config.js' %}"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<script>
+
+    $(document).ready(function () {
+        $("#product-form").on("submit", function (e) {
+            e.preventDefault();  // Prevent default form submission
+
+            var formData = new FormData(this);  // Create form data for AJAX request
+
+            $.ajax({
+                url: "{% url 'add_product' %}",  // Django URL for adding a product
+                type: "POST",
+                data: formData,
+                processData: false,  // Prevent jQuery from processing the data
+                contentType: false,  // Prevent jQuery from setting contentType
+                headers: {"X-CSRFToken": $("input[name=csrfmiddlewaretoken]").val()},
+                success: function (response) {
+                    $("#product-message").removeClass("d-none alert-danger").addClass("alert-success").text(response.message).show();
+                    setTimeout(function () {
+                        $("#kt_modal_add_product").modal("hide");
+                        $("#product-form")[0].reset();  // Reset the form after successful submission
+                        $("#product-message").hide();
+                        location.reload();
+                    }, 1500);
+                },
+
+                error: function (xhr) {
+                    var errorMsg = xhr.responseJSON.errors ? Object.values(xhr.responseJSON.errors).join(", ") : xhr.responseJSON.message;
+                    $("#product-message").removeClass("d-none alert-success").addClass("alert-danger").text(errorMsg).show();
+                }
+            });
+        });
+    });
+
+
+    // edit product
+    function setEditModalData(productId) {
+        fetch(`/get-product/${productId}/`)  // Endpoint to get product data
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById("product-id").value = data.product.id;
+                    document.getElementById("edit-product-name").value = data.product.nomi;
+                    document.getElementById("edit-product-category").value = data.product.kategoriya;
+                    document.getElementById("edit-product-size").value = data.product.razmer;
+                    document.getElementById("edit-product-count").value = data.product.count;
+
+                    // Show image preview
+                    let imagePreview = document.getElementById("edit-product-image-preview");
+                    if (data.product.rasm) {
+                        imagePreview.src = data.product.rasm;  // Ensure this is a valid URL
+                        imagePreview.style.display = "block";
+                    } else {
+                        imagePreview.style.display = "none";
+                    }
+
+                } else {
+                    alert("Mahsulot yuklanmadi!");
+                }
+            })
+            .catch(error => console.error("Xatolik:", error));
+    }
+
+
+    function saveProductChanges() {
+        let formData = new FormData();
+        let productId = document.getElementById("product-id").value;
+        formData.append("nomi", document.getElementById("edit-product-name").value);
+        formData.append("kategoriya", document.getElementById("edit-product-category").value);
+        formData.append("razmer", document.getElementById("edit-product-size").value);
+        formData.append("count", document.getElementById("edit-product-count").value);
+
+        let fileInput = document.getElementById("edit-product-image");
+        if (fileInput.files.length > 0) {
+            formData.append("rasm", fileInput.files[0]);
+        }
+
+        fetch(`/update-product/${productId}/`, {
+            method: "POST",
+            body: formData,
+            headers: {"X-CSRFToken": getCSRFToken()}
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    $("#edit-product-message").removeClass("d-none alert-danger")
+                        .addClass("alert-success")
+                        .text(data.message)
+                        .show();
+
+                    // **Update table row dynamically**
+                    let row = document.getElementById(`product-row-${productId}`);
+                    if (row) {
+                        row.querySelector(".product-name").textContent = data.product.nomi;
+                        row.querySelector(".product-category").textContent = data.product.kategoriya;
+                        row.querySelector(".product-size").textContent = data.product.razmer;
+                        row.querySelector(".product-count").textContent = data.product.count;
+
+                        if (data.product.rasm) {
+                            row.querySelector(".product-image").src = data.product.rasm;
+                        }
+                    }
+
+                    // Close the modal and reset the form after update
+                    setTimeout(() => {
+                        $("#kt_modal_edit_product").modal("hide");
+                        document.getElementById("edit-product-form").reset();
+                        $("#edit-product-message").hide();
+                    }, 1000);
+                } else {
+                    alert("Xatolik: " + JSON.stringify(data.errors));
+                }
+            })
+            .catch(error => console.error("Xatolik:", error));
+    }
+
+
+    function getCSRFToken() {
+        return document.querySelector('[name=csrfmiddlewaretoken]').value;
+    }
+
+</script>
+
+<!--end::Custom Javascript-->
+<!--end::Javascript-->
+</body>
+<!-- end::Body-->
+
+</html>

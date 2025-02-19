@@ -17,7 +17,7 @@ from BOLT.views.main import (
     dashboard_page,
     search_products,
     filter_products,
-    bad_request_view, users_page, set_language, admin_warehouse_page,
+    bad_request_view, products_page, set_language, admin_warehouse_page, add_product, get_product, update_product,
 )
 from BOLT.views.order import (
     search_orders,
@@ -40,12 +40,14 @@ urlpatterns = [
     path('', dashboard_page, name='home_page'),  # Home page
     path('dashboard1/', dashboard_page, name='dashboard1'),
     path('warehouse/', warehouse_page, name='warehouse_page'),
-
+    path('add-product/', add_product, name='add_product'),
+    path('update-product/<int:product_id>/', update_product, name="update_product"),
+    path('get-product/<int:product_id>/', get_product, name="get_product"),
     path("admin_warehouse_page/", admin_warehouse_page, name="admin_warehouse_page"),
     path('mechanic/', mechanic_page, name='mechanic_page'),
     path('check-section/', check_section, name='check_section'),
 
-    path('users-page/', users_page, name='users_page'),
+    path('products-page/', products_page, name='products_page'),
 
     # Search and Filter
     path('warehouse/search-products/', search_products, name='warehouse_search_products'),

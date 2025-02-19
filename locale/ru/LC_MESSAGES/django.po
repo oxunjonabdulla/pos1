@@ -460,6 +460,38 @@ msgstr "Заказы, полученные механиками"
 msgid "Omborxona buyurtmalar"
 msgstr "Заказы на склад"
 
+msgid "Bugungi buyurtma berilgan mahsulotlar"
+msgstr "Товары, заказанные сегодня"
+
+msgid "OMBORXONADA MAVJUD MAHSULOTLAR !"
+msgstr "ТОВАРЫ В НАЛИЧИИ НА СКЛАДЕ!"
+
+msgid "Mahsulot qo'shish"
+msgstr "Добавить продукт"
+
+msgid "Mahsulot"
+msgstr "Продукт"
+
+msgid "Kategoriyasi"
+msgstr "Категория"
+
+msgid "O'zgartirish"
+msgstr "Изменить"
+
+msgid "Mahsulot muvaffaqiyatli qo'shildi"
+msgstr "Продукт успешно добавлен."
+
+msgid "Ruxsat etilmagan foydalanuvchi!"
+msgstr "Неавторизованный пользователь!"
+
+msgid "Mahsulot muvaffaqiyatli yangilandi!"
+msgstr "Продукт успешно обновлен!"
+
+msgid "Ma'lumotni qayta ishlashda xatolik yuz berdi."
+msgstr "Произошла ошибка при обработке данных."
+
+msgid "Buyurtma muvaffaqiyatli tasdiqlandi!"
+msgstr "Заказ успешно подтвержден!"
 
 
 

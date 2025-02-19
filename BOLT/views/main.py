@@ -1,13 +1,15 @@
+from itertools import product
+
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.db.models import Count
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import redirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _  # Import for translation
-from django.shortcuts import render, redirect, get_object_or_404
+
+from BOLT.forms import ProductForm
 from product_app.models import Maxsulot, CartItems, Order, Kategoriya, Department
 from user_app.models import User
 
@@ -241,8 +243,6 @@ def filter_products(request):
     return JsonResponse({"error": _("Hech qanday kategoriya identifikatori berilmagan")}, status=400)
 
 
-
-
 @login_required(login_url="login_page")
 def search_products(request):
     query = request.GET.get('query', '').strip()
@@ -314,7 +314,7 @@ def check_section(request):
                 }, status=400)
 
         return JsonResponse({"success": True})
-    return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli")}, status=405)
+    return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")}, status=405)
 
 
 @login_required(login_url='login_page')
@@ -322,16 +322,24 @@ def bad_request_view(request, exception=None):
     return render(request, 'user/error-404.html')
 
 
+from django.core.paginator import Paginator
+from django.utils.translation import gettext as _
+
+
 @login_required(login_url='login_page')
-def users_page(request):
+def products_page(request):
     today = timezone.now().date()
 
-    if request.user.is_superuser:
-        if request.user.username == "sklad":
-            orders = Order.objects.filter(kimga="2")
-        else:
-            orders = Order.objects.filter(Q(kimga="1") | Q(kimga=None))
-        users = User.objects.all()
+    if request.user.is_superuser and request.user.username == "sklad":
+        orders = Order.objects.filter(kimga="2")
+
+        # Pagination setup
+        products_list = Maxsulot.objects.order_by("-created_at").filter(kategoriya__department__name="Omborxona")
+        paginator = Paginator(products_list, 10)  # Show 10 products per page
+        page_number = request.GET.get("page")
+        products = paginator.get_page(page_number)
+        categories = Kategoriya.objects.filter(department__name="Omborxona")
+
         orders_1_count = orders.filter(status='1').count()
         orders_2_count = orders.filter(status='2').count()
         orders_3_count = orders.filter(status='3').count()
@@ -341,12 +349,88 @@ def users_page(request):
             "orders_2_count": orders_2_count,
             "orders_3_count": orders_3_count,
             "today_orders": orders.filter(created_at__date=today, status='1'),
-            "users": users
+            "products": products,  # Paginated product list
+            "categories": categories
         }
-        return render(request,
-                      template_name='user/users.html',
-                      context=user_ctx)
-    return redirect('mechanic_page')
+        return render(request, "user/products.html", user_ctx)
+
+    return redirect("mechanic_page")
+
+
+@login_required(login_url='login_page')
+def add_product(request):
+    if request.user.is_superuser and request.user.username == "sklad":
+        if request.method == "POST":
+            form = ProductForm(request.POST, request.FILES)
+            if form.is_valid():
+                user = request.user
+                product = form.save(commit=False)
+                product.foydalanuvchi = user
+                product.save()
+                return JsonResponse({"success": True, "message": _("Mahsulot muvaffaqiyatli qo'shildi")}, status=200)
+            else:
+                return JsonResponse({"success": False, "errors": form.errors}, status=400)
+
+    return JsonResponse({"success": False, "message": "Ruxsat etilmagan foydalanuvchi!"}, status=403)
+
+
+# @login_required(login_url='login_page')
+# def update_product(request, product_id):
+#     if request.user.is_superuser and request.user.username == "sklad":
+#         product = get_object_or_404(Maxsulot, id=product_id)
+#
+#         if request.method == "POST":
+#             form = ProductForm(request.POST, request.FILES, instance=product)
+#             if form.is_valid():
+#                 form.save()
+#                 return JsonResponse({"success": True, "message": "Mahsulot muvaffaqiyatli yangilandi!"})
+#             else:
+#                 return JsonResponse({"success": False, "errors": form.errors}, status=400)
+#
+#         return JsonResponse({"success": False, "message": "Faqat POST so‘rov qabul qilinadi."}, status=400)
+#
+#     return JsonResponse({"success": False, "message": "Sizga ruxsat berilmagan."}, status=403)
+
+
+def update_product(request, product_id):
+    product = get_object_or_404(Maxsulot, id=product_id)
+
+    if request.method == "POST":
+        form = ProductForm(request.POST, request.FILES, instance=product)
+        if form.is_valid():
+            product = form.save()
+            return JsonResponse({
+                "success": True,
+                "message": "Mahsulot muvaffaqiyatli yangilandi!",
+                "product": {
+                    "id": product.id,
+                    "nomi": product.nomi,
+                    "kategoriya": product.kategoriya.id if product.kategoriya else None,
+                    "razmer": product.razmer,
+                    "count": product.count,
+                    "rasm": product.rasm.url if product.rasm else None
+                }
+            })
+        else:
+            return JsonResponse({"success": False, "errors": form.errors})
+
+    return JsonResponse({"success": False, "message": "Noto'g'ri so'rov usuli."})
+
+
+@login_required(login_url='login_page')
+def get_product(request, product_id):
+    product = get_object_or_404(Maxsulot, id=product_id)
+    return JsonResponse({
+        "success": True,
+        "product": {
+            "id": product.id,
+            "nomi": product.nomi,
+            "kategoriya": product.kategoriya.id if product.kategoriya else "",
+            "razmer": product.razmer,
+            "count": product.count,
+            "rasm": product.rasm.url if product.rasm else None
+        }
+    })
 
 
 from urllib.parse import urlparse

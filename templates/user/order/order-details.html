@@ -238,7 +238,7 @@
 
                             {% endif %}
 
-                           {% if request.user.username == "sklad" %}
+                            {% if request.user.username == "sklad" %}
                                 <a href="{% url 'orders_page' %}" class="menu-item-link">
                                     <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                          style="height: 110px; width: 110px;">
@@ -288,7 +288,7 @@
                             {% endif %}
 
 
-                            <a href="{% url "users_page" %}" class="menu-item-link">
+                            <a href="{% url "products_page" %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                      style="height: 110px; width: 110px;">
                                     <div class="menu-link menu-center">
@@ -695,7 +695,6 @@
             </div>
 
 
-            <!--begin::Submit Order Modal-->
             <div class="modal fade" id="submitOrderModal" tabindex="-1" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -704,17 +703,17 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form id="submitOrderForm" data-order-pk="{{ order.id }}"> <!-- Add pk to form dataset -->
+                            <form id="submitOrderForm" data-order-pk="{{ order.id }}">
                                 {% csrf_token %}
                                 <div class="mb-3">
                                     <label for="submitOrderPassword"
                                            class="form-label">{% trans "Parolingizni kiriting" %}</label>
                                     <input type="password" class="form-control" id="submitOrderPassword" name="password"
-                                           required placeholder="{% trans "Parol..." %}">
+                                           required placeholder="{% trans 'Parol...' %}">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">{% trans "Orqaga" %}
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                        {% trans "Orqaga" %}
                                     </button>
                                     <button type="submit" class="btn btn-success">{% trans "Tasdiqlash" %}</button>
                                 </div>
@@ -723,7 +722,6 @@
                     </div>
                 </div>
             </div>
-            <!--end::Submit Order Modal-->
 
 
             <!--begin::Cancel Order Modal-->
@@ -896,74 +894,88 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 <script>
-    // Submit Order Form Handler
-document.getElementById("submitOrderForm").addEventListener("submit", function (event) {
-    event.preventDefault();
 
-    const password = document.getElementById("submitOrderPassword").value;
-    const orderPk = document.getElementById("submitOrderForm").dataset.orderPk; // Fetch pk from form dataset
 
-    fetch(`/submit-order/${orderPk}/`, { // Append pk to the URL
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": "{{ csrf_token }}"
-        },
-        body: JSON.stringify({password})
-    })
-        .then(response => response.json())
-        .then(data => {
-            const modal = bootstrap.Modal.getInstance(document.getElementById("submitOrderModal"));
-            modal.hide();
-
-            if (data.success) {
-                showAlert("Buyurtma muvaffaqiyatli tasdiqlandi!", "success");
-                setTimeout(() => location.reload(), 2000);
-            } else {
-                showAlert(data.message || "Xatolik yuz berdi!", "danger");
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            showAlert("Xatolik yuz berdi!", "danger");
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-bs-target='#submitOrderModal']").forEach(button => {
+        button.addEventListener("click", function () {
+            const orderPk = this.getAttribute("data-pk");
+            document.getElementById("submitOrderForm").dataset.orderPk = orderPk;
         });
+    });
+
+    document.getElementById("submitOrderForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        const password = document.getElementById("submitOrderPassword").value;
+        const orderPk = this.dataset.orderPk;
+
+        fetch(`/submit-order/${orderPk}/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": getCSRFToken()
+            },
+            body: JSON.stringify({ password })
+        })
+            .then(response => response.json())
+            .then(data => {
+                const modal = bootstrap.Modal.getInstance(document.getElementById("submitOrderModal"));
+                modal.hide();
+
+                if (data.success) {
+                    showAlert(data.message, "success");
+                    setTimeout(() => location.reload(), 1500);
+                } else {
+                    showAlert(data.message, "danger");
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                showAlert("Xatolik yuz berdi!", "danger");
+            });
+    });
 });
 
+    function getCSRFToken() {
+        return document.querySelector("[name=csrfmiddlewaretoken]").value;
+    }
 
-// Cancel Order Form Handler
-document.getElementById("cancelOrderForm").addEventListener("submit", function (event) {
-    event.preventDefault();
 
-    const password = document.getElementById("cancelOrderPassword").value;
-    const orderPk = document.getElementById("cancelOrderForm").dataset.orderPk; // Fetch pk from form dataset
-    const reason = document.getElementById("cancelOrderReason").value;
+    // Cancel Order Form Handler
+    document.getElementById("cancelOrderForm").addEventListener("submit", function (event) {
+        event.preventDefault();
 
-    fetch(`/cancel-order/${orderPk}/`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": "{{ csrf_token }}"
-        },
-        body: JSON.stringify({password, reason})
-    })
-        .then(response => response.json())
-        .then(data => {
-            const modalElement = document.getElementById("cancelOrderModal");
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            modal.hide();
+        const password = document.getElementById("cancelOrderPassword").value;
+        const orderPk = document.getElementById("cancelOrderForm").dataset.orderPk; // Fetch pk from form dataset
+        const reason = document.getElementById("cancelOrderReason").value;
 
-            if (data.success) {
-                showAlert("Buyurtma bekor qilindi!", "success");
-                setTimeout(() => location.reload(), 2000);
-            } else {
-                showAlert(data.message || "Xatolik yuz berdi!", "danger");
-            }
+        fetch(`/cancel-order/${orderPk}/`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": "{{ csrf_token }}"
+            },
+            body: JSON.stringify({password, reason})
         })
-        .catch(error => {
-            console.error(error);
-            showAlert("Xatolik yuz berdi!", "danger");
-        });
-});
+            .then(response => response.json())
+            .then(data => {
+                const modalElement = document.getElementById("cancelOrderModal");
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                modal.hide();
+
+                if (data.success) {
+                    showAlert("Buyurtma bekor qilindi!", "success");
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    showAlert(data.message || "Xatolik yuz berdi!", "danger");
+                }
+            })
+            .catch(error => {
+                console.error(error);
+                showAlert("Xatolik yuz berdi!", "danger");
+            });
+    });
 
 </script>
 <!-- end::Javascript-->

@@ -81,6 +81,33 @@
             padding: 0 10px; /* Optional: Adjust padding */
             margin-bottom: 10px; /* Space below the logo */
         }
+
+        .product-name {
+            display: block;
+            max-width: 20ch; /* Limits each line to approximately 20 characters */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            text-align: center; /* Centers text horizontally */
+            margin: 0 auto; /* Ensures block-level centering */
+        }
+
+
+        #products-container > .d-flex {
+            display: flex; /* kichik ekranlar uchun, agar kerak bo'lsa */
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* 1280px va undan katta ekranlarda gridga o‘tish va 3 ustun bo‘lishini ta’minlash */
+        @media (min-width: 1280px) {
+            #products-container > .d-flex {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
+
     </style>
 </head>
 <!--end::Head-->
@@ -196,7 +223,7 @@
                                 </a>
 
                             {% endif %}
-                              <a href="{% url 'orders_page' %}" class="menu-item-link">
+                            <a href="{% url 'orders_page' %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
                                      style="height: 110px; width: 110px;">
                                     <div class="menu-link menu-center">
@@ -225,19 +252,7 @@
                                 </div>
                             </a>
 
-                            <a href="{% url "users_page" %}" class="menu-item-link">
-                                <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                     style="height: 110px; width: 110px;">
-                                    <div class="menu-link menu-center">
-                                <span class="menu-icon me-0">
-                                    <i class="fas fa-users" style="font-size: 3.5rem; color: #FFC107;"></i>
-                                </span>
-                                    </div>
-                                    <p class="mt-2 text-center text-dark" style="font-size: 0.9rem; font-weight: 500;">
-                                        {% trans "Xodimlar" %}
-                                    </p>
-                                </div>
-                            </a>
+
 
                             <a href="{% url "admin_tutor" %}" class="menu-item-link">
                                 <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
@@ -408,36 +423,36 @@
                                 <!--begin::Content-->
                                 <div class="scroll-y mh-325px my-5 px-8">
                                     <!--begin::Item-->
-                                     {% for order in today_orders %}
-                                            <a href="{% url "order1-detail" pk=order.id %}">
-                                                <div class="d-flex flex-stack py-4">
-                                                    <!--begin::Section-->
-                                                    <div class="d-flex align-items-center me-2">
-                                                        <!--begin::Label-->
+                                    {% for order in today_orders %}
+                                        <a href="{% url "order1-detail" pk=order.id %}">
+                                            <div class="d-flex flex-stack py-4">
+                                                <!--begin::Section-->
+                                                <div class="d-flex align-items-center me-2">
+                                                    <!--begin::Label-->
 
-                                                        <span class="badge badge-light fs-8">#{{ order.id }}</span>
+                                                    <span class="badge badge-light fs-8">#{{ order.id }}</span>
 
-                                                        <!--end::Label-->
-                                                        <!--begin::Title-->
-                                                        <a
-                                                                class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
-                                                        <!--end::Title-->
-                                                    </div>
-                                                    <!--end::Section-->
-
-                                                    <!--begin::Code-->
-                                                    {% if order.status == '1' %}
-                                                        <span class="w-70px badge badge-light-primary me-4">{% trans "Buyurtma berildi" %}</span>
-                                                    {% elif order.status == '2' %}
-                                                        <span class="w-70px badge badge-light-success me-4">{% trans "Bajarildi" %}</span>
-                                                    {% elif order.status == '3' %}
-                                                        <span class="w-70px badge badge-light-danger me-4">{% trans "Bekor qilindi" %}</span>
-                                                    {% endif %}
-                                                    <!--end::Code-->
-
+                                                    <!--end::Label-->
+                                                    <!--begin::Title-->
+                                                    <a
+                                                            class="text-gray-800 text-hover-primary fw-semibold">{{ order.created_at }}</a>
+                                                    <!--end::Title-->
                                                 </div>
-                                            </a>
-                                        {% endfor %}
+                                                <!--end::Section-->
+
+                                                <!--begin::Code-->
+                                                {% if order.status == '1' %}
+                                                    <span class="w-70px badge badge-light-primary me-4">{% trans "Buyurtma berildi" %}</span>
+                                                {% elif order.status == '2' %}
+                                                    <span class="w-70px badge badge-light-success me-4">{% trans "Bajarildi" %}</span>
+                                                {% elif order.status == '3' %}
+                                                    <span class="w-70px badge badge-light-danger me-4">{% trans "Bekor qilindi" %}</span>
+                                                {% endif %}
+                                                <!--end::Code-->
+
+                                            </div>
+                                        </a>
+                                    {% endfor %}
                                     <!--end::Item-->
                                 </div>
                                 <!--end::Content-->
@@ -636,7 +651,6 @@
                                 <ul class="nav nav-pills d-flex justify-content-between nav-pills-custom gap-3 mb-6">
 
 
-
                                     {% for category in categories %}
                                         <li class="nav-item mb-3 me-0">
                                             <a class="nav-link nav-link-border-solid btn btn-outline btn-flex btn-active-color-primary flex-column flex-stack pt-9 pb-7 page-bg {% if category.id == active_category %}active{% endif %}"
@@ -672,7 +686,7 @@
                                                              class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                                                         <div class="mb-2">
                                                             <div class="text-center">
-                                                                <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">{{ product.nomi }}</span>
+                                                                <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1 product-name">{{ product.nomi }}</span>
                                                                 <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: {{ product.razmer }}</span>
                                                             </div>
                                                         </div>
@@ -1024,7 +1038,7 @@
                                             <img src="${product.image}" class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                                             <div class="mb-2">
                                                 <div class="text-center">
-                                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1">${product.name}</span>
+                                                    <span class="fw-bold text-gray-800 cursor-pointer text-hover-primary fs-3 fs-xl-1 product-name">${product.name}</span>
                                                     <span class="text-gray-500 fw-semibold d-block fs-6 mt-n1">{% trans "O'lchami" %}: ${product.razmer}</span>
                                                 </div>
                                             </div>
@@ -1139,7 +1153,7 @@
                         <div class="card-body text-center">
                             <img src="${product.rasm}" class="rounded-3 mb-4 w-150px h-150px" alt=""/>
                             <div class="mb-2">
-                                <span class="fw-bold text-gray-800 text-hover-primary fs-3">${product.nomi}</span>
+                                <span class="fw-bold text-gray-800 text-hover-primary fs-3 product-name">${product.nomi}</span>
                                 <span class="text-gray-500 fw-semibold d-block fs-6">{% trans "O'lchami" %}: ${product.razmer}</span>
                             </div>
                             <div class="position-relative d-flex justify-content-center align-items-center mb-4">
