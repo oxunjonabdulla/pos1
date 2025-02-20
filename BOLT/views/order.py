@@ -469,3 +469,33 @@ def warehouse_orders(request):
             return render(request, 'user/order/admin-warehouse-orders.html', user_ctx)
 
     return render(request, 'user/order/admin-warehouse-orders.html')
+
+
+
+@login_required(login_url="login_page")
+def super_admin_orders(request):
+    if request.user.is_superuser and request.user.username == "superadmin":
+
+        orders = Order.objects.order_by("-created_at")
+        paginator = Paginator(orders, 10)
+        page_number = request.GET.get('page', 1)
+        try:
+            paginated_orders = paginator.page(page_number)
+        except PageNotAnInteger:
+            paginated_orders = paginator.page(1)
+        except EmptyPage:
+            paginated_orders = paginator.page(paginator.num_pages)
+        orders_1_count = orders.filter(status='1').count()
+        orders_2_count = orders.filter(status='2').count()
+        orders_3_count = orders.filter(status='3').count()
+        orders_4_count = orders.filter(status='4').count()
+        today_orders = Order.objects.filter(created_at__date=timezone.now().date(), status='1')
+        return render(request,
+                      'user/order/superadmin-orders.html',
+                      {'user_orders': paginated_orders,
+                       'orders_1_count': orders_1_count,
+                       "orders_2_count": orders_2_count,
+                       "orders_3_count": orders_3_count,
+                       "orders_4_count": orders_4_count,
+                       "today_orders": today_orders})
+    return redirect("dashboard1")

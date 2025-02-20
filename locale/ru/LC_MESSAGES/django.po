@@ -494,6 +494,23 @@ msgid "Buyurtma muvaffaqiyatli tasdiqlandi!"
 msgstr "Заказ успешно подтвержден!"
 
 
+msgid "Bekor qilish sababi ko'rsatilmagan"
+msgstr "Причина отмены не указана."
+
+msgid "Kimga yuborildi"
+msgstr "Отправлено в"
+
+msgid "Rasm"
+msgstr "Картина"
+
+msgid "Buyurtma Tafsilotlari"
+msgstr "Подробности заказа"
+
+msgid "Jami mahsulotlar soni"
+msgstr "Общее количество продуктов"
+
+msgid "Bekor qilingan!"
+msgstr "Отменено!"
 
 
 
