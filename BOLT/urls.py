@@ -18,6 +18,7 @@ from BOLT.views.main import (
     search_products,
     filter_products,
     bad_request_view, products_page, set_language, admin_warehouse_page, add_product, get_product, update_product,
+    super_admin_products,
 )
 from BOLT.views.order import (
     search_orders,
@@ -25,7 +26,7 @@ from BOLT.views.order import (
     submit_order,
     cancel_order,
     user_order_details,
-    orders_page, order_page, approve_order, warehouse_orders, admin_order_details,
+    orders_page, order_page, approve_order, warehouse_orders, admin_order_details, super_admin_orders,
 )
 from BOLT.views.tutorial import user_tutorial_page, admin_tutorial_page
 
@@ -63,6 +64,9 @@ urlpatterns = [
     path('approve-order/<int:pk>/', approve_order, name='approve-order'),
     path('cancel-order/<int:pk>/', cancel_order, name='cancel_order'),
     path('user_order_detail/<int:pk>/', user_order_details, name='user_order_details'),
+    path("super_admin_orders/", super_admin_orders, name="super_admin_orders"),
+
+    path("super_admin_products/", super_admin_products, name="super_admin_products"),
 
     path('admin_order_details/<int:pk>/', admin_order_details, name='admin_order_details'),
     path('orders/', orders_page, name='orders_page'),

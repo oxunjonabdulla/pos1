@@ -1,13 +1,10 @@
-from itertools import product
-
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
+from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db.models import Count
 from django.db.models import Q
 from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from django.utils.translation import gettext as _  # Import for translation
 
 from BOLT.forms import ProductForm
 from product_app.models import Maxsulot, CartItems, Order, Kategoriya, Department
@@ -18,7 +15,7 @@ from user_app.models import User
 def dashboard_page(request):
     today = timezone.now().date()
 
-    if request.user.is_superuser:
+    if request.user.is_superuser and request.user.username != "superadmin":
         if request.user.username == "sklad":
             orders = Order.objects.filter(kimga="2")
         else:
@@ -57,7 +54,7 @@ def dashboard_page(request):
         }
         return render(request, 'user/department/dashboard.html', admin_ctx)
 
-    elif request.user.is_staff:
+    elif request.user.is_staff and not request.user.is_superuser:
         cart_items = CartItems.objects.filter(foydalanuvchi=request.user)
         today = timezone.now().date()
         today_orders = Order.objects.filter(created_at__date=today, foydalanuvchi=request.user)
@@ -87,6 +84,9 @@ def dashboard_page(request):
             'search_url': 'mechanic_search_products',
             'today_orders': today_orders.filter(status__in=['2', '3'])
         })
+
+    elif request.user.username == "superadmin":
+        return redirect("super_admin_products")
 
     else:
         return redirect('login_page')
@@ -374,24 +374,6 @@ def add_product(request):
     return JsonResponse({"success": False, "message": "Ruxsat etilmagan foydalanuvchi!"}, status=403)
 
 
-# @login_required(login_url='login_page')
-# def update_product(request, product_id):
-#     if request.user.is_superuser and request.user.username == "sklad":
-#         product = get_object_or_404(Maxsulot, id=product_id)
-#
-#         if request.method == "POST":
-#             form = ProductForm(request.POST, request.FILES, instance=product)
-#             if form.is_valid():
-#                 form.save()
-#                 return JsonResponse({"success": True, "message": "Mahsulot muvaffaqiyatli yangilandi!"})
-#             else:
-#                 return JsonResponse({"success": False, "errors": form.errors}, status=400)
-#
-#         return JsonResponse({"success": False, "message": "Faqat POST so‘rov qabul qilinadi."}, status=400)
-#
-#     return JsonResponse({"success": False, "message": "Sizga ruxsat berilmagan."}, status=403)
-
-
 def update_product(request, product_id):
     product = get_object_or_404(Maxsulot, id=product_id)
 
@@ -431,6 +413,25 @@ def get_product(request, product_id):
             "rasm": product.rasm.url if product.rasm else None
         }
     })
+
+
+@login_required(login_url="login_page")
+def super_admin_products(request):
+    if request.user.is_superuser and request.user.username == "superadmin":
+        products_list = Maxsulot.objects.order_by("-created_at").filter(kategoriya__department__name="Omborxona")
+        paginator = Paginator(products_list, 10)  # Show 10 products per page
+        page_number = request.GET.get("page")
+        products = paginator.get_page(page_number)
+        today_orders = Order.objects.filter(created_at__date=timezone.now().date(), status='1')
+        return render(
+            request,
+            "user/superadmin-mahsulotlar.html",
+            {
+                "products": products,
+                "today_orders": today_orders
+            }
+        )
+    return redirect("dashboard1")
 
 
 from urllib.parse import urlparse
