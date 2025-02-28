@@ -5,6 +5,7 @@
 
         <tr style="background-color: #E8F0FE; border-bottom: 2px solid #B6C7E3;">
 
+
             <!-- Checkbox -->
             <td class="text-start border border-secondary">
                 <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -98,6 +99,18 @@
                            onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
                             {% trans "Batafsil" %}
                         </a>
+                        <a href="#"
+                           class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-success export-btn"
+                           style="background-color: #28a745; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                           onmouseover="this.style.backgroundColor='white'; this.style.color='#28a745';"
+                           onmouseout="this.style.backgroundColor='#28a745'; this.style.color='white';"
+                           data-bs-toggle="modal"
+                           data-bs-target="#totalAmountModal"
+                           data-order-id="{{ order.id }}">
+                            {% trans "Chop Etish" %}
+                        </a>
+
+
                     {% else %}
                         <a href="{% url 'order1-detail' pk=order.id %}"
                            class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-primary"
@@ -105,6 +118,16 @@
                            onmouseover="this.style.backgroundColor='white'; this.style.color='#1B84FF';"
                            onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
                             {% trans "Batafsil" %}
+                        </a>
+                        <a href="#"
+                           class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-success export-btn"
+                           style="background-color: #28a745; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                           onmouseover="this.style.backgroundColor='white'; this.style.color='#28a745';"
+                           onmouseout="this.style.backgroundColor='#28a745'; this.style.color='white';"
+                           data-bs-toggle="modal"
+                           data-bs-target="#totalAmountModal"
+                           data-order-id="{{ order.id }}">
+                            {% trans "Chop Etish" %}
                         </a>
                     {% endif %}
                 {% else %}
@@ -115,9 +138,20 @@
                        onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
                         {% trans "Batafsil" %}
                     </a>
+                    <a href="#"
+                       class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-success export-btn"
+                       style="background-color: #28a745; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                       onmouseover="this.style.backgroundColor='white'; this.style.color='#28a745';"
+                       onmouseout="this.style.backgroundColor='#28a745'; this.style.color='white';"
+                       data-bs-toggle="modal"
+                       data-bs-target="#totalAmountModal"
+                       data-order-id="{{ order.id }}">
+                        {% trans "Chop Etish" %}
+                    </a>
+
+
                 {% endif %}
             </td>
-
 
 
         </tr>
@@ -216,6 +250,18 @@
                        onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
                         {% trans "Batafsil" %}
                     </a>
+                    <a href="#"
+                       class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-success export-btn"
+                       style="background-color: #28a745; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                       onmouseover="this.style.backgroundColor='white'; this.style.color='#28a745';"
+                       onmouseout="this.style.backgroundColor='#28a745'; this.style.color='white';"
+                       data-bs-toggle="modal"
+                       data-bs-target="#totalAmountModal"
+                       data-order-id="{{ order.id }}">
+                        {% trans "Chop Etish" %}
+                    </a>
+
+
                 {% else %}
                     <a href="{% url 'user_order_details' pk=order.id %}"
                        class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm"
@@ -224,6 +270,18 @@
                        onmouseout="this.style.backgroundColor='#1B84FF'; this.style.color='white';">
                         {% trans "Batafsil" %}
                     </a>
+                    <a href="#"
+                       class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-success export-btn"
+                       style="background-color: #28a745; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                       onmouseover="this.style.backgroundColor='white'; this.style.color='#28a745';"
+                       onmouseout="this.style.backgroundColor='#28a745'; this.style.color='white';"
+                       data-bs-toggle="modal"
+                       data-bs-target="#totalAmountModal"
+                       data-order-id="{{ order.id }}">
+                        {% trans "Chop Etish" %}
+                    </a>
+
+
                 {% endif %}
             </td>
 
@@ -232,6 +290,71 @@
     {% endif %}
     <!-- End Order Row -->
 {% endfor %}
+
+
+<!-- Bootstrap Modal -->
+<!-- Order Details Modal -->
+
+<!-- Bootstrap & JavaScript Dependencies -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll(".export-btn").forEach(button => {
+            button.addEventListener("click", function () {
+                const orderId = this.getAttribute("data-order-id");
+
+                fetch(`/get_order_details/${orderId}/`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById("order_date").value = data.order_date;
+                        document.getElementById("order_user").value = data.order_user;
+
+                        let receiverText = "";
+                        if (data.order_receiver == 1) {
+                            receiverText = "{% trans "Mexanika Bo'limi" %}";
+                        } else if (data.order_receiver == 2) {
+                            receiverText = "{% trans "Omborxona" %}";
+                        } else {
+                            receiverText = "{% trans "Noma'lum" %}";
+                        }
+                        document.getElementById("order_receiver").value = receiverText;
+
+                        let productList = document.getElementById("productList");
+                        productList.innerHTML = "";
+
+                        if (data.products.length === 0) {
+                            productList.innerHTML = `<tr><td colspan="4" class="text-center">{% trans "Mahsulotlar mavjud emas" %}</td></tr>`;
+                        } else {
+                            data.products.forEach(product => {
+                                let row = document.createElement("tr");
+                                row.innerHTML = `
+                                    <td>${product.name}</td>
+                                    <td>${product.quantity}</td>
+                                    <td><input type="number" class="form-control price-input" name="price_${product.id}" placeholder="Narxi" data-quantity="${product.quantity}" data-amount-id="amount_${product.id}"></td>
+                                    <td><input type="text" class="form-control" id="amount_${product.id}" readonly></td>
+                                `;
+                                productList.appendChild(row);
+                            });
+                        }
+
+                        document.querySelectorAll(".price-input").forEach(input => {
+                            input.addEventListener("input", function () {
+                                let price = parseFloat(this.value) || 0;
+                                let quantity = parseInt(this.getAttribute("data-quantity")) || 0;
+                                let amountField = document.getElementById(this.getAttribute("data-amount-id"));
+                                amountField.value = (price * quantity).toFixed(2);
+                            });
+                        });
+
+                        let totalAmountModal = new bootstrap.Modal(document.getElementById('totalAmountModal'), { keyboard: false });
+                        totalAmountModal.show();
+                    })
+                    .catch(error => console.error("Error fetching order details:", error));
+            });
+        });
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {

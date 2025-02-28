@@ -8,10 +8,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-yh#xj0(y^prqm(algsngjtz#q%zn$+050hhuzw--x_t!-5ys*0'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # ALLOWED_HOSTS = ['stand-metro.uz', 'www.stand-metro.uz', '167.71.49.146', 'localhost']
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -79,7 +79,7 @@ WSGI_APPLICATION = 'BOLT.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'smbolt',
+        'NAME': 'bolt',
         'USER': 'postgres',
         'PASSWORD': '22',
         'HOST': 'localhost',
@@ -139,8 +139,8 @@ MODELTRANSLATION_LANGUAGES = ('uz', 'ru')
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-# STATICFILES_DIRS = [BASE_DIR / "static/"]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATICFILES_DIRS = [BASE_DIR / "static/"]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 MEDIA_URL = '/media/'

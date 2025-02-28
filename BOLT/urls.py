@@ -27,6 +27,7 @@ from BOLT.views.order import (
     cancel_order,
     user_order_details,
     orders_page, order_page, approve_order, warehouse_orders, admin_order_details, super_admin_orders,
+    get_order_details,
 )
 from BOLT.views.tutorial import user_tutorial_page, admin_tutorial_page
 
@@ -57,6 +58,8 @@ urlpatterns = [
     path('search-products/', search_products, name='search_products'),
     path('filter-products/', filter_products, name='filter_products'),
     path('search-orders/', search_orders, name='search_orders'),
+    path("get_order_details/<int:order_id>/", get_order_details, name="get_order_details"),
+
 
     # Order Management
     path('order1-detail/<int:pk>/', order1_details, name='order1-detail'),
@@ -73,6 +76,8 @@ urlpatterns = [
     path('warehouse_orders/', warehouse_orders, name='warehouse_orders'),
     path('order/', order_page, name='order_page'),
 
+    # path('export_order/<int:pk>/', export_order, name='export_order'),
+
     # Cart Management
     path('add-to-cart/<int:product_id>/', add_to_cart, name='add_to_cart'),
     path('update-cart-quantity/<int:cart_item_id>/', update_cart_quantity, name='update_cart_quantity'),
@@ -86,6 +91,7 @@ urlpatterns = [
 
     # Error Handling
     path('404/', bad_request_view, name='404'),
+
 
 ]
 

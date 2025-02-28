@@ -716,6 +716,13 @@
                                                         data-products='{% for item in order.maxsulotlar.all %}{"name": "{{ item.maxsulot.nomi }}", "size": "{{ item.maxsulot.razmer }}", "quantity": "{{ item.soni }}", "category": "{{ item.maxsulot.kategoriya.nomi }}", "image": "{{ item.maxsulot.rasm.url }}"},{% endfor %}'>
                                                     {% trans "Batafsil" %}
                                                 </button>
+                                                <a href="{% url 'export_order' pk=order.id %}"
+                                                   class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary shadow-sm border border-success"
+                                                   style="background-color: #28a745; color: white; transition: all 0.3s ease; padding: 8px 14px;"
+                                                   onmouseover="this.style.backgroundColor='white'; this.style.color='#28a745';"
+                                                   onmouseout="this.style.backgroundColor='#28a745'; this.style.color='white';">
+                                                    {% trans "Chop Etish" %}
+                                                </a>
                                             </td>
 
 

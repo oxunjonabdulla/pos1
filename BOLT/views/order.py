@@ -1,18 +1,20 @@
 import json
+import os
 
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.db.models import Q
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.translation import gettext as _  # Import for translation
 from django.views.decorators.csrf import csrf_exempt
+from openpyxl.styles import Font
 
+from BOLT.settings import BASE_DIR
 from product_app.models import Maxsulot, CartItems, Order, OrderItems
 from settings_app.models import AdminParol, SectionChoices
 
@@ -171,6 +173,7 @@ def approve_order(request, pk):
 
     return JsonResponse({"success": False, "message": _("Ruxsat berilmagan.")})
 
+
 @csrf_exempt
 @login_required
 def submit_order(request, pk):
@@ -222,9 +225,11 @@ def submit_order(request, pk):
             return JsonResponse({"success": True, "message": _("Buyurtma muvaffaqiyatli tasdiqlandi!")})
 
         except json.JSONDecodeError:
-            return JsonResponse({"success": False, "message": _("Ma'lumotni qayta ishlashda xatolik yuz berdi.")}, status=400)
+            return JsonResponse({"success": False, "message": _("Ma'lumotni qayta ishlashda xatolik yuz berdi.")},
+                                status=400)
 
     return JsonResponse({"success": False, "message": _("Noto'g'ri so'rov usuli.")}, status=405)
+
 
 @csrf_exempt
 def cancel_order(request, pk):
@@ -471,7 +476,6 @@ def warehouse_orders(request):
     return render(request, 'user/order/admin-warehouse-orders.html')
 
 
-
 @login_required(login_url="login_page")
 def super_admin_orders(request):
     if request.user.is_superuser and request.user.username == "superadmin":
@@ -499,3 +503,91 @@ def super_admin_orders(request):
                        "orders_4_count": orders_4_count,
                        "today_orders": today_orders})
     return redirect("dashboard1")
+
+
+# export order
+import io
+import openpyxl
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+
+
+import io
+import os
+import openpyxl
+from openpyxl.styles import Font
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
+
+# def export_order(request, pk):
+#     total_amount = request.GET.get("total_amount")
+#     if not total_amount:
+#         return HttpResponse("Jami summa topilmadi", status=400)
+#
+#     # Yangi Excel fayl yaratish
+#     wb = openpyxl.Workbook()
+#     ws = wb.active
+#     ws.title = "Buyurtma"
+#
+#     # Sarlavha qo'shish
+#     headers = ["Mahsulot nomi", "Razmer", "Miqdori", "Kategoriya"]
+#     ws.append(headers)
+#
+#     # Order ma'lumotlarini olish
+#     order = get_object_or_404(Order, pk=pk)
+#
+#     # Mahsulotlarni qo'shish
+#     for item in order.maxsulotlar.all():
+#         ws.append([
+#             item.maxsulot.nomi,
+#             item.maxsulot.razmer,
+#             item.soni,
+#             item.maxsulot.kategoriya.nomi
+#         ])
+#
+#     # Jami summani qo'shish
+#     row = ws.max_row + 1
+#     ws[f"A{row}"] = "Jami summa:"
+#     ws[f"A{row}"].font = Font(bold=True)
+#
+#     ws.merge_cells(start_row=row, start_column=2, end_row=row, end_column=4)
+#     ws.cell(row=row, column=2, value=f"{total_amount} so'm").font = Font(bold=True)
+#
+#     # Faylni xotirada saqlash
+#     output = io.BytesIO()
+#     wb.save(output)
+#     output.seek(0)
+#
+#     # Javob qaytarish (Excel fayl sifatida)
+#     response = HttpResponse(output.getvalue(),
+#                             content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+#     response["Content-Disposition"] = f'attachment; filename="order_{order.pk}.xlsx"'
+#
+#     return response
+
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
+
+
+
+def get_order_details(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    order_items = order.maxsulotlar.all()
+
+    data = {
+        "order_date": order.created_at.strftime("%Y-%m-%d"),
+        "order_user": order.foydalanuvchi.username,
+        "order_receiver": order.kimga,
+        "products": [
+            {
+                "id": item.id,
+                "name": item.maxsulot.nomi,
+                "quantity": item.soni,
+                "price": ""
+            } for item in order_items
+        ]
+    }
+
+    return JsonResponse(data)
+
+

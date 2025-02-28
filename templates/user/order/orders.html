@@ -309,23 +309,23 @@
 
 
                                 {% if request.user.is_superuser and request.user.username == "sklad" %}
-                                <a href="{% url 'products_page' %}" class="menu-item-link">
-                                    <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
-                                         style="height: 110px; width: 110px;">
-                                        <div class="menu-link menu-center">
+                                    <a href="{% url 'products_page' %}" class="menu-item-link">
+                                        <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
+                                             style="height: 110px; width: 110px;">
+                                            <div class="menu-link menu-center">
                                     <span class="menu-icon me-0">
                                         <!-- Updated icon for products (e.g., a shopping basket or box) -->
                                         <i class="fas fa-box" style="font-size: 3.5rem; color: #FFC107;"></i>
                                     </span>
+                                            </div>
+                                            <p class="mt-2 text-center text-dark"
+                                               style="font-size: 0.9rem; font-weight: 500;">
+                                                {% trans "Mahsulotlar" %}
+                                                <!-- "Products" in Uzbek or your desired language -->
+                                            </p>
                                         </div>
-                                        <p class="mt-2 text-center text-dark"
-                                           style="font-size: 0.9rem; font-weight: 500;">
-                                            {% trans "Mahsulotlar" %}
-                                            <!-- "Products" in Uzbek or your desired language -->
-                                        </p>
-                                    </div>
-                                </a>
-                            {% endif %}
+                                    </a>
+                                {% endif %}
 
                                 <a href="{% url "admin_tutor" %}" class="menu-item-link">
                                     <div class="menu-item py-2 d-flex flex-column align-items-center justify-content-center"
@@ -884,6 +884,57 @@
             </div>
             <!-- end::Content-->
 
+            <div class="modal fade" id="totalAmountModal" tabindex="-1" aria-labelledby="orderDetailsLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="orderDetailsLabel">{% trans "Buyurtma Tafsilotlari" %}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="orderForm">
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Buyurtma sanasi" %}:</label>
+                                    <input type="text" id="order_date" class="form-control" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Buyurtma beruvchi" %}:</label>
+                                    <input type="text" id="order_user" class="form-control" readonly>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">{% trans "Qabul qiluvchi" %}:</label>
+                                    <input type="text" id="order_receiver" class="form-control" readonly>
+                                </div>
+
+
+                                <!-- Product List in the Modal -->
+                                <h6>{% trans "Mahsulotlar" %}:</h6>
+                                <table class="table table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>{% trans "Mahsulot nomi" %}</th>
+                                        <th>{% trans "Miqdori" %}</th>
+                                        <th>{% trans "Narxi (ixtiyoriy)" %}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="productList">
+                                    <!-- Products will be inserted here dynamically -->
+                                    </tbody>
+                                </table>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                    data-bs-dismiss="modal">{% trans "Bekor qilish" %}</button>
+                            <a href="{% static "Охун.xlsx" %}" type="button"
+                               class="btn btn-success">{% trans "Excel yuklash" %}</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- begin::Footer-->
             <div class="footer py-4 d-flex flex-lg-column " id="kt_footer">
                 <!--begin::Container-->
@@ -952,6 +1003,7 @@
             }
         });
     });
+
 
 </script>
 
