@@ -172,11 +172,8 @@ def admin_warehouse_page(request):
     # Restrict access to superusers only
     if not request.user.is_superuser or request.user.username == "sklad":
         return redirect("dashboard1")
-    if request.user.is_superuser:
-        if request.user.username == "sklad":
-            orders = Order.objects.filter(kimga="2")
-        else:
-            orders = Order.objects.filter(Q(kimga="1") | Q(kimga=None))
+    if request.user.is_superuser and not request.user.username == "superadmin" and not request.user.username == "sklad":
+        orders = Order.objects.filter(Q(kimga="1") | Q(kimga=None))
     # Get today's date
     today = timezone.now().date()
 
@@ -194,7 +191,10 @@ def admin_warehouse_page(request):
     cart_items = CartItems.objects.filter(foydalanuvchi=request.user)
 
     # Get the warehouse department or return a 404 error if not found
-    warehouse_department = get_object_or_404(Department, name="Omborxona")
+    try:
+        warehouse_department = Department.objects.get(name="Omborxona")
+    except Department.DoesNotExist:
+        return render(request, "user/error-404.html")  # Handle the case where the department doesn't exist
 
     # Fetch categories related to the warehouse department with product counts
     categories = Kategoriya.objects.filter(department=warehouse_department).annotate(
